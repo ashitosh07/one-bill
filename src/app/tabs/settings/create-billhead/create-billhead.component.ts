@@ -19,7 +19,7 @@ import { fadeInUpAnimation } from '../../../../@fury/animations/fade-in-up.anima
 import { BillheadService } from '../../shared/services/bill-head.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MetadataService } from 'src/app/tabs/shared/services/metadata.service'
-import { MetadataBillHeadTypes } from '../../shared/models/metadata.billHead-types.model'
+import { MetadataBillHeadTypes } from '../../shared/models/metadata.billhead-types.model'
 import { MetadataUtilityType } from '../../shared/models/metadata.utility-type.model'
 import { MetadataBillFormula } from '../../shared/models/metadata.bill-formula.model'
 import { Metadata } from '../../shared/models/metadata.model'
