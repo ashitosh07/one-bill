@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { ListColumn } from 'src/@fury/shared/list/list-column.model'
 import { DatePipe, CurrencyPipe } from '@angular/common'
-import { BillSettlement } from 'src/app/tabs/shared/models/s'
+import { BillSettlement } from 'src/app/tabs/shared/models/bill-settlement.model'
 import { Bill } from 'src/app/tabs/shared/models/bill.model'
 import { BillMaster } from 'src/app/tabs/shared/models/bill-master.model'
 import { environment } from 'src/environments/environment'
