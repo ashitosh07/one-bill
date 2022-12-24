@@ -76,6 +76,7 @@
     "@types/jasminewd2": "~2.0.8",
     "@types/lodash-es": "~4.17.3",
     "@types/node": "^13.9.8",
+    "ajv": "^7.2.4",
     "auto-import": "^0.1.4",
     "codelyzer": "^5.2.2",
     "jasmine-core": "~3.5.0",
