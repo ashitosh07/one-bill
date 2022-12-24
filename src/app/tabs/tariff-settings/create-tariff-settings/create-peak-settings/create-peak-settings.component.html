@@ -1,0 +1,111 @@
+<div class="actions" fxLayout="row" fxLayoutGap="8px">
+    <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="column"
+        fxLayoutAlign.gt-sm="start stretch">
+        <!-- [fxFlex.gt-sm]="col4" -->
+        <!-- <fury-card  class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow"> -->
+        <!-- style="box-shadow: 3px 3px 1px 2px whitesmoke;" -->
+        <!-- <fury-card-content> -->
+        <form [formGroup]="peak_settings">
+            <div class="person">
+                <div class="content" fxLayout="row" fxLayoutGap="8px">
+
+                    <mat-form-field fxFlex="auto">
+                        <mat-label>Seasons</mat-label>
+                        <mat-select formControlName="season" (selectionChange)="onChangeSeasons($event.value)"
+                            [(value)]="seasonId" required>
+                            <mat-option *ngFor="let option of seasons" [value]="option.value">
+                                {{ option.label }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-hint>This will be season.</mat-hint>
+                        <mat-error *ngIf="peak_settings.invalid">Season is required.</mat-error>
+                    </mat-form-field>
+
+                    <div fxFlex="auto">
+                        <button (click)="addItem('Season')" type="button" mat-mini-fab class="create" color="primary">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
+
+                    <mat-form-field fxFlex="auto">
+                        <mat-label>Week Types</mat-label>
+                        <mat-select formControlName="weekType" (selectionChange)="onChangeWeekTypes($event.value)"
+                            [(value)]="weekTypeId" required>
+                            <mat-option *ngFor="let option of weekTypes" [value]="option.value">
+                                {{ option.label }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-hint>This will be week type.</mat-hint>
+                        <mat-error *ngIf="peak_settings.invalid">Week type is required.</mat-error>
+                    </mat-form-field>
+
+                    <div fxFlex="auto">
+                        <button class="addWeekType" (click)="addItem('WeekType')" type="button" mat-mini-fab
+                            class="create" color="primary">
+                            <mat-icon>add</mat-icon>
+                        </button>
+                    </div>
+
+                    <mat-form-field fxFlex="auto">
+                        <mat-label>Type</mat-label>
+                        <mat-select formControlName="peakType" (selectionChange)="onChangeType($event.value)"
+                            [(value)]="peakTypeId" required>
+                            <mat-option *ngFor="let option of peakTypes" [value]="option.value">
+                                {{ option.label }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-hint>This will be peak type.</mat-hint>
+                        <mat-error *ngIf="peak_settings.invalid">Type is required.</mat-error>
+                    </mat-form-field>
+
+                </div>
+            </div>
+            <div class="person">
+                <div class="content" fxLayout="row" fxLayoutGap="8px">
+                    <mat-form-field fxFlex="auto">
+                        <mat-label>From</mat-label>
+                        <input formControlName="fromHour" [(ngModel)]="fromHour" type="time" step="2" format="hh:mm:ss"
+                            matInput required>
+                        <mat-hint>This will be from Hour start.</mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="auto">
+                        <mat-label>To</mat-label>
+                        <input formControlName="toHour" [(ngModel)]="toHour" type="time" step="2" format="hh:mm:ss"
+                            matInput required>
+                        <mat-hint>This will be to Hour end.</mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="auto">
+                        <mat-label>Rate</mat-label>
+                        <input formControlName="rate" [(ngModel)]="rate" matInput required>
+                        <mat-hint>This will be rate.</mat-hint>
+                    </mat-form-field>
+
+                </div>
+            </div>
+        </form>
+        <div style="text-align: right;">
+            <button class="create" (click)="addNewItem()" type="button" mat-mini-fab color="primary">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+
+        <div class="result" fxLayout="row" style="padding-top: 10px;">
+            <app-table-structure [visibleDeleteButton]="true" style="width: 100%;" [tableData]="dataSource"
+                [columns]="columns" (deleteRow)="onDeleteRow($event)">
+            </app-table-structure>
+        </div>
+        <!-- </fury-card-content> -->
+        <!-- </fury-card> -->
+        <!-- [fxFlex.gt-sm]="col2" -->
+        <!-- <fury-card  class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+            <fury-card-content>
+                <div class="result" fxLayout="row">
+                    <app-table-structure  [visibleDeleteButton]="true" [tableData]="dataSource" [columns]="columns" (deleteRow)="onDeleteRow($event)">
+                    </app-table-structure>
+                </div>
+            </fury-card-content>
+        </fury-card> -->
+    </div>
+</div>

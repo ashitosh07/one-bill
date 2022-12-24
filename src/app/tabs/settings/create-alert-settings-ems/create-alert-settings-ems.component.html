@@ -1,0 +1,377 @@
+<fury-page-layout mode="card" class="padding-top">
+
+  
+    <fury-page-layout-content fxLayout="column">
+      <!-- <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+        fxLayoutAlign.gt-sm="start stretch"> -->
+        
+          <mat-toolbar color="primary" class="position-fixed">
+            <img class="img-style" src="assets/img/fav-icon.png" />
+            <span>Alarm Settings - EMS</span>
+            <span class="toolbar-spacer"></span>
+            <app-create-alert-settings-ems-footer-toolbar (saveClicked)="onSave()">
+            </app-create-alert-settings-ems-footer-toolbar>
+          </mat-toolbar>
+        <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+          <fury-card-content fxLayout="column" class="padding-top">
+            <div [formGroup]="form">
+            <div class="result" fxLayout="column">
+              <div class="person">
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px">
+
+                  <mat-form-field fxFlex>
+                    <mat-label>Client</mat-label>
+                    <mat-select [(ngModel)]="client" name="clientId" id="clientId" placeholder="Client" formControlName="clientId" (selectionChange)="onChangeClient($event)">
+                      <mat-option *ngFor="let client of clients;" [value]="client.id" >{{client.description}}</mat-option>
+                    </mat-select>
+                    <mat-hint>Please select Client.</mat-hint> 
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex>
+                    <mat-label>Alarm Type</mat-label>
+                    <mat-select id="alarmType" name="alarmType" (selectionChange)="onChangeAlarmType($event)" formControlName="alarmTypeId">
+                      <mat-option *ngFor="let item of alarmTypes; index as i" [value]="item.id">
+                        {{ item.description }}</mat-option>
+                    </mat-select>
+                    <app-show-errors [ctrl]="form?.get('alarmTypeId')"></app-show-errors>
+                    <mat-hint>Please select Alarm Type.</mat-hint>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex>
+                    <mat-label>Alarm Name</mat-label>
+                    <input type="text" formControlName="alarmName" matInput />
+                    <app-show-errors [ctrl]="form.get('alarmName')"></app-show-errors>
+                    <mat-hint>Please enter Alarm Name.</mat-hint>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex *ngIf="alarmType == 'Weekly'">
+                    <mat-label>Day</mat-label>
+                    <mat-select (selectionChange)="onChangeDay($event)" formControlName="weekDayId">
+                      <mat-option *ngFor="let day of days; index as i" [value]="day.id">{{ day.description }}
+                      </mat-option>
+                    </mat-select>
+                    <app-show-errors [ctrl]="form?.get('weekDayId')"></app-show-errors>
+                    <mat-hint>Please select Day.</mat-hint>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex *ngIf="alarmType == 'Monthly'">
+                    <mat-label>Date</mat-label>
+                    <mat-select (selectionChange)="onChangeDate($event)" formControlName="dateId">
+                      <mat-option *ngFor="let date of dates; index as i" [value]="date.id">{{ date.description }}
+                      </mat-option>
+                    </mat-select>
+                    <app-show-errors [ctrl]="form?.get('dateId')"></app-show-errors>
+                    <mat-hint>Please select Date.</mat-hint>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="person top-padding">
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="25px">
+                  <mat-form-field fxFlex
+                    *ngIf="alarmType != 'Hourly' && alarmType != 'RealTime' && alarmType != 'Offline' && alarmType != 'Mismatch Reading' && alarmType != 'Meter Reading Report' && alarmType != 'Meter Health Report'">
+                    <mat-label>Hour</mat-label>
+                    <mat-select (selectionChange)="onChangeHour($event)" formControlName="hourId">
+                      <mat-option *ngFor="let hour of hours; index as i" [value]="hour.id">{{ hour.description }}
+                      </mat-option>
+                    </mat-select>
+                    <mat-hint>Please select Hour.</mat-hint>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex *ngIf="alarmType != 'RealTime' && alarmType != 'Offline' && alarmType != 'Mismatch Reading' && alarmType != 'Meter Reading Report' && alarmType != 'Meter Health Report'">
+                    <mat-label>Minutes</mat-label>
+                    <mat-select (selectionChange)="onChangeMinutes($event)" formControlName="minuteId">
+                      <mat-option *ngFor="let minute of minutes; index as i" [value]="minute.id">
+                        {{ minute.description }}</mat-option>
+                    </mat-select>
+                    <mat-hint>Please select Minutes.</mat-hint>
+                  </mat-form-field>
+
+                  <mat-form-field *ngIf="alarmType != 'Meter Health Report' && alarmType != 'Meter Reading Report'">
+                    <mat-select [(ngModel)]="meterTypeName" name="meterType" id="meterTypeId" placeholder="Select a Meter Type"
+                      (selectionChange)="onMeterTypeChange($event)" formControlName="meterTypeId">
+                      <mat-option *ngFor="let item of meterTypes;" [value]="item.description">{{item.description}}</mat-option>
+                    </mat-select>
+                    <mat-hint>Please select Meter Type.</mat-hint>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex *ngIf="alarmType != 'Meter Health Report' && alarmType != 'Meter Reading Report'">
+                    <mat-label>Select Feeder</mat-label>
+                    <mat-select [(ngModel)]="selectedMeters" class="multiSelectCustom"
+                      (selectionChange)="onChangeFeeder($event)" formControlName="feederId" multiple>
+                      <input class="myInput" #myInput matInput focused="'true'" type="text"
+                        (keyup)="searchMeterType($event.target.value)" autocomplete="off" placeholder="search">
+                      <mat-divider></mat-divider>
+                      <mat-option #allMeterTypesSelected (click)="toggleMeterTypesAllSelection()" [value]="0">Select All
+                      </mat-option>
+                      <mat-option *ngFor="let feeder of feeders; index as i"
+                        (click)="toggleMeterTypesPerOne(allMeterTypesSelected.viewValue)" [value]="feeder.id">
+                        {{ feeder.deviceName }}</mat-option>
+                    </mat-select>
+                    <app-show-errors [ctrl]="form?.get('feederId')"></app-show-errors>
+                    <mat-hint>Please select Feeder.</mat-hint>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex *ngIf="alarmType != 'Offline' && alarmType != 'Meter Health Report' && alarmType != 'Meter Reading Report' && alarmType != 'Mismatch Reading'">
+                    <mat-label>Select Parameter</mat-label>
+                    <mat-select (selectionChange)="onChangeParameter($event)" formControlName="parameterId">
+                      <mat-option *ngFor="let parameter of parameters; index as i" [value]="parameter.id">
+                        {{ parameter.description }}</mat-option>
+                    </mat-select>
+                    <app-show-errors [ctrl]="form?.get('parameterId')"></app-show-errors>
+                    <mat-hint>Please select Parameter.</mat-hint>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex *ngIf="alarmType == 'RealTime'">
+                    <mat-label>Condition</mat-label>
+                    <mat-select (selectionChange)="onChangeCondition($event)" formControlName="conditionId">
+                      <mat-option *ngFor="let condition of conditions; index as i" [value]="condition.id">
+                        {{ condition.description }}</mat-option>
+                    </mat-select>
+                    <mat-hint>Please select Condition.</mat-hint>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex *ngIf="alarmType == 'RealTime'">
+                    <mat-label>Check Value</mat-label>
+                    <input type="Number" formControlName="conditionValue" matInput>
+                    <mat-hint>Please enter Condition Value.</mat-hint>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="result" fxLayout="column" *ngIf="alarmType != 'Meter Reading Report' && alarmType != 'Meter Health Report'">
+                <div class="person top-padding">
+                  <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="end center" fxLayoutGap.gt-sm="20px">
+                    <div fxLayout="row" fxLayoutGap.gt-sm="20px">
+                      <label>SMS</label>
+                      <mat-checkbox formControlName="isSms" fxFlexLayoutAlign="end center" (change)="toggleSMS(isSms)">
+                      </mat-checkbox>
+                      <!-- <span>SMS</span> -->
+                      <label>Whatsapp</label>
+                      <mat-checkbox formControlName="isWhatsapp" fxFlexLayoutAlign="end center"
+                        (change)="toggleWhatsapp(isWhatsapp)">
+                      </mat-checkbox>
+                    </div>
+
+                    <mat-form-field fxFlex="80%">
+                      <mat-label>Mobile</mat-label>
+                      <input type="text" formControlName="sMSMobileNumber" maxlength="100" matInput />
+                      <mat-hint *ngIf="isSms || isWhatsapp">Please enter Mobile Number.</mat-hint>
+                      <app-show-errors [ctrl]="form?.get('sMSMobileNumber')"></app-show-errors>
+                    </mat-form-field>
+
+                  </div>
+                </div>
+              </div>
+              <div class="result" fxLayout="column" *ngIf="alarmType != 'Meter Reading Report' && alarmType != 'Meter Health Report'">
+                <div class="person">
+                  <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="end center" fxLayoutGap.gt-sm="20px">
+
+                    <label>Whatsapp Group</label>
+                    <mat-checkbox formControlName="isWhatsAppGroup" fxFlexLayoutAlign="end center"
+                      (change)="toggleWhatsappGroup(isGroup)">
+                    </mat-checkbox>
+
+                    <mat-form-field fxFlex="39.25%">
+                      <mat-label>Group Name</mat-label>
+                      <input type="text" formControlName="whatsAppGroupName" maxlength="200" matInput />
+                      <mat-hint *ngIf="isGroup">Please enter Group Name.</mat-hint>
+                      <app-show-errors [ctrl]="form?.get('whatsAppGroupName')"></app-show-errors>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="39%">
+                      <mat-label>Group Admin Number</mat-label>
+                      <input type="text" formControlName="whatsAppGroupAdminNumber" maxlength="200" matInput />
+                      <mat-hint *ngIf="isGroup">Please enter Group Admin Number.</mat-hint>
+                      <app-show-errors [ctrl]="form?.get('whatsAppGroupAdminNumber')"></app-show-errors>
+                    </mat-form-field>
+
+                  </div>
+                </div>
+              </div>
+              <div class="result" fxLayout="column">
+                <div class="person top-padding">
+                  <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="end center" fxLayoutGap.gt-sm="20px">
+
+                    <mat-label>Email</mat-label>
+                    <mat-checkbox formControlName="isEmail" fxFlexLayoutAlign="end center" (change)="toggleEmail(isEmail)">
+                    </mat-checkbox>
+
+                    <mat-form-field fxFlex="80%">
+                      <mat-label>Email</mat-label>
+                      <input type="text" formControlName="emailId" maxlength="100" matInput />
+                      <mat-hint *ngIf="isEmail">Please enter Email Id.</mat-hint>
+                    </mat-form-field>
+
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            </div>
+          </fury-card-content>
+        </fury-card>
+      <!-- </div> -->
+    </fury-page-layout-content>
+    <!-- <fury-page-layout-content fxLayout="column">
+      <div
+        fxFlex="noshrink"
+        fxLayout="column"
+        fxLayout.gt-sm="row"
+        fxLayoutAlign.gt-sm="start stretch"
+      >
+        <div fxFlex="20%">
+          <fury-card
+            [fxFlex.gt-sm]="col2"
+            class="basic-forms route-animations-elements"
+            [@fadeInUp]
+            fxFlex="grow"
+          >
+            <fury-card-content fxLayout="column">
+              <div class="result" fxLayout="column">
+                <div class="person padding">
+                  <div
+                    fxLayout="column"
+                    fxLayout.gt-sm="row"
+                    fxLayoutAlign="end center">
+                    <label>SMS</label>
+                    <mat-checkbox
+                      formControlName="isSms"
+                      fxFlexLayoutAlign="end center"
+                      (change)="toggleSMS(isSms)"
+                    >
+                    </mat-checkbox>
+                  </div>
+
+                  <div
+                    fxLayout="column"
+                    fxLayout.gt-sm="row"
+                    fxLayoutAlign="end end"
+                  >
+                    <label>Whatsapp</label>
+                    <mat-checkbox
+                      formControlName="isWhatsapp"
+                      fxFlexLayoutAlign="end center"
+                      (change)="toggleWhatsapp(isWhatsapp)"
+                    >
+                    </mat-checkbox>
+                  </div>
+                </div>
+
+                <div class="person padding">
+                  <div
+                    fxLayout="column"
+                    fxLayout.gt-sm="row"
+                    fxLayoutAlign="end end"
+                  >
+                    <label>Whatsapp Group</label>
+                    <mat-checkbox
+                      formControlName="isWhatsAppGroup"
+                      fxFlexLayoutAlign="end center"
+                      (change)="toggleWhatsappGroup(isGroup)">
+                    </mat-checkbox>
+                  </div>
+                </div>
+
+                <div class="person padding">
+                  <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="end end">
+                    <label>Email</label>
+                    <mat-checkbox formControlName="isEmail" fxFlexLayoutAlign="end center" (change)="toggleEmail(isEmail)">
+                    </mat-checkbox>
+                  </div>
+                </div>
+              </div>
+            </fury-card-content>
+          </fury-card>
+        </div>
+        <div fxFlex="80%">
+          <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+            <fury-card-content fxLayout="column">
+              <div class="result" fxLayout="column">
+                <div class="person">
+                  <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="end end">
+                    <mat-form-field fxFlex>
+                      <mat-label>Mobile</mat-label>
+                      <input type="number" formControlName="sMSMobileNumber" maxlength="100" matInput/>
+                      <mat-hint *ngIf="isSms || isWhatsapp">Please enter Mobile Number.</mat-hint> 
+                      <app-show-errors [ctrl]="form?.get('sMSMobileNumber')"></app-show-errors>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="person">
+                  <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="30px" fxLayoutAlign="end end">
+                    <mat-form-field fxFlex>
+                      <mat-label>Group Name</mat-label>
+                      <input type="text" formControlName="whatsAppGroupName" maxlength="200" matInput/>
+                      <mat-hint *ngIf="isGroup">Please enter Group Name.</mat-hint> 
+                      <app-show-errors
+                        [ctrl]="form?.get('whatsAppGroupName')"
+                      ></app-show-errors>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex>
+                      <mat-label>Group Admin Number</mat-label>
+                      <input type="number" formControlName="whatsAppGroupAdminNumber" maxlength="200" matInput/>
+                      <mat-hint *ngIf="isGroup">Please enter Group Admin Number.</mat-hint> 
+                      <app-show-errors [ctrl]="form?.get('whatsAppGroupAdminNumber')"></app-show-errors>
+                    </mat-form-field>
+                  </div>
+                </div>
+
+                <div class="person">
+                  <div fxLayout="column" fxLayout.gt-sm="row">
+                    <mat-form-field fxFlex>
+                      <mat-label>Email</mat-label>
+                      <input type="text" formControlName="emailId" maxlength="100" matInput/>
+                      <mat-hint *ngIf="isEmail">Please enter Email Id.</mat-hint> 
+                    </mat-form-field>
+                  </div>
+                </div>
+              </div>
+            </fury-card-content>
+          </fury-card>
+        </div>
+      </div>
+    </fury-page-layout-content> -->
+
+    <fury-page-layout-content fxLayout="column" class="card-width" style="margin-top: 20px;">
+      <fury-card-content [@fadeInUp]>
+        <fury-list name="View Alarm Settings" (filterChange)="onFilterChange($event)">
+          <table [dataSource]="dataSource" mat-table matSort align="center">
+
+            <ng-container *ngFor="let column of displayedColumns">
+              <ng-container *ngIf="column.isModelProperty" [matColumnDef]="column.property">
+                <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.name }}</th>
+                <td *matCellDef="let row" mat-cell>
+                  {{ row[column.property] }}
+                </td>
+              </ng-container>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+              <th *matHeaderCellDef class="actions-cell" mat-header-cell mat-sort-header></th>
+              <td *matCellDef="let row" class="actions-cell" mat-cell>
+                <button type="button" mat-icon-button [matMenuTriggerFor]="actionsMenu"
+                  (click)="$event.stopPropagation()">
+                  <mat-icon>more_horiz</mat-icon>
+                </button>
+
+                <mat-menu #actionsMenu="matMenu" yPosition="below" xPosition="before">
+                  <button (click)="deleteAlertSetting(row)" mat-menu-item>
+                    <span>Delete</span>
+                  </button>
+                </mat-menu>
+              </td>
+            </ng-container>
+
+            <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+            <tr *matRowDef="let row; columns: visibleColumns;" class="clickable route-animations-elements" mat-row></tr>
+
+          </table>
+          <mat-paginator class="paginator" [pageSize]="pageSize"></mat-paginator>
+        </fury-list>
+      </fury-card-content>
+    </fury-page-layout-content>
+  <!-- </div> -->
+</fury-page-layout>

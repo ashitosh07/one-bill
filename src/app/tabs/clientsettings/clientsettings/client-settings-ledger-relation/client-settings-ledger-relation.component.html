@@ -1,0 +1,87 @@
+<div class="content" [formGroup]="ledgerSettings" fxLayout="column" fxLayoutGap="8px">
+
+   <div fxLayout="row" fxLayoutGap="8px">
+
+    <mat-form-field fxFlex="auto">
+        <mat-label>Group</mat-label>
+        <mat-select formControlName="groupId" (selectionChange)="onChangeGroupId($event)"
+            [(ngModel)]="groupId" >
+            <mat-option *ngFor="let option of lstGroup" [value]="option.groupId">
+                {{ option.groupName }}
+            </mat-option>
+        </mat-select>
+        <mat-hint>This will be Group Id.</mat-hint>
+        <mat-error *ngIf="ledgerSettings.invalid">Group Id is required.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="auto">
+        <mat-label>Ledger</mat-label>
+        <mat-select formControlName="ledgerId" (selectionChange)="onChangeLedgerId($event)"
+            [(ngModel)]="ledgerId" >
+            <mat-option *ngFor="let option of lstGroupandLedger" [value]="option.ledgerId">
+                {{ option.ledgerName }}
+            </mat-option>
+        </mat-select>
+        <mat-hint>This will be Ledger Id.</mat-hint>
+        <mat-error *ngIf="ledgerSettings.invalid">Ledger Id is required.</mat-error>
+    </mat-form-field>
+  
+    <button  mat-button color="primary"
+    [disabled]="groupName === '' || 
+    ledgerName === '' "
+    (click)="saveLedger()">CREATE LEDGER RELATION</button>
+
+   </div> 
+ 
+   <div class="example-container" fxLayout="row" [ngStyle]="{display:blnShow}">
+    <table [dataSource]="ledgerDataSource" mat-table matSort>
+
+        <!-- Image Column -->
+        <ng-container matColumnDef="image">
+          <th *matHeaderCellDef class="image-cell" mat-header-cell></th>
+          <td *matCellDef="let row" class="image-cell" mat-cell>
+            <img src="http://i.pravatar.cc/30?u={{ row.name }}">
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="delete">
+          <th>Delete</th>
+          <td *matCellDef="let row" class="actions-cell" mat-cell>
+            <mat-icon>more_horiz</mat-icon>
+          </td>
+        </ng-container>
+
+        <!-- fullName Column -->
+        <ng-container *ngFor="let column of ledgerColumns">
+          <ng-container *ngIf="column.isModelProperty" [matColumnDef]="column.property">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.name }}</th>
+            <td *matCellDef="let row" mat-cell>
+              {{ row[column.property] }}
+            </td>
+          </ng-container>
+        </ng-container>
+        
+
+        <!-- actions Column -->
+        <ng-container matColumnDef="actions">
+          <th *matHeaderCellDef class="actions-cell" mat-header-cell>Delete</th>
+          <td *matCellDef="let row;" class="actions-cell" mat-cell (click)="deleteLedger(row)">
+            <mat-icon class="deleteIcon">delete</mat-icon>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="modify">
+          <th *matHeaderCellDef class="actions-cell" mat-header-cell>Modify</th>
+          <td *matCellDef="let row" class="actions-cell" mat-cell (click)="modifyLedger(row)">
+            <mat-icon class="modifyIcon">edit</mat-icon>
+          </td>
+        </ng-container>
+        
+        <tr *matHeaderRowDef="ledgerVisibleColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: ledgerVisibleColumns;" class="clickable route-animations-elements" mat-row>
+        </tr>
+        
+      </table>
+   </div>
+
+</div>

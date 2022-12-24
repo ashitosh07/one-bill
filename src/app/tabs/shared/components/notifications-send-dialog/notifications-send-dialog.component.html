@@ -1,0 +1,38 @@
+<h4 mat-dialog-title>
+    <mat-toolbar role="toolbar" class="task-header">
+        <span>Send Notifications</span>
+        <span class="fx-spacer"></span>
+        <button mat-icon-button (click)="close()">
+            <mat-icon title="Close" mat-list-icon>close</mat-icon>
+        </button>
+    </mat-toolbar>
+</h4>
+
+<mat-dialog-content class="mat-dlg-content">
+    <!-- <fury-card>
+            <fury-card-content class="padding-top"> -->
+    <div fxLayout="column" class="content">
+        <mat-form-field class="result" color="primary">
+            <mat-label>Select Template</mat-label>
+            <mat-select id="template" name="template" (selectionChange)="onChangeTemplate($event.value)"
+                [(value)]="notificationType">
+                <mat-option *ngFor="let option of options" [value]="option.notificationType">
+                    {{ option.notificationType }}
+                </mat-option>
+            </mat-select>
+            <mat-hint>Please select a template</mat-hint>
+        </mat-form-field>
+    </div>
+    <!-- </fury-card-content>
+        </fury-card> -->
+</mat-dialog-content>
+{{this.notificationLabel}}
+<mat-dialog-content>
+
+</mat-dialog-content>
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button mat-button (click)="send(false)">Resend</button>
+    <button mat-button (click)="send(true)">Send</button>
+    <!-- <button mat-button class="buttonStyle" [disabled]="true">Preview</button>
+    <button mat-button class="buttonStyle" [disabled]="true">Logs</button> -->
+</mat-dialog-actions>

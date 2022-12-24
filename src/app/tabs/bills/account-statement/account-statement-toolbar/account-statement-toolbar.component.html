@@ -1,0 +1,60 @@
+
+<mat-dialog-content>
+    <div class="person padding-bottom">
+        <form [formGroup]="form">
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="8px" style="padding-bottom: 20px;" *ngIf="tenantId == 0">
+                <mat-checkbox class="formulaLabel" color="primary" formControlName="movedOutTenant"
+                  (change)="showMovedOutTenants(isMovedOutTenant)">
+                  Show only Moved Out Tenants
+                </mat-checkbox>
+            </div>
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="8px">
+
+                <mat-form-field class="result" color="primary">
+                    <mat-label>From Date</mat-label>
+                    <input (click)="formDatepickerRef1.open()" id="fromDate" name="fromDate" formControlName="fromDate" [(ngModel)]="fromDate"
+                        (focus)="formDatepickerRef1.open()" [matDatepicker]="formDatepickerRef1" matInput readonly>
+                    <mat-datepicker-toggle [for]="formDatepickerRef1" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #formDatepickerRef1></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field class="result" color="primary">
+                    <mat-label>To Date</mat-label>
+                    <input (click)="formDatepickerRef2.open()" id="toDate" name="toDate" formControlName="toDate" [(ngModel)]="toDate"
+                        (focus)="formDatepickerRef2.open()" [matDatepicker]="formDatepickerRef2" matInput readonly>
+                    <mat-datepicker-toggle [for]="formDatepickerRef2" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #formDatepickerRef2></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field class="result" color="primary" style="width: 400px;" *ngIf="ownerId == 0">
+                    <mat-label>Tenant Name</mat-label>
+                    
+                    <!-- <input type="text" [matAutocomplete]="tenant" [(ngModel)]="tenantName" id="TenantName" name="TenantName" matInput
+                        (input)="filterTenant($event.target.value)">
+                    <mat-autocomplete #tenant="matAutocomplete" (optionSelected)="selectTenant($event)">
+                        <mat-option *ngFor="let tenant of filteredTenants; index as i" [value]="tenant.ownerName">
+                            {{ tenant.ownerName }}
+                        </mat-option>
+                    </mat-autocomplete> -->
+                    
+                    <mat-select [(ngModel)]="selectedTenants" multiple formControlName="tenant">         
+                        <input class="myInput" #myInput matInput focused="'true'" type="text" (keydown)="handleInput($event)" 
+                            (keyup)="searchTenant($event.target.value)" autocomplete="off" placeholder="search">
+                        <mat-divider></mat-divider>                       
+                        <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">Select All</mat-option>
+                        <mat-option *ngFor="let tenant of filteredTenants" [optionSelected]="tenant.selected" [value]="tenant.id" (click)="togglePerOne(allSelected.viewValue)"> {{tenant.ownerName}}
+                        </mat-option>                                
+                    </mat-select>
+
+                    <mat-hint>Please select a tenant name</mat-hint>
+                </mat-form-field>
+
+                <div class="fury-flex-form-field">
+                    <button (click)="onSearch()" mat-icon-button>
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</mat-dialog-content>

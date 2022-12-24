@@ -1,0 +1,212 @@
+@import "var";
+
+table {
+  width: 100%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: #777;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.example-element-diagram {
+  min-width: 80px;
+  border: 2px solid black;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: 104px;
+}
+
+.example-element-symbol {
+  font-weight: bold;
+  font-size: 40px;
+  line-height: normal;
+}
+
+.example-element-description {
+  padding: 16px;
+}
+
+.example-element-description-attribution {
+  opacity: 0.5;
+}
+
+.inner-table {
+  width: 100%;
+}
+
+.inner-table mat-form-field {
+  margin-top: 15px;
+  width: 100%;
+}
+
+.mat-column-Number {
+  text-align: right;
+  justify-content: flex-end;
+}
+
+.fury-list-table {
+  display: flex;
+  flex-direction: column;
+
+  .fury-list-header {
+    padding-left: $spacing;
+    padding-right: $spacing;
+    height: $card-header-height;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+
+    @include media-xs {
+      height: auto;
+      padding-top: $spacing;
+      padding-bottom: $spacing;
+    }
+
+    .fury-list-name {
+      font-size: 20px;
+      line-height: 32px;
+      font-weight: 500;
+      padding-right: $spacing;
+
+      @include media-xs {
+        border-right: none;
+      }
+    }
+
+    .fury-filter-input {
+      font-size: 16px;
+      line-height: 1.125;
+      border: none;
+      height: 32px;
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    .fury-filter-input-icon {
+      width: 1.2em;
+      vertical-align: bottom;
+      height: 22px;
+      font-size: 22px;
+      margin-right: $padding-xs;
+    }
+  }
+
+  .mat-header-row .mat-header-cell .mat-sort-header-button {
+    text-transform: uppercase;
+  }
+
+  .mat-cell.image-cell, .mat-header-cell.image-cell {
+    flex: 0;
+    width: 35px + $spacing;
+
+    img {
+      border-radius: 50%;
+      height: 35px;
+      width: 35px;
+      margin-right: $spacing;
+      vertical-align: middle;
+    }
+  }
+
+  .mat-cell, .mat-header-cell {
+    white-space: nowrap;
+    padding-left: $padding-sm;
+    padding-right: $padding-sm;
+  }
+
+  .mat-cell.actions-cell, .mat-header-cell.actions-cell {
+    flex: 0;
+    width: 40px;
+    overflow: visible;
+  }
+
+  .paginator {
+    display: block;
+  }
+
+  .clickable {
+    cursor: pointer;
+  }
+}
+
+mat-button-toggle {
+  color: white; 
+}
+
+.mat-button-toggle-checked {
+  color: white; 
+}
+
+::ng-deep mat-button-toggle.split-button-1 {
+  background-color: rgb(187, 197, 98);
+}
+
+::ng-deep mat-button-toggle.split-button-2 {
+  background-color: green;
+}
+
+::ng-deep mat-button-toggle.drop-down-button {
+  margin-left: 1px;
+}
+
+// .approved-row {
+//   background-color: rgb(152, 197, 171);
+// }
+
+// .rejected-row {
+//   background-color: rgb(206, 120, 152);
+// }
+
+// .unpaid-row {
+//   background-color: rgb(219, 178, 134);
+// }
+
+// .fine-row {
+//   background-color: rgb(240, 226, 105);
+// }
+
+// .penalty-row {
+//   background-color: rgb(117, 227, 241);
+// }
+
+.full-row {
+  background-color: rgb(152, 197, 171);
+}
+
+.partial-row {
+  background-color: rgb(206, 120, 152);
+}
+
+.succeed-row {
+  background-color: rgb(152, 197, 171);
+}
+
+.failed-row {
+  background-color: rgb(206, 120, 152);
+}
+
+td  {
+  white-space: unset !important;
+  word-wrap: break-word !important;
+  overflow-wrap: break-word;
+  max-width: 300px;
+}

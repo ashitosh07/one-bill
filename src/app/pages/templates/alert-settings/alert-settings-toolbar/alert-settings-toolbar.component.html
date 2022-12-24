@@ -1,0 +1,65 @@
+<mat-dialog-content>
+    <div class="person">
+        <form>
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px">
+
+                <mat-form-field class="result" color="primary">
+                    <mat-label>Notification Category</mat-label>
+                    <mat-select [(ngModel)]="notificationCategory" name="notificationCategory"
+                    id="notificationCategoryId" (selectionChange)="onNotificationCategoryChange()">
+                      <mat-option value="0">--Select--</mat-option>
+                      <mat-option *ngFor="let item of lstNotificationCategory;" [value]="item.id" >{{item.description}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+
+                <mat-form-field class="result" color="primary">
+                    <mat-label>Notification Type</mat-label>
+                    <mat-select id="notification_type" name="notification_type"
+                        (selectionChange)="onNotificationTypeChange($event.value)" [(value)]="notificationTypeId">
+                        <mat-option value="0">--Select--</mat-option>
+                        <mat-option *ngFor="let option of lstTemplateType" [value]="option.id">{{ option.description }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="result" color="primary">
+                    <mat-label>Notification Mode</mat-label>
+                    <mat-select #notificationSelect [(ngModel)]="selectedModes" multiple id="notification_mode"
+                        name="notification_mode" (selectionChange)="onChangeNotificationMode($event.value)">
+                        <mat-option #notificationModeAllSelectOption (click)="toggleAllModeSelection()" [value]="0">
+                            Select All</mat-option>
+                        <mat-option *ngFor="let option of notificationModes" [optionSelected]="option.selected"
+                            [value]="option.value" (click)="togglePerOne(notificationModeAllSelectOption.viewValue)"> {{option.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <!-- <mat-form-field class="result" color="primary">
+                    <mat-label>Clients</mat-label>
+                    <mat-select #clientSelect [(ngModel)]="selectedClients" multiple id="client_select"
+                        name="client_select" (selectionChange)="onChangeClients($event.value)">
+                        <input class="myInput" #myInput matInput focused="'true'" type="text"
+                            (keyup)="search($event.target.value)" autocomplete="off" placeholder="search">
+                        <mat-divider></mat-divider>
+                        <mat-option #clientAllSelectOption (click)=" toggleAllClientSelection()" [value]="0">Select All
+                        </mat-option>
+                        <mat-option *ngFor="let client of clients" [optionSelected]="client.selected"
+                            [value]="client.value"> {{client.label}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-checkbox id="isImmediate" name="isImmediate" class="result" [(ngModel)]="isImmediate"
+                    (change)="onChangeImmediate($event)">
+                    <label>Immediate</label>
+                </mat-checkbox>
+
+                <mat-form-field class="result" color="primary">
+                    <mat-label>Days</mat-label>
+                    <input type="text" id="days" name="days" [(ngModel)]="days" matInput>
+                    <mat-hint>This will be days.</mat-hint>
+                </mat-form-field> -->
+            </div>
+        </form>
+    </div>
+</mat-dialog-content>

@@ -1,0 +1,42 @@
+<fury-card-header class="removePadding">
+    <mat-toolbar color="primary">
+        <img class="img-style" src="assets/img/fav-icon.png">
+        <span>Credit Note</span>
+        <span class="toolbar-spacer"></span>
+        <div class="fury-flex-form-field">
+            <button [disabled]="disableSave || (viewMode==='View')" matTooltip="Save" (click)="onSave()" mat-icon-button
+                class="example-icon" aria-label="Example icon-button with menu icon">
+                <mat-icon>save</mat-icon>
+            </button>
+        </div>
+    </mat-toolbar>
+</fury-card-header>
+<div class="topPadding"></div>
+<fury-page-layout-content [fxLayoutGap]="gap" fxLayout="column" class="removePadding">
+    <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+        fxLayoutAlign.gt-sm="start stretch">
+        <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+            <fury-card-content fxLayout="column" class="removePadding">
+                <div class="result divScroll" fxLayout="column">
+                    <app-table-structure [tableData]="creditNoteTransactions" [columns]="columns"
+                        (changedRow)="onChangedRow()">
+                    </app-table-structure>
+                </div>
+            </fury-card-content>
+        </fury-card>
+    </div>
+</fury-page-layout-content>
+<div class="person padding-top" fxLayout.gt-sm="row" fxLayout="column" fxLayoutAlign="end center"
+    fxLayoutGap.gt-sm="12px">
+    <mat-form-field class="result" color="primary">
+        <mat-label>Account Head Amount</mat-label>
+        <input type="text" id="accountHeadAmount" name="accountHeadAmount" style="text-align: right;" readonly
+            [(ngModel)]="accountHeadAmount" matInput>
+    </mat-form-field>
+
+    <mat-form-field class="result" color="primary" style="padding-top:10px">
+        <mat-label>Credit Note Amount</mat-label>
+        <input type="text" id="creditNoteAmount" name="creditNoteAmount" style="text-align: right;" readonly
+            [(ngModel)]="creditNoteAmount" matInput>
+    </mat-form-field>
+</div>

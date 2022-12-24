@@ -1,0 +1,6 @@
+<div *ngIf="shouldShowErrors()">
+    <small *ngFor="let error of listOfErrors()">
+        {{error}}
+        <br/>
+    </small>
+</div>

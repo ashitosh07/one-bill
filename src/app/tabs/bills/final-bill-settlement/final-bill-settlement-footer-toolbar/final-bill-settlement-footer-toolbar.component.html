@@ -1,0 +1,15 @@
+<mat-dialog-content>
+  <div class="person">
+    <form>
+      <button matTooltip="Save" [disabled]="isDisabled" (click)="onSave()" mat-icon-button class="example-icon"
+        aria-label="Example icon-button with menu icon">
+        <mat-icon>save</mat-icon>
+      </button>
+
+      <button matTooltip="Print" [disabled]="isPrintDisable" (click)="onPrint()" mat-icon-button class="example-icon"
+        aria-label="Example icon-button with menu icon">
+        <mat-icon>print</mat-icon>
+      </button>
+    </form>
+  </div>
+</mat-dialog-content>

@@ -1,0 +1,53 @@
+<div fxLayout="column" style="padding: 27px;">
+
+  <div class="loading-indicator" *ngIf="showSpinner">
+    <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
+  </div>
+
+  <mat-toolbar color="primary" fxLayout="row" fxLayout.xs="column" class="position-fixed">
+    <img class="img-style" src="assets/img/fav-icon.png" [fxHide.xs]="true">
+    <span fxLayout="row" fxLayout.xs="column">Parameter Chart </span>
+  </mat-toolbar>
+
+  <mat-card fxLayout="column" class="padding-top">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="2%" style="width: 60%;">
+
+      <mat-form-field>
+        <mat-select [(ngModel)]="meterTypeName" name="meterType" id="meterTypeId" placeholder="Select a Meter Type"
+          (selectionChange)="onMeterTypeChange($event)">
+          <mat-option *ngFor="let item of meterTypes;" [value]="item.description">{{item.description}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-select id="meterId" (selectionChange)="onMeterChange($event)" placeholder="Select a Meter">
+          <input class="myInput" #myInput matInput focused="'true'" type="text" (keyup)="search($event.target.value)"
+            autocomplete="off" placeholder="search">
+          <mat-divider></mat-divider>
+          <mat-option *ngFor="let item of meters;" [value]="item.id">{{item.deviceName}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-select id="parameterId" (selectionChange)="onParameterChange($event)" placeholder="Select a Parameter">
+          <mat-option *ngFor="let parameter of parameters;" [value]="parameter.id">
+            {{ parameter.description }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput [matDatepicker]="fromDat" [(ngModel)]="fromDate" placeholder="Date">
+        <mat-datepicker-toggle matSuffix [for]="fromDat"></mat-datepicker-toggle>
+        <mat-datepicker #fromDat></mat-datepicker>
+      </mat-form-field>
+
+      <button color="primary" style="align-content: center;text-align: center !important;" mat-raised-button class="common-buttons" (click)="viewParameterChart()">APPLY</button>
+
+    </div>
+  </mat-card>
+
+  <mat-card fxLayout="row" fxLayoutGap="10%">
+    <div id="pccontainer"></div>
+  </mat-card>
+
+</div>

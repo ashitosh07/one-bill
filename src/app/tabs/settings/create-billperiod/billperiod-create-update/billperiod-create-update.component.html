@@ -1,0 +1,81 @@
+<div mat-dialog-title>
+  <mat-toolbar role="toolbar" class="task-header">
+    <span>Bill Period</span>
+    <span class="fx-spacer"></span>
+    <button mat-icon-button (click)="close()">
+      <mat-icon title="Close" mat-list-icon>close</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content class="mat-dlg-content">
+    <fury-card>
+      <fury-card-content>
+        <!-- [(ngModel)]="billSettingsName" -->
+        <div class="person">
+          <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+
+            <mat-form-field fxFlex>
+              <mat-label>Bill Settings</mat-label>
+              <input matInput [matAutocomplete]="billSettings" id="billSettingsName" name="billSettingsName"
+                formControlName="billSettingsName" (click)="getBillSettings()">
+              <mat-autocomplete #billSettings="matAutocomplete" (optionSelected)="selectBillSettings($event)">
+                <mat-option *ngFor="let billSettings of filteredBillSettings; index as i"
+                  [value]="billSettings.description">
+                  {{ billSettings.description }}
+                </mat-option>
+              </mat-autocomplete>
+
+              <!-- <app-show-errors [ctrl]="form.get('billSettingsId')"></app-show-errors> -->
+              <mat-hint>Please select a Bill Setting</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <mat-label>Period description</mat-label>
+              <input type="text" id="periodDescription" name="periodDescription" formControlName="periodDescription"
+                matInput>
+              <!-- <app-show-errors [ctrl]="form.get('periodDescription')"></app-show-errors> -->
+              <mat-hint>Please enter Period Description</mat-hint>
+            </mat-form-field>
+
+          </div>
+        </div>
+        <div class="person">
+          <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+
+            <mat-form-field fxFlex>
+              <mat-label>Period Start Date</mat-label>
+              <input (click)="formDatepickerRef.open()" id="fromDate" name="fromDate" (focus)="formDatepickerRef.open()"
+                [matDatepicker]="formDatepickerRef" [(ngModel)]="startDate" matInput formControlName="fromDate">
+                <!-- [ngModelOptions]="{standalone: true}" -->
+              <mat-datepicker-toggle [for]="formDatepickerRef" matSuffix></mat-datepicker-toggle>
+              <mat-datepicker #formDatepickerRef></mat-datepicker>
+              <!-- <app-show-errors [ctrl]="form.get('periodStart')"></app-show-errors> -->
+              <mat-hint>Please select Start Date</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <mat-label>Period End Date</mat-label>
+              <input (click)="formDatepickerRef1.open()" id="endDate" name="endDate" (focus)="formDatepickerRef1.open()" matInput
+                (ngModelChange)="validateDates($event)" [matDatepicker]="formDatepickerRef1" [(ngModel)]="endDate" formControlName="toDate">
+              <mat-datepicker-toggle [for]="formDatepickerRef1" matSuffix></mat-datepicker-toggle>
+              <mat-datepicker #formDatepickerRef1></mat-datepicker>
+              <!-- <app-show-errors [ctrl]="form.get('periodEnd')"></app-show-errors> -->
+              <mat-hint>Please select End Date</mat-hint>
+              <small *ngIf="!isValidDate">Period End date should be greater than Period Start date.</small>
+            </mat-form-field>
+
+          </div>
+        </div>
+
+      </fury-card-content>
+    </fury-card>
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button mat-button (click)="closeDialog()">CANCEL</button>
+    <!-- <button *ngIf="isCreateMode()" mat-button [disabled]="!form.valid">CREATE BILL PERIOD</button>
+  <button *ngIf="isUpdateMode()" mat-button [disabled]="!form.valid">UPDATE BILL PERIOD</button> -->
+    <button [disabled]="!form.valid || !isValidDate" mat-button (click)="save()">SAVE</button>
+  </mat-dialog-actions>
+</form>

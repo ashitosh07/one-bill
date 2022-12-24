@@ -1,0 +1,17 @@
+<fury-page-layout mode="card">
+    <fury-page-layout-header>
+        <fury-breadcrumbs [@fadeInRight] [crumbs]="[]" current="Tariff Settings"></fury-breadcrumbs>
+    </fury-page-layout-header>
+
+    <fury-page-layout-content [@fadeInUp]>
+        <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start stretch">
+            <div class="containerDiv" fxLayout="column">
+                <fury-edit-tariff-settings-details [dataSource]="tariffMasters" (updateRow)="onUpdateRow($event)"
+                    (deleteRow)="onDeleteRow($event)" (addItemClicked)="onAddItem()">
+                </fury-edit-tariff-settings-details>
+            </div>
+        </div>
+    </fury-page-layout-content>
+
+</fury-page-layout>

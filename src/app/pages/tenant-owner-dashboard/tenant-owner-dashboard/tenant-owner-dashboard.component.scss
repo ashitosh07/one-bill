@@ -1,0 +1,196 @@
+
+.heading
+{
+    background: #1976d2;
+    font-size: 17px;
+    height: 0px;
+}
+
+.child-2{
+    background :white;
+    min-height: 50px;
+    border-style: solid;
+    border-width: thin;
+    border-color: #dddddd;
+    align-items: center;
+}
+
+.button-style{
+    // width: 50%;
+    margin-bottom: 5%;
+    // margin-top: -2%;
+    align-self: center;
+    justify-content: center;
+}
+
+.nodata{
+    width: 80%;
+    height: 16%;
+    margin-top: 6%;
+    color: gray;
+    align-self: center;
+    justify-content: center;
+    display: flex;
+}
+
+
+.img-style{
+    width: 32px;
+  }
+
+  .header-row{
+    flex-direction: row;
+    display: flex;
+    // width: 99%; 
+    background-color:rgb(224 238 241);
+    justify-content: center;
+    align-items: center;
+    min-height: 40%;
+  }
+
+  .content{
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 50%;
+    max-width: 100%;
+    //background-color:rgb(224 238 241);
+  }
+
+  .card-data{
+     height: 70%;
+     align-self: stretch;
+  }
+
+  .div-height{
+    min-height: 125px;
+  }
+
+.lastBill
+{
+  font-size: xx-large;
+  vertical-align: middle;
+  margin: 0px;
+  text-align: right;
+  //padding-left: 10%;
+  font-weight: bold;
+  //padding-top: 10px;
+}
+
+.fontSize {
+  font-size: medium;
+  vertical-align: middle;
+  font-weight: bold;
+}
+
+.LastBillTile {  
+  background: rgb(3, 169, 244);//rgb(76, 175, 80);
+  color: rgb(255, 255, 255);  
+  max-width: 100%;
+  min-height: 150px;
+  padding-bottom: 20px;
+}
+
+.Consumption {
+  background: #DC0A59;// #FF6347;
+  color: rgb(255, 255, 255);  
+  max-width: 100%;
+  min-height: 150px;
+  padding-bottom: 40px;
+}
+
+.dues
+{
+  background:#10C8CD;
+  color: white;
+  max-width: 100%;
+  min-height: 150px;
+  padding-bottom: 40px;
+}
+
+.LastPaid
+{
+  background: rgb(63, 81, 181);
+  color: rgb(255, 255, 255);  
+  max-width: 100%;
+  min-height: 150px;
+  padding-bottom: 40px;
+}
+
+.rightAlign {
+  float: right;
+}
+
+.buttons button:hover {
+  color: white;
+  background-color: rgb(158, 159, 163);
+  outline: none;
+}
+
+.buttons button.active {
+  background-color: #0051B4;
+  color: white;
+}
+
+.revbuttons {
+  min-width: 310px;
+  text-align: right;
+  // margin-bottom: 1.5rem;
+  font-size: 0;
+}
+
+.revbuttons button {
+  cursor: pointer;
+  // border: 1px solid silver;
+  border:none;
+  border-radius: 16px;
+  // border-right-width: 0;
+  background-color: #f8f8f8 0% 0% no-repeat padding-box;
+  font-size: 1rem;
+  padding: 0.5rem;
+  outline: none;
+  transition-duration: 0.3s;
+  margin: 4px auto;
+}
+
+.revbuttons button:hover {
+  color: white;
+  background-color: rgb(158, 159, 163);
+  outline: none;
+}
+
+.revbuttons button.active {
+  background-color: #0051B4;
+  color: white;
+}
+
+.toolBar {
+  font-size: x-large;
+  font-weight: bold;
+  line-height: 50px;
+  margin-bottom: 10px !important;
+}
+
+.customMatToolbar {
+  font-weight: 35px;
+  font-size: larger;
+  margin-bottom: 0px !important;
+}
+
+// h6 > div {
+//   color: #40407a !important;
+// }
+
+.mat-button-toggle-group {
+  height: 45px;
+}
+
+.mat-button-toggle {
+  width: 100px;
+}
+
+.mat-button-toggle-checked {
+  background-color:#0051B4;
+  color: white !important;
+}

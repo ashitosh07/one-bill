@@ -1,0 +1,40 @@
+    <div  *ngIf="lstNews.length>0" flexLayout="column" fxLayoutGap="2%" class="div-news">
+    <!-- <mat-card flexLayout="row" class="heading"> -->
+      <!-- <div style="margin-top: -10px;color: white;"><b>Announcement</b></div> -->
+      <!-- <mat-toolbar color="primary" fxLayout="row" fxLayout.xs="column" style="margin:0px"> -->
+        <!-- <div mat-dialog-title>Announcements</div> -->
+      <!-- </mat-toolbar> -->
+      <h6 class="customMatToolbar" >
+        <div mat-dialog-title>Announcements</div>
+    </h6>
+    <!-- </mat-card>  -->
+
+    <div flexLayout="row" style="min-height:20px"></div>
+
+    <div class="scrollit" flexLayout="row">
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let item of lstNews;let i=index" id='divId' class="child-2" (opened)="panelOpenState[i] = true" (closed)="panelOpenState[i]  = false">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              <h5>
+                <b>
+                  <label *ngIf="item.title.length>135">
+                  <label  *ngIf="panelOpenState[i]"> {{item.title}} </label> 
+                  <label *ngIf="!panelOpenState[i]">{{item.title|slice:0:135 }} ...</label>
+                </label>
+                <label *ngIf="item.title.length<=135"> {{item.title}} </label>
+                <label *ngIf="!item.title">-------</label>   
+                </b> 
+              </h5>       
+            </mat-panel-title>
+  
+          </mat-expansion-panel-header>
+          <label> 
+            {{item.content}}
+            </label>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+  </div>
+  
+  </div>

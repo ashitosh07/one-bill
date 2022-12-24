@@ -1,0 +1,57 @@
+<div mat-dialog-title>
+    <mat-toolbar role="toolbar" class="task-header">
+      <span>Announcement</span>
+      <span class="fx-spacer"></span>
+      <button mat-icon-button (click)="close()">
+          <mat-icon title="Close" mat-list-icon>close</mat-icon>
+      </button>
+    </mat-toolbar>
+  </div>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+    <mat-dialog-content>
+        <fury-card>
+            <fury-card-content class="padding-top">
+                <div class="person">
+                    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px">
+                        <mat-form-field fxFlex>
+                            <mat-label>Title</mat-label>
+                            <input type="text" formControlName="title" matInput required>
+                            <mat-hint>This will be Title.</mat-hint>
+                            <app-show-errors [ctrl]="form.get('title')"></app-show-errors>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlex>
+                            <mat-label>Valid Till</mat-label>
+                            <input (click)="formDatepickerRef.open()" (focus)="formDatepickerRef.open()" [min]="minDate" [matDatepicker]="formDatepickerRef" formControlName="validTill" matInput required >
+                            <mat-datepicker-toggle [for]="formDatepickerRef" matSuffix></mat-datepicker-toggle>
+                             <mat-datepicker #formDatepickerRef></mat-datepicker>
+                            <mat-hint>Please enter valid till date.</mat-hint>
+                            <app-show-errors [ctrl]="form.get('validTill')"></app-show-errors>
+                            <small *ngIf="!validateDates()">Valid Till should not be a past date.</small>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlex>
+                            <mat-label>Clients</mat-label>
+                            <mat-select [(ngModel)]="selectedClients" multiple formControlName="clientSelect">                                
+                                <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">Select All</mat-option>
+                                <mat-option *ngFor="let client of clients" [optionSelected]="client.selected" [value]="client.value" (click)="togglePerOne(allSelected.viewValue)"> {{client.label}}
+                                </mat-option>                                
+                            </mat-select>
+                            <mat-hint>Please select clients.</mat-hint>
+                            <app-show-errors [ctrl]="form.get('clientSelect')"></app-show-errors>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div fxLayout="row" class="padding-top"> 
+                    <textarea class="textId" maxlength="​160" #textId rows="10" cols="100" formControlName="content" placeholder="Enter text here...."></textarea>
+                </div>
+            </fury-card-content>
+        </fury-card> 
+    </mat-dialog-content>
+    <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button (click)="closeDialog()">CANCEL</button>
+        <button *ngIf="isCreateMode()" mat-button [disabled]="!form.valid || !validateDates()">CREATE ANNOUNCEMENT</button>
+        <button *ngIf="isUpdateMode()" mat-button [disabled]="!form.valid || !validateDates()">UPDATE ANNOUNCEMENT</button>
+    </mat-dialog-actions>
+</form>

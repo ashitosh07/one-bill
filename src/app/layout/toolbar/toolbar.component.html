@@ -1,0 +1,52 @@
+<div class="toolbar" fxLayout="row" fxLayoutAlign="space-between">
+  <div fxLayout="row" fxLayoutAlign="start center" fxFlex.xs="30%">
+    <fury-toolbar-sidenav-mobile-toggle (openSidenav)="openSidenav.emit()"></fury-toolbar-sidenav-mobile-toggle>
+
+    <div [fxShow.gt-sm]="topNavigation$ | async" [fxShow.xs]="false" [routerLink]="['/']" fxShow>
+      <img src="../../../assets/img/logo_dark.png" alt="" height="60px">
+      <title>Logo</title>
+    </div>
+
+    <!-- <fury-toolbar-search-bar fxFlex="300px" fxHide fxShow.gt-md></fury-toolbar-search-bar> -->
+    <!-- <fury-toolbar-quickpanel-toggle (openQuickPanel)="openQuickPanel.emit()"
+                                    class="toolbar-button" fxHide fxShow.gt-md></fury-toolbar-quickpanel-toggle> -->
+
+    <div>
+      <mat-form-field color=primary fxFlex.xs="60%" *ngIf="role != 'External' && visible == true">
+        <!-- <mat-label>{{ selected}}</mat-label>    fxFlex.sm="60%"-->
+        <mat-select disableOptionCentering panelClass="matOptionMarginSettings" [(ngModel)]="selected">
+          <!-- (ngModelChange)="onClientSelect($event)" -->
+
+          <mat-option *ngFor="let client of userClients; index as i" [value]="client.clientId">
+            <!-- <button class="button" mat-button>
+              {{client.clientName}}
+            </button>  -->
+            <button class="button buttonStyle" (click)="onClientSelect(client.clientId)" mat-button>
+              {{client.clientName}}
+            </button>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+
+  </div>
+
+
+
+  <div fxLayout="row">
+
+    <fury-toolbar-fullscreen-toggle class="toolbar-button"></fury-toolbar-fullscreen-toggle>
+
+    <!-- <fury-toolbar-search fxHide fxShow.gt-sm fxHide.gt-md class="toolbar-button"></fury-toolbar-search> -->
+
+    <fury-toolbar-notifications class="toolbar-button" *ngIf="ownerId == 0"></fury-toolbar-notifications>
+
+    <fury-toolbar-user class="toolbar-button"></fury-toolbar-user>
+    <!-- && role != 'Ems' -->
+    <fury-toolbar-quickpanel-main-toggle *ngIf="ownerId == 0 && hideQuickFilter == false"
+      (openQuickPanel)="openQuickPanel.emit()" class="toolbar-button"></fury-toolbar-quickpanel-main-toggle>
+    <!--  fxHide fxShow.gt-md width="200px"-->
+
+  </div>
+</div>

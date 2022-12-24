@@ -1,0 +1,115 @@
+<mat-dialog-content>
+    <div class="person">
+        <form>
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="end end" fxLayoutGap.gt-sm="24px">
+
+                <div class="fury-flex-form-field"
+                    *ngIf="parameterValue && (ownerId == 0 && !isApproveBills && !isRejectedBills)">
+                    <button matTooltip="Notifications" mat-icon-button class="material-icons"
+                        (click)="onSendNotifications()">
+                        <mat-icon>textsms</mat-icon>
+                    </button>
+                </div>
+                <!-- <div class="fury-flex-form-field" *ngIf="role!='External'">
+
+                    <mat-button-toggle-group>
+                        <mat-button-toggle class="example-icon favorite-icon">
+                            <button [disabled]="!(billType ==='Approved')" matTooltip="Email" mat-icon-button
+                                class="example-icon favorite-icon">
+                                <mat-icon>email</mat-icon>
+                            </button>
+                        </mat-button-toggle>
+                        <mat-button-toggle class="split-button-1 drop-down-button"
+                            [matMenuTriggerFor]="dropdownMenuOne">
+                            <mat-icon>arrow_drop_down</mat-icon>
+                        </mat-button-toggle>
+                    </mat-button-toggle-group>
+
+                    <mat-menu #dropdownMenuOne="matMenu">
+                        <div mat-menu-item>
+                            <button [disabled]="!(billType ==='Approved')" matTooltip="Email" mat-icon-button
+                                class="example-icon favorite-icon" (click)="onSendInvoice('Invoice')">
+                                Send Invoice
+                            </button>
+                        </div>
+                        <div mat-menu-item>
+                            <button mat-icon-button matTooltip="Payment Reminder1" class="material-icons"
+                                (click)="onSendInvoice('Payment Reminder1')">
+                                Reminder1
+                            </button>
+                        </div>
+                        <div mat-menu-item>
+                            <button mat-icon-button matTooltip="Payment Reminder2" class="material-icons"
+                                (click)="onSendInvoice('Payment Reminder2')">
+                                Reminder2
+                            </button>
+                        </div>
+                        <div mat-menu-item>
+                            <button mat-icon-button matTooltip="Final Payment Reminder" class="material-icons"
+                                (click)="onSendInvoice('Final Payment Reminder')">
+                                Final Reminder
+                            </button>
+                        </div>
+                        <div mat-menu-item>
+                            <button mat-icon-button matTooltip="Penalty Notice" class="material-icons"
+                                (click)="onSendInvoice('Penalty Notice')">
+                                Penalty Notice
+                            </button>
+                        </div>
+                    </mat-menu>
+                </div> -->
+
+                <div class="fury-flex-form-field">
+                    <button matTooltip="Print" mat-icon-button class="example-icon" *ngIf="ownerId == 0"
+                        (click)="onPrint()">
+                        <mat-icon>print</mat-icon>
+                    </button>
+                </div>
+
+                <div class="fury-flex-form-field" *ngIf="ownerId == 0 && !isApproveBills && !isRejectedBills">
+                    <button matTooltip="Summary" mat-icon-button class="material-icons"
+                        (click)="onPrintSummary('Normal')">
+                        <mat-icon>assignment</mat-icon>
+                    </button>
+                </div>
+
+                <!-- <div class="fury-flex-form-field" *ngIf="role!='External' && !isApproveBills &&  !isRejectedBills">
+                    <button matTooltip="Details Summary" mat-icon-button class="material-icons"
+                        (click)="onPrintSummary('Extended')">
+                        <mat-icon>receipt</mat-icon>
+                    </button>
+                </div> -->
+
+                <div class="fury-flex-form-field" *ngIf="ownerId == 0 && isApproveBills && !isRejectedBills">
+                    <button [disabled]="!showAprrovedButton" matTooltip="Approve" mat-icon-button class="material-icons"
+                        (click)="onApprove()">
+                        <mat-icon>verified_user</mat-icon>
+                    </button>
+                </div>
+
+                <div class="fury-flex-form-field" *ngIf="ownerId == 0 && !isApproveBills && isRejectedBills">
+                    <button matTooltip="Regenerate" mat-icon-button class="material-icons" (click)="onRegenerate()"
+                        [disabled]="disable">
+                        <mat-icon>build</mat-icon>
+                    </button>
+                </div>
+
+                <div class="fury-flex-form-field" *ngIf="ownerId == 0 && !isRejectedBills">
+                    <button matTooltip="Export" (click)="onExcelExport()" mat-icon-button class="example-icon"
+                        aria-label="Example icon-button with menu icon">
+                        <mat-icon>import_export</mat-icon>
+                    </button>
+                </div>
+
+
+                <div class="fury-flex-form-field" *ngIf="ownerId == 0 && !isRejectedBills">
+                    <button matTooltip="Detailed Bill Summary" (click)="onBillConsumptionExcelExport()" mat-icon-button
+                        class="example-icon" aria-label="Example icon-button with menu icon">
+                        <mat-icon>table_chart</mat-icon>
+                    </button>
+                </div>
+
+            </div>
+        </form>
+    </div>
+</mat-dialog-content>

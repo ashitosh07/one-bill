@@ -1,0 +1,10 @@
+<mat-dialog-content>
+    <div class="person">
+        <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="1px">
+            <div class="fury-flex-form-field">
+                <app-table-structure [tableData]="outStandingBills" [columns]="columns"
+                    (selectedRows)="onSelectedRows($event)"></app-table-structure>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>

@@ -1,0 +1,237 @@
+{
+  "owners": [
+    {
+      "id": 101,
+      "ownerName": "",
+      "startDate": "",
+      "dob": "2020-10-25",
+      "title": "Ms",
+      "titleId": 2,
+      "firstName": "test one update",
+      "lastName": "user one update",
+      "mobileNumber": "123456789",
+      "emailAddress": "testone@mail.comupdate",
+      "accountNumber": "123456789",
+      "companyName": "company one update",
+      "addresses": [
+        {
+          "address1": "current address one line 1 update",
+          "address2": "current address one line 2 update",
+          "city": "current city one update",
+          "postalCode": "123456",
+          "countryId": 1,
+          "country": "India",
+          "addressType": "Current Address",
+          "addressTypeId": 1
+        },
+        {
+          "address1": "permanent address one line 1 update",
+          "address2": "permanent address one line 2 update",
+          "city": "permanent city one update",
+          "postalCode": "123456",
+          "countryId": 1,
+          "country": "India",
+          "addressType": "Permanent Address",
+          "addressTypeId": 2
+        }
+      ],
+      "bankDetails": [
+        {
+          "bankId": "",
+          "bankName": "test bank one update",
+          "accountName": "test user one update",
+          "accountNo": "123456789",
+          "swiftCode": "123456",
+          "ibanNumber": "123456",
+          "bankAddress": "branch one update",
+          "entityId": "",
+          "entityType": ""
+        }
+      ],
+      "documents": [
+        {
+          "path": "Owner_Tenant.pdf",
+          "documentTypeId": 1,
+          "documentType": "voterId"
+        }
+      ]
+    },
+    {
+      "id": 102,
+      "ownerName": "",
+      "startDate": "",
+      "dob": "2020-10-14",
+      "title": "Mrs",
+      "titleId": 3,
+      "firstName": "test two",
+      "lastName": "user",
+      "mobileNumber": "987654321",
+      "emailAddress": "testtwo@mail.com",
+      "accountNumber": "987654321",
+      "companyName": "",
+      "addresses": [
+        {
+          "address1": "",
+          "address2": "",
+          "city": "",
+          "postalCode": "",
+          "countryId": 0,
+          "country": "",
+          "addressType": "Current Address",
+          "addressTypeId": 1
+        }
+      ],
+      "bankDetails": [
+        {
+          "bankId": "",
+          "bankName": "",
+          "accountName": "",
+          "accountNo": "",
+          "swiftCode": "",
+          "ibanNumber": "",
+          "bankAddress": "",
+          "entityId": "",
+          "entityType": ""
+        }
+      ],
+      "documents": []
+    },
+    {
+      "id": 103,
+      "ownerName": "",
+      "startDate": "",
+      "dob": "2020-10-21",
+      "title": "Mr",
+      "titleId": 1,
+      "firstName": "test three",
+      "lastName": "user",
+      "mobileNumber": "987654321",
+      "emailAddress": "testthree@mail.com",
+      "accountNumber": "987654321",
+      "companyName": "",
+      "addresses": [
+        {
+          "address1": "",
+          "address2": "",
+          "city": "",
+          "postalCode": "",
+          "countryId": 0,
+          "country": "",
+          "addressType": "Current Address",
+          "addressTypeId": 1
+        }
+      ],
+      "bankDetails": [
+        {
+          "bankId": "",
+          "bankName": "",
+          "accountName": "",
+          "accountNo": "",
+          "swiftCode": "",
+          "ibanNumber": "",
+          "bankAddress": "",
+          "entityId": "",
+          "entityType": ""
+        }
+      ],
+      "documents": []
+    },
+    {
+      "id": 100,
+      "ownerName": "",
+      "startDate": "",
+      "dob": "2020-10-26",
+      "title": "Mr",
+      "titleId": 1,
+      "firstName": "test",
+      "lastName": "user",
+      "mobileNumber": "987654321",
+      "emailAddress": "test@mail.com",
+      "accountNumber": "987654321",
+      "companyName": "",
+      "addresses": [
+        {
+          "address1": "",
+          "address2": "",
+          "city": "",
+          "postalCode": "",
+          "countryId": 0,
+          "country": "",
+          "addressType": "Current Address",
+          "addressTypeId": 1
+        }
+      ],
+      "bankDetails": [
+        {
+          "bankId": "",
+          "bankName": "",
+          "accountName": "",
+          "accountNo": "",
+          "swiftCode": "",
+          "ibanNumber": "",
+          "bankAddress": "",
+          "entityId": "",
+          "entityType": ""
+        }
+      ],
+      "documents": []
+    }
+  ],
+  "metadata": {
+    "addressTypes": [
+      {
+        "id": 1,
+        "name": "Current Address"
+      },
+      {
+        "id": 2,
+        "name": "Permanent Address"
+      }
+    ],
+    "titles": [
+      {
+        "id": 1,
+        "name": "Mr"
+      },
+      {
+        "id": 2,
+        "name": "Ms"
+      },
+      {
+        "id": 3,
+        "name": "Mrs"
+      }
+    ],
+    "countries": [
+      {
+        "id": 1,
+        "name": "India"
+      },
+      {
+        "id": 2,
+        "name": "Dubai"
+      },
+      {
+        "id": 3,
+        "name": "Canada"
+      }
+    ],
+    "documentTypes": [
+      {
+        "id": 1,
+        "code": "voterId",
+        "name": "Voter ID"
+      },
+      {
+        "id": 2,
+        "code": "drivingLicense",
+        "name": "Driving License"
+      },
+      {
+        "master_Id": 3,
+        "code": "panCard",
+        "name": "Pan Card"
+      }
+    ]
+  }
+}

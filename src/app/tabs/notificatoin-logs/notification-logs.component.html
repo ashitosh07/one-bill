@@ -1,0 +1,43 @@
+<fury-page-layout mode="card" style="margin-top: 27px;">
+
+  <div class="loading-indicator" *ngIf="showSpinner">
+    <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
+  </div>
+
+  <fury-page-layout-content  fxLayout="column">
+    <mat-toolbar color="primary" class="position-fixed">
+      <img class="img-style" src="assets/img/fav-icon.png" />
+
+      <span>Notification Logs</span>
+      <span class="toolbar-spacer"></span>
+      <button matTooltip="Export" (click)="onExport()" mat-icon-button class="example-icon"
+            aria-label="Example icon-button with menu icon">
+            <mat-icon>import_export</mat-icon>
+        </button>
+      <!-- <fury-notification-logs-footer-toolbar [userActions]="userActions" 
+                      >
+                  </fury-notification-logs-footer-toolbar> -->
+    </mat-toolbar>
+    <!-- <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+      fxLayoutAlign.gt-sm="start stretch"> -->
+      <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+        <fury-card-header>
+
+          <!-- <fury-card-header-heading>Bill History</fury-card-header-heading> -->
+        </fury-card-header>
+        <fury-card-content fxLayout="column">
+          <div class="result" fxLayout="column">
+            <app-notification-logs-toolbar [status]="statuses" [modes]="modes" [isHide]="false"
+              (modeChanged)="onModeChange($event)" (searchClicked)="getNotificationLogs($event)">
+            </app-notification-logs-toolbar>
+
+            <fury-expandable-table-structure [tableData]="notificationLogs" [columnsToDisplay]="columns"
+              [columnNames]="columnNames" [hideHeader]="false">
+            </fury-expandable-table-structure>
+          </div>
+        </fury-card-content>
+      </fury-card>
+      
+    <!-- </div> -->
+  </fury-page-layout-content>
+</fury-page-layout>

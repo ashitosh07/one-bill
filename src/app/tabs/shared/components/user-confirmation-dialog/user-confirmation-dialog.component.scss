@@ -1,0 +1,32 @@
+.myInput {
+    height: 50px !important;
+    padding: 10px !important;
+  }
+.task-header {
+    background-color: transparent;
+    padding: 0 5px;
+    height: 20px;
+}
+.fx-spacer {
+    flex: 1 1 auto;
+}
+
+.content
+{
+  width: 480px;
+  height: 150px;
+  padding-top: 20px;
+}
+
+.buttonStyle
+{
+    background: #1976d2; //rgb(63, 81, 181);
+    color: white;  
+    padding-right: 10px;
+}
+
+.marginRadioButton
+{
+  margin-left: 10px;
+  margin-bottom: 15px;
+}

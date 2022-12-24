@@ -1,0 +1,63 @@
+<fury-page-layout mode="card" style="margin-top:20px">
+
+
+    <fury-page-layout-content fxLayout="column">
+        <mat-toolbar color="primary" class="position-fixed">
+            <img class="img-style" src="assets/img/fav-icon.png">
+
+            <span>Bill Cancel History</span>
+            <span class="toolbar-spacer"></span>
+            <!-- <button matTooltip="Email" (click)="onSendEmail()" mat-icon-button class="example-icon"
+                aria-label="Example icon-button with menu icon">
+                <mat-icon>email</mat-icon>
+            </button> -->
+
+            <button matTooltip="Print" (click)="onPrintPdf()" mat-icon-button class="example-icon"
+                aria-label="Example icon-button with menu icon">
+                <mat-icon>print</mat-icon>
+            </button>
+
+        </mat-toolbar>
+
+        <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start stretch">
+
+            <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+                <fury-card-header>
+                </fury-card-header>
+                <fury-card-content fxLayout="column">
+                    <div class="result" fxLayout="column">
+                        <app-bill-history-toolbar [tenants]="tenants" [billPeriods]="billPeriods" [isTenantVisible]="false"
+                            [billTypes]="billTypes" [isHide]="false" (searchClicked)="onGetBillsHistory($event)">
+                        </app-bill-history-toolbar>
+                    </div>
+
+                    <div class="padding" fxLayout="column">
+                        <fury-expandable-table-structure [tableData]="billMasterDetails" [columnsToDisplay]="columns"
+                            [innerDisplayedColumns]="innerColumns" [columnNames]="columnNames"
+                            (selectedRows)="onSelectedRows($event)" (viewDataRow)="onViewDataRow($event)"
+                            (printDataRow)="downloadReport($event)" [hideHeader]="false">
+                        </fury-expandable-table-structure>
+                    </div>
+                    <div class="result" fxLayout.gt-sm="row" fxLayout="column" fxLayoutAlign="end end"
+                        fxLayoutGap.gt-sm="12px">
+                        <mat-form-field class="result" color="primary">
+                            <mat-label>Bill Amount</mat-label>
+                            <input type="text" id="billAmount" name="billAmount" style="text-align: right;"
+                                [(ngModel)]="billAmount" matInput>
+                        </mat-form-field>
+
+                        <mat-form-field class="result" color="primary">
+                            <mat-label>Paid Amount</mat-label>
+                            <input type="text" id="receivedAmount" name="receivedAmount" style="text-align: right;"
+                                [(ngModel)]="receivedAmount" matInput>
+                        </mat-form-field>
+                    </div>
+                </fury-card-content>
+
+            </fury-card>
+        </div>
+    </fury-page-layout-content>
+
+
+</fury-page-layout>

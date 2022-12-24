@@ -1,0 +1,65 @@
+/* You can add global styles to this file, and also import other style files */
+@import "./@fury/styles/core";
+@import "./app/app.theme";
+@import "../node_modules/@syncfusion/ej2-base/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-angular-navigations/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-inputs/styles/material.css";
+@import "../node_modules/@syncfusion/ej2-buttons/styles/material.css";
+// @import "../node_modules/primeng/resources/primeng.min.css";
+// @import "../node_modules/primeicons/primeicons.css";
+// @import "../node_modules/primeng/resources/themes/nova/theme.css";
+
+.mat-slide-toggle-thumb {
+  // width: 10px !important;
+  // height: 10px !important;
+  // transform: translate(50%, 50%);
+}
+
+.mat-slide-toggle-bar {
+background-color: rgb(137, 162, 165);
+
+// border-radius: 15px !important;
+// height: 16px !important;
+}
+
+// .mat-slide-toggle-thumb-container {
+// top: -2px !important;
+// }
+
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+background-color: #2196F3; // rgb(37, 134, 58);
+
+}
+
+.mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+background-color: #fff;
+}
+
+.title {
+    font-size: 12px;
+}
+
+.blue-snackbar {
+    background: #2196F3;
+}
+.green-snackbar {
+    background: #249e34;
+}
+.red-snackbar {
+    background: #B00020;
+}
+.yellow-snackbar {
+  background: #d2dd3a;
+}
+
+.custom-modalbox {
+    mat-dialog-container {
+      overflow: initial !important;
+      padding: 42px;
+    }
+  }
+
+  .matOptionMarginSettings{
+    margin-top: 24px !important;
+    margin-bottom: 30px;
+  }

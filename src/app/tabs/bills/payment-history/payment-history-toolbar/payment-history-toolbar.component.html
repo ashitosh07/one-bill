@@ -1,0 +1,68 @@
+<mat-dialog-content>
+    <div class="person bottom-padding">
+        <form [formGroup]="form">
+            <div fxLayout="column" fxLayout.gt-sm="column" fxLayoutGap.gt-sm="8px" style="padding-bottom: 20px;" *ngIf="ownerId == 0">
+                <mat-checkbox class="isViewSecurityDeposit" color="primary"
+                    (change)="changeViewSecurityDeposit($event)">
+                    Fetch Only Security Deposit Transactions</mat-checkbox>
+            </div>
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="8px">
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="8px" *ngIf="ownerId == 0">
+                    <mat-form-field class="result" style="width:180px" color="primary">
+                        <mat-label>From Date</mat-label>
+                        <input (click)="formDatepickerRef1.open()" id="fromDate" name="fromDate"
+                            [ngModelOptions]="{ standalone: true }" [(ngModel)]="fromDate" (ngModelChange)="validateFromDateAndToDate()"
+                            (focus)="formDatepickerRef1.open()" [matDatepicker]="formDatepickerRef1" matInput readonly>
+                        <mat-datepicker-toggle [for]="formDatepickerRef1" matSuffix></mat-datepicker-toggle>
+                        <mat-datepicker #formDatepickerRef1></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field class="result" style="width:180px" color="primary">
+                        <mat-label>To Date</mat-label>
+                        <input (click)="formDatepickerRef2.open()" id="toDate" name="toDate"
+                            [ngModelOptions]="{ standalone: true }" [(ngModel)]="toDate" (focus)="formDatepickerRef2.open()"
+                            [matDatepicker]="formDatepickerRef2" matInput readonly (ngModelChange)="validateFromDateAndToDate()">
+                        <mat-datepicker-toggle [for]="formDatepickerRef2" matSuffix></mat-datepicker-toggle>
+                        <mat-datepicker #formDatepickerRef2></mat-datepicker>
+                        <small *ngIf="!isValidDate">To date should be greater than or equal to From date.</small>
+                    </mat-form-field>
+
+                    <mat-form-field style="width:220px" class="result">
+                        <mat-label>Payment Mode</mat-label>
+                        <!-- (selectionChange)="onChangePaymentMode($event.value)" -->
+                        <mat-select id="PaymentMode" name="PaymentMode" multiple formControlName="paymentMode"
+                            [(ngModel)]="paymentMode">
+                            <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">Select All</mat-option>
+                            <mat-option *ngFor="let option of paymentModes" [value]="option.value"
+                                [optionSelected]="option.selected" (click)="togglePerOne(allSelected.viewValue)">
+                                {{ option.label }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <div class="fury-flex-form-field">
+                        <button (click)="onSearch()" mat-icon-button class="example-icon"
+                            aria-label="Example icon-button with menu icon">
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <div fxLayout="row" fxLayoutGap="15px" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="15px" *ngIf="ownerId > 0">
+                    <mat-form-field class="result" color="primary" style="width: 160px;">
+                        <mat-label>Months</mat-label>
+                        <mat-select id="months" name="months"
+                            (selectionChange)="onChangeMonths($event.value)" [(value)]="monthSelected">
+                            <mat-option *ngFor="let option of lstMonths" [value]="option.description">{{ option.description }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-hint>Please select Months</mat-hint>
+                    </mat-form-field>
+                    <div class="fury-flex-form-field">
+                        <button (click)="onSearch()" mat-button class="buttonStyle">Search</button>
+                    </div>
+                </div>
+            </div>
+            
+        </form>
+    </div>
+</mat-dialog-content>

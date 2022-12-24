@@ -1,0 +1,71 @@
+<mat-dialog-content>
+    <div class="person">
+        <form>
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="6px">
+                <!-- <mat-form-field class="result" color="primary">
+                    <mat-label>Utility Type</mat-label>
+                    <mat-select id="UtilityType" name="UtilityType"
+                        (selectionChange)="onChangeUtilityType($event.value)" [(value)]="utilityTypeId">
+                        <mat-option *ngFor="let option of utilityTypes" [value]="option.value">{{ option.label }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+
+                <mat-form-field class="result" color="primary">
+                    <mat-label>Bill Period</mat-label>
+                    <mat-select id="BillPeriod" name="BillPeriod" (selectionChange)="onChangeBillPeriod($event.value)"
+                        [(value)]="billPeriodId">
+                        <mat-option *ngFor="let option of billPeriods" [value]="option.value">{{ option.label }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="result" color="primary">
+                    <mat-label>Tenant Name</mat-label>
+                    <mat-select [(ngModel)]="selectedTenants" multiple placeholder="Select a tenant"
+                        class="multiSelectCustom" id="tenant" name="tenant" #tenantSelect>
+                        <input class="myInput" #myInput matInput focused="'true'" type="text" (keydown)="handleInput($event)"
+                            (keyup)="searchTenants($event.target.value)" autocomplete="off" placeholder="search">
+                        <mat-divider></mat-divider>
+                        <mat-option #allTenantsSelected (click)="toggleTenantsAllSelection()" [value]="0">Select
+                            All</mat-option>
+                        <mat-option *ngFor="let tenant of filteredTenants" [value]="tenant.id"
+                            (click)="toggleTenantsPerOne(allTenantsSelected.viewValue)"> {{ tenant.ownerName }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="result" color="primary" style="width: 180px;">
+                    <mat-label>Bill Date</mat-label>
+                    <input (click)="formDatepickerRef3.open()" id="BillDate" name="BillDate" [(ngModel)]="billDate"
+                        (focus)="formDatepickerRef3.open()" [matDatepicker]="formDatepickerRef3" [max]="maxDate" matInput>
+                    <mat-datepicker-toggle [for]="formDatepickerRef3" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #formDatepickerRef3></mat-datepicker>
+                </mat-form-field>
+
+                <div class="fury-flex-form-field">
+                    <button matTooltip="Generate Bills" (click)="onGenerate()" color="primary" mat-icon-button>
+                        <!-- <span>GENERATE</span> -->
+                        <mat-icon>launch</mat-icon>
+                    </button>
+                </div>
+
+                <mat-form-field class="result" color="primary" style="width: 150px;" *ngIf="!isHide">
+                    <mat-label>From Date</mat-label>
+                    <input (click)="formDatepickerRef1.open()" id="FromDate" name="FromDate" [(ngModel)]="fromDate"
+                        (focus)="formDatepickerRef1.open()" [matDatepicker]="formDatepickerRef1" matInput readonly>
+                    <mat-datepicker-toggle [for]="formDatepickerRef1" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker disabled="true" #formDatepickerRef1></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field class="result" color="primary" style="width: 150px;" *ngIf="!isHide">
+                    <mat-label>To Date</mat-label>
+                    <input (click)="formDatepickerRef2.open()" id="ToDate" name="ToDate" [(ngModel)]="toDate"
+                        (focus)="formDatepickerRef2.open()" [matDatepicker]="formDatepickerRef2" matInput readonly>
+                    <mat-datepicker-toggle [for]="formDatepickerRef2" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker disabled="true" #formDatepickerRef2></mat-datepicker>
+                </mat-form-field>
+            </div>
+        </form>
+    </div>
+</mat-dialog-content>

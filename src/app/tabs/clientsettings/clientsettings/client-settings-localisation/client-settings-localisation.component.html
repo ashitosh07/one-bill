@@ -1,0 +1,128 @@
+<div class="content" [formGroup]="localisationSettings" fxLayout="column" fxLayoutGap="8px">
+    
+    <div fxLayout="row" fxLayoutGap="16px">
+
+        <mat-form-field fxFlex="33%" *ngIf="false">
+            <mat-label>Date Format</mat-label>
+            <mat-select formControlName="dateFormatId" [(ngModel)]="dateFormatId" required (selectionChange)="validateForm()">
+                <mat-option *ngFor="let option of lstDateFormat" [value]="option.id">
+                    {{ option.description }}
+                </mat-option>
+            </mat-select>
+            <mat-hint>This will be Date Format.</mat-hint>
+            <mat-error *ngIf="localisationSettings.invalid">Date Format is required.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="28%">
+            <mat-label>Currency</mat-label>
+            <!-- <input formControlName="currency" [(ngModel)]="currency" (keyup)="validateForm()" matInput required> -->
+            <mat-select formControlName="currency" [(ngModel)]="currency" required>
+                <mat-option *ngFor="let option of lstCurrency" [value]="option.id">
+                    {{ option.description }}
+                </mat-option>
+            </mat-select>
+            <mat-hint *ngIf="!localisationSaved">This will be Currency.</mat-hint>
+            <mat-error *ngIf="localisationSettings.invalid">Currency is required.</mat-error>
+        </mat-form-field>
+
+        <!-- <button class="create" [disabled]="localisationSaved" (click)="createCurrency()" style="height: 30px;width: 30px;margin-top: 10px; margin-right: 0px; margin-left: 0px;padding-top: -5px;" type="button" mat-mini-fab color="primary">
+          <mat-icon style="height: 10px;width: 10px;padding-top: -5px;margin-top: -25px;margin-left: -13px;">add</mat-icon>
+        </button> -->
+
+        <mat-form-field fxFlex="33%">
+            <mat-label>Currency RoundOff</mat-label>
+            <input type="number" formControlName="roundOff" furyValidateNumericOnlyDirective [(ngModel)]="roundOff" (keyup)="validateForm()" matInput required>
+            <!-- <mat-select formControlName="roundOff" [(ngModel)]="roundOff" required>
+                <mat-option *ngFor="let option of lstRoundOff" [value]="option.id">
+                    {{ option.description }}
+                </mat-option>
+            </mat-select> -->
+            <mat-hint *ngIf="!localisationSaved">This will be Currency RoundOff from 1-5.</mat-hint>
+            <mat-error *ngIf="localisationSettings.invalid">Currency RoundOff should be from 1-5.</mat-error>
+        </mat-form-field>        
+    
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="16px" class="padding-top">
+      <span style="font-weight: bold;">Map Client Utilities & Consumption RoundOff</span>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="16px" style="padding-top: 5px;">
+
+        <mat-form-field fxFlex="28%">
+            <mat-label>Utilities</mat-label>
+            <mat-select formControlName="utilityTypeId" [(ngModel)]="utilityTypeId" (selectionChange)="onUtilityType($event)">
+                <mat-option *ngFor="let option of lstUtilityTypes" [value]="option.id">
+                    {{ option.description }}
+                </mat-option>
+            </mat-select>
+            <mat-hint *ngIf="isDuplicateUtilityType == false">This will be Utility Type.</mat-hint>            
+            <mat-hint style="color: red;" *ngIf="isDuplicateUtilityType == true">Utility Type already added.</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="33%">
+            <mat-label>Consumption RoundOff</mat-label>
+            <input type="number" formControlName="consumptionRoundOff" furyValidateNumericOnlyDirective [(ngModel)]="consumptionRoundOff" matInput>
+            <!-- <mat-select formControlName="roundOff" [(ngModel)]="roundOff" required>
+                <mat-option *ngFor="let option of lstRoundOff" [value]="option.id">
+                    {{ option.description }}
+                </mat-option>
+            </mat-select> -->
+            <mat-hint>This will be Consumption RoundOff from 1-5.</mat-hint>
+            <mat-error *ngIf="localisationSettings.invalid">Currency RoundOff should be from 1-5.</mat-error>
+        </mat-form-field>
+        
+        <button  mat-button color="primary" [disabled]="utilityTypeId == undefined || utilityTypeId == null || this.localisationSettings.controls.consumptionRoundOff.invalid || consumptionRoundOff == undefined || consumptionRoundOff == '' || (lstUtilityTypes.length == lstConsumptionRoundOff.length)"
+        (click)="saveConsumptionRoundOff()">ADD CONSUMPTION ROUNDOFF</button>
+        <!-- currency === null || roundOff === null || (utilitiesDataSource != undefined && utilitiesDataSource.length != lstUtilityTypes.length) -->
+    </div>    
+
+    <table class="example-container" [dataSource]="consumptionRoundOffDataSource" mat-table matSort [ngStyle]="{display:blnShow}" align="center">
+
+        <ng-container matColumnDef="delete">
+          <th>Delete</th>
+          <td *matCellDef="let row" class="actions-cell" mat-cell>
+            <mat-icon>more_horiz</mat-icon>
+          </td>
+        </ng-container>
+
+        <ng-container *ngFor="let column of consumptionRoundOffColumns">
+          <ng-container *ngIf="column.isModelProperty" [matColumnDef]="column.property">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.name }}</th>
+            <td *matCellDef="let row" mat-cell>
+              {{ row[column.property] }}
+            </td>
+          </ng-container>
+        </ng-container>   
+        
+        <ng-container matColumnDef="consumptionRoundOff">
+          <th *matHeaderCellDef mat-header-cell class="header-align-right">Consumption RoundOff</th>
+          <td *matCellDef="let row" mat-cell class="header-align-right">
+            {{row.consumptionRoundOff}}
+          </td>
+        </ng-container>
+
+        <!-- <ng-container matColumnDef="actions">
+          <th *matHeaderCellDef class="actions-cell" mat-header-cell>Delete</th>
+          <td *matCellDef="let row" class="actions-cell" mat-cell (click)="deleteConsumptionRoundOff(row)">
+            <mat-icon class="deleteIcon">delete</mat-icon>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="modify">
+          <th *matHeaderCellDef class="actions-cell" mat-header-cell>Modify</th>
+          <td *matCellDef="let row" class="actions-cell" mat-cell (click)="modifyConsumptionRoundOff(row)">
+            <mat-icon class="modifyIcon">edit</mat-icon>
+          </td>
+        </ng-container> -->
+
+        <tr *matHeaderRowDef="localisationVisibleColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: localisationVisibleColumns;" class="clickable route-animations-elements" mat-row>
+        </tr>
+        
+      </table>
+
+      <span style="color: red;font-size: smaller;padding-top: 30px;" *ngIf="isUtilitiesMapped == false">* Please Map Consumption RoundOff for all Utilities.</span>
+      
+
+</div>

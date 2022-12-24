@@ -1,0 +1,199 @@
+<div class="container">
+  <div class="utype" style="padding: 1.25% 1% 1% 1%">
+    <span class="toolBar">{{ dashboardTitle }}</span>
+
+    <!-- <mat-card class="mat-elevation-z4" fxLayout="column"> -->
+    <!-- <mat-toolbar color="primary" fxLayout="row">
+        <img class="img-style" src="assets/img/fav-icon.png" />
+        <span>{{dashboardTitle}}</span>        
+      </mat-toolbar> -->
+    <!-- </mat-card> -->
+  </div>
+
+  <div
+    class="content"
+    fxLayout="row"
+    fxLayout.xs="row"
+    fxLayout.sm="row"
+    fxLayoutGap="15px"
+    style="padding: 0% 1% 1% 1%"
+  >
+    <!-- <mat-card class="mat-elevation-z4 MonthCollection" fxFlex>
+      <span style="padding-top: 20px"></span>
+      <p class="contractscounter">
+        {{ currencySymbol }}{{ totalMonthCollectionForTile$ }}
+
+        <span class="alignRight">
+          <mat-icon matTooltip="{{ toolTip }}" *ngIf="isGain == true"
+            >arrow_upward</mat-icon
+          >
+          <mat-icon matTooltip="{{ toolTip }}" *ngIf="isGain == false"
+            >arrow_downward</mat-icon
+          >
+        </span>
+      </p>
+      <span style="padding-top: 20px"></span>
+      <span class="fontSize">Current Month Collection</span>
+
+      <span class="alignRight"> {{ gain }}% </span>
+
+      
+      <div *ngIf="hideTextOnTile" class="pointer">...More Info</div>
+    </mat-card> -->
+    <!-- <div class="bottomPadding"></div> -->
+
+    <!-- <div class="add-space">&nbsp;</div>  -->
+
+    <!-- <mat-card class="mat-elevation-z4 OutStanding" fxFlex>
+      <p class="contractscounter">
+        {{ currencySymbol }}{{ totalOutStandingForTile$ }}
+      </p>
+      <span style="padding-right: 20px" class="fontSize"
+      >Total OutStanding</span
+      >
+      
+    </mat-card> -->
+    <!-- <span class="alignRight">
+      <mat-icon matTooltip="Comparison with Previous Month OutStanding" *ngIf="isOutstandingIncreased == true">arrow_upward</mat-icon>
+      <mat-icon matTooltip="Comparison with Previous Month OutStanding" *ngIf="isOutstandingIncreased == false">arrow_downward</mat-icon>        
+    </span> -->
+    <!-- <span class="alignRight">        
+        {{ outstandingPercentage }}%   
+      </span>  -->
+
+    <!-- <div class="bottomPadding"></div> -->
+
+    <!-- <span class="spacer"></span>
+      <div class="spacer"></div>    
+      <div class="add-space">&nbsp;</div>   -->
+
+    <!-- <mat-card class="mat-elevation-z4 contractReminder" fxFlex>
+      <p class="contractscounter">{{ contractsAboutToExpire }}</p>
+      <span class="fontSize">Contracts About To Expire</span>
+
+      <span class="spacer"></span>
+      <div
+      *ngIf="hideMoreInfo"
+      class="pointer"
+      (click)="contractReminder()"
+      style="padding-top: 30px"
+      >
+      ...More Info
+    </div>
+  </mat-card> -->
+    <!-- <div *ngIf="!hideMoreInfo" class="bottomPadding"></div> -->
+
+    <!-- <div *ngIf="!hideMoreInfo" class="bottomPadding"></div> -->
+    <!-- <mat-card
+      class="mat-elevation-z4 openTickets"
+      fxFlex
+      *ngIf="parameterValue == true"
+    >
+      <p class="ticketscounter">{{ numberOfOpenTickets }}</p>
+      <span class="fontSize">Open Tickets</span>
+      <span class="spacer"></span>
+      <div
+        *ngIf="hideMoreInfo"
+        class="pointer"
+        (click)="openTickets()"
+        style="padding-top: 30px"
+      >
+        ...More Info
+      </div>
+    </mat-card> -->
+  </div>
+
+  <div
+    class="content"
+    fxLayout="row"
+    fxLayout.xs="row"
+    fxLayout.sm="row"
+    fxLayoutGap="6px"
+    style="padding: 1% 1% 1% 1%"
+  >
+    <div fxFlex="50%">
+      <mat-card class="mat-elevation-z4">
+        <div class="buttons">
+          <button
+            id="{{ q }}"
+            *ngFor="let q of quarters"
+            (click)="showQuarterData($event)"
+          >
+            {{ q.replace('Q', 'Quarter') }}
+          </button>
+        </div>
+        <div id="gdacontainer1"></div>
+      </mat-card>
+    </div>
+
+    <div fxFlex="50%">
+      <mat-card class="mat-elevation-z4">
+        <div class="revbuttons">
+          <button
+            id="{{ type }}"
+            *ngFor="let type of revenueTypes"
+            (click)="showRevenueData($event)"
+          >
+            {{ type }}
+          </button>
+        </div>
+        <div id="gdacontainer2"></div>
+      </mat-card>
+    </div>
+  </div>
+
+  <div
+    class="content"
+    fxLayout="row"
+    fxLayout.xs="row"
+    fxLayout.sm="row"
+    fxLayoutGap="6px"
+    style="padding: 1% 1% 1% 1%"
+  >
+    <mat-card class="mat-elevation-z4" fxFlex="50%">
+      <div id="gdacontainer3"></div>
+    </mat-card>
+    <mat-card class="mat-elevation-z4" fxFlex="50%">
+      <div id="gdacontainer4"></div>
+    </mat-card>
+  </div>
+
+  <div class="utype" style="padding: 1% 1% 1% 1%">
+    <!-- <mat-card class="mat-elevation-z4" fxLayout="column"> -->
+    <mat-toolbar color="primary" fxLayout="row">
+      <!-- <img class="img-style" src="assets/img/fav-icon.png" /> -->
+      <span>{{ consumptionTitle }}</span>
+      <span class="toolbar-spacer"></span>
+      <!-- fxFlex.xs="10%" -->
+      <div class="dropdown" fxFlex="20%">
+        <!-- fxFlex.xs="10%" -->
+        <mat-form-field fxFlex>
+          <mat-select
+            [(ngModel)]="utilityType"
+            name="utilityType"
+            id="utilityTypeId"
+            placeholder="Utility Type"
+            (ngModelChange)="onDropdownChange()"
+          >
+            <mat-option *ngFor="let item of lstutilityType" [value]="item.id">{{
+              item.description
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-toolbar>
+    <!-- </mat-card> -->
+  </div>
+
+  <div
+    class="content"
+    fxLayout="row"
+    fxLayout.xs="row"
+    fxLayout.sm="row"
+    style="padding: 0% 1% 0% 1%"
+  >
+    <mat-card fxFlex="100%">
+      <div id="gdacontainer6"></div>
+    </mat-card>
+  </div>
+</div>

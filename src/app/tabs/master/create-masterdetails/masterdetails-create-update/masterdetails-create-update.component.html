@@ -1,0 +1,75 @@
+<div mat-dialog-title>
+  <mat-toolbar role="toolbar" class="task-header">
+    <span>Master Details</span>
+    <span class="fx-spacer"></span>
+    <button mat-icon-button (click)="close()">
+        <mat-icon title="Close" mat-list-icon>close</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content class="mat-dlg-content">
+    <fury-card>
+      <fury-card-content>
+
+        <div class="person">
+          <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+
+            <mat-form-field fxFlex>
+              <mat-label>Mode</mat-label>
+
+              <input matInput [matAutocomplete]="mode" formControlName="modeName">
+              <mat-autocomplete #mode="matAutocomplete" (optionSelected)="selectMode($event)">
+                <mat-option *ngFor="let mode of filteredMode; index as i" [value]="mode.description">
+                  {{ mode.description }}
+                </mat-option>
+              </mat-autocomplete>
+              <app-show-errors [ctrl]="form.get('mode')"></app-show-errors>
+              <mat-hint>Please select a Mode</mat-hint>
+
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <mat-label>Sequence</mat-label>
+              <input type="number" formControlName="sequence" matInput>
+            </mat-form-field>
+
+          </div>
+        </div>
+
+        <div class="person topPadding">
+          <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+            <mat-form-field fxFlex>
+              <mat-label>Parent Item</mat-label>
+
+              <input matInput [matAutocomplete]="parent" formControlName="parentName">
+              <mat-autocomplete #parent="matAutocomplete" (optionSelected)="selectParentMode($event)">
+                <mat-option *ngFor="let parentMode of filteredParentModes; index as i" [value]="parentMode.description">
+                  {{ parentMode.description }}
+                </mat-option>
+              </mat-autocomplete>
+
+              <!-- <app-show-errors [ctrl]="form.get('parentId')"></app-show-errors>
+              <mat-hint *ngIf="isCreateMode()">Please select a Parent Item</mat-hint> -->
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <mat-label>Item Name</mat-label>
+              <input type="text" formControlName="description" matInput>
+              <app-show-errors [ctrl]="form.get('description')"></app-show-errors>
+              <mat-hint>Please enter Item Name</mat-hint>
+            </mat-form-field>
+
+          </div>
+        </div>
+
+      </fury-card-content>
+    </fury-card>
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button mat-button (click)="closeDialog()">CANCEL</button>
+    <button *ngIf="isCreateMode()" mat-button [disabled]="!form.valid">CREATE MASTER DETAILS</button>
+    <button *ngIf="isUpdateMode()" mat-button [disabled]="!form.valid">UPDATE MASTER DETAILS</button>
+  </mat-dialog-actions>
+</form>

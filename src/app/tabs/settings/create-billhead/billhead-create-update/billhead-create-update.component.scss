@@ -1,0 +1,68 @@
+.marginRight
+{
+    margin-right: 36%;
+}
+
+.isVAT {
+    align-self: center;
+    margin-left: 0px;
+    text-align: center;
+  }
+
+.gracePeriodLabelLeft{
+    padding-top: 30px;
+    margin-right: 10px;
+}
+
+.gracePeriodLabelRight{
+    padding-top: 30px;
+    margin-left: 10px;
+}
+
+.formulaLabel{
+    clear: both;
+    padding-top:10px;
+}
+
+.formulaSubLabel
+{
+    clear: both;
+    padding-top:10px;
+    //font-size: 12px;
+    font-weight: 500;
+}
+
+.topPadding
+{
+    padding-top: 12px;
+}
+
+.heading
+{
+    font-size: 18px;
+    font-weight: bold;
+    padding-left: 25px;
+}
+
+.subHeading{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.duplicate {
+    color: red;
+}
+
+.task-header {
+    background-color: transparent;
+    padding: 0 5px;
+     height: 20px;
+  }
+  
+  .fx-spacer {
+    flex: 1 1 auto;
+  }
+
+  .billSettingMapping {
+      font-size: smaller;
+  }

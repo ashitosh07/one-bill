@@ -1,0 +1,186 @@
+.container {
+  display: flex;
+  flex-direction: column;
+}
+
+.utype{
+    width: 100%;
+}
+
+.mat-card {
+  min-height: 25% !important ;
+}
+.toolbar-spacer {
+    flex: 1 1 auto;
+  }
+
+  .dropdown{
+    background-color: white;
+    color: black;
+    height: 78%;
+  }
+
+  .img-style{
+    width: 32px;
+  }
+
+  .chkspace
+  {
+    padding-right: 20px;
+  }
+
+.pointer
+{
+  cursor: pointer;
+  text-align: right;
+}  
+
+.contractReminder
+{
+  background: rgb(63, 81, 181);
+  color: rgb(255, 255, 255);  
+  max-width: 100%;
+  //height: 20%;
+}
+
+.MonthCollection {
+  
+  background: rgb(3, 169, 244);//rgb(76, 175, 80);
+  color: rgb(255, 255, 255);  
+  max-width: 100%;
+  //height: 20%;
+}
+
+.OutStanding {
+  background: #DC0A59 ;// #FF6347;
+  color: rgb(255, 255, 255);  
+  max-width: 100%;
+  //height: 20%;
+}
+
+.openTickets
+{
+  background:#10C8CD;
+  color: white;
+}
+
+.fontSize {
+  font-size: medium;
+  vertical-align: middle;
+  font-weight: normal;
+}
+
+.contractscounter
+{
+  font-size: xx-large;
+  vertical-align: middle;
+  margin: 0px;
+  //padding-left: 10%;
+  font-weight: bold;
+}
+
+.ticketscounter
+{
+  font-size: xx-large;
+  vertical-align: middle;
+  margin: 0px;
+  //padding-left: 5%;
+  font-weight: bold;
+}
+
+//
+.buttons {
+  min-width: 310px;
+  text-align: center;
+  // margin-bottom: 1.5rem;
+  font-size: 0;
+}
+
+.buttons button {
+  cursor: pointer;
+  // border: 1px solid silver;
+  border:none;
+  border-radius: 16px;
+  // border-right-width: 0;
+  background-color: #f8f8f8 0% 0% no-repeat padding-box;
+  font-size: 1rem;
+  padding: 0.5rem;
+  outline: none;
+  transition-duration: 0.3s;
+  margin: 4px auto;
+}
+
+// .buttons button:first-child {
+//   border-top-left-radius: 0.3em;
+//   border-bottom-left-radius: 0.3em;
+// }
+
+// .buttons button:last-child {
+//   border-top-right-radius: 0.3em;
+//   border-bottom-right-radius: 0.3em;
+//   border-right-width: 1px;
+// }
+
+.buttons button:hover {
+  color: white;
+  background-color: rgb(158, 159, 163);
+  outline: none;
+}
+
+.buttons button.active {
+  background-color: #0051B4;
+  color: white;
+}
+
+.revbuttons {
+  min-width: 310px;
+  text-align: center;
+  // margin-bottom: 1.5rem;
+  font-size: 0;
+}
+
+.revbuttons button {
+  cursor: pointer;
+  // border: 1px solid silver;
+  border:none;
+  border-radius: 16px;
+  // border-right-width: 0;
+  background-color: #f8f8f8 0% 0% no-repeat padding-box;
+  font-size: 1rem;
+  padding: 0.5rem;
+  outline: none;
+  transition-duration: 0.3s;
+  margin: 4px auto;
+}
+
+.revbuttons button:hover {
+  color: white;
+  background-color: rgb(158, 159, 163);
+  outline: none;
+}
+
+.revbuttons button.active {
+  background-color: #0051B4;
+  color: white;
+}
+
+.spacer {
+  flex: 1 1 auto;
+  //text-align: right;
+}
+
+.bottomPadding {
+  padding-bottom: 20px;
+}
+
+.alignRight {
+  float: right;
+}
+
+.toolBar {
+  font-size: x-large;
+  font-weight: bold;
+  line-height: 50px;
+}
+
+

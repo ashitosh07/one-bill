@@ -1,0 +1,26 @@
+<h4 mat-dialog-title>
+    <mat-toolbar role="toolbar" class="task-header">
+        <span>{{formHeading}}</span>
+        <span class="fx-spacer"></span>
+        <button mat-icon-button (click)="close()">
+            <mat-icon mat-list-icon>close</mat-icon>
+        </button>
+    </mat-toolbar>
+</h4>
+<form [formGroup]="form" (ngSubmit)="save()">
+    <mat-dialog-content>
+        <div class="person">
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="12px">
+                <mat-form-field fxFlex [style.width.px]=327 [style.height.px]=100>
+                    <mat-label>Remarks</mat-label>
+                    <textarea formControlName="remarks" matInput></textarea>
+                    <app-show-errors [ctrl]="form.get('remarks')"></app-show-errors>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-dialog-content>
+    <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button>{{buttonName}}</button>
+
+    </mat-dialog-actions>
+</form>

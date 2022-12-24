@@ -1,0 +1,30 @@
+stages:
+  - build
+  - deploy
+
+cache:
+  paths:
+  - node_modules/
+  
+build_job:
+  only:
+    - master
+  stage: build
+  variables:
+    GIT_CLEAN_FLAGS: none
+  script:
+    - npm install
+    - ng build --prod
+
+  
+deploy_job:
+  cache: {}
+  only:
+    - master
+  stage: deploy
+  variables:
+    GIT_STRATEGY: none
+  script:
+    - ' xcopy /y /s ".\dist\*.*" "C:\inetpub\wwwroot\SmartBillWeb\"'
+  dependencies:
+    - build_job

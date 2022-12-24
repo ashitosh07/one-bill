@@ -1,0 +1,68 @@
+
+  .mat-dlg-content
+  {
+    margin-left:1px;
+    width:95%;
+    height:fit-to-content;
+  }
+
+  small
+  {
+    color:red;
+  }
+
+  .hidden
+  {
+    display: none;
+  }
+
+  .contractControls {
+    cursor: pointer;
+}
+
+.contractControlsDisabled {
+    color: rgba(0, 0, 0, 0.26);
+}
+
+.formulaLabel{
+  clear: both;
+  padding-top:10px;
+}
+
+.marginRight
+{
+    margin-right: 8%;
+}
+
+.reasonForContractEndShow{
+  display: block;
+}
+
+.reasonForContractEndHide{
+  display: none;
+}
+
+.securityDeposit {
+  align-self: center;
+  margin-left: 10px;
+}
+
+.securityDepositAmount {
+  margin-left: 85px;
+  //margin-right: 35px;
+  width:400px;
+}
+
+.deleteIcon {
+  cursor: pointer;
+}
+
+.task-header {
+  background-color: transparent;
+  padding: 0 5px;
+   height: 20px;
+}
+
+.fx-spacer {
+  flex: 1 1 auto;
+}

@@ -1,0 +1,73 @@
+import { AlertSettingsMeter } from '../create-alert-settings-ems/alert-settings-meter.model';
+
+export class AlertSettingsEMS {
+    id:number;
+    alarmTypeId:number;
+    alarmType:string;
+    alarmName:string;
+    weekDayId:number;
+    weekDay:string;
+    dateId:number;
+    date: string;
+    hourId:number;
+    hour: string;
+    minuteId:number;
+    minutes: string;
+    feederId:number;
+    feeder:string;
+    meterName: string;
+    parameterId:number;
+    parameter:string;
+    parameterName: string;
+    parameterValue: string;
+    conditionId:number;
+    condition:string;
+    conditionValue: number;
+    isSms:boolean;
+    sMSMobileNumber:string;
+    isWhatsapp:boolean;
+    isWhatsAppGroup:boolean;
+    whatsAppGroupName:string;
+    whatsAppGroupAdminNumber: string;
+    isEmail:boolean;
+    emailId:string;    
+    isNotify: boolean;
+    clientId: number;
+    alarmMeters: AlertSettingsMeter[];
+
+    constructor(alarm) {
+        this.id = alarm.id || 0;
+        this.alarmTypeId = alarm.alarmTypeId || 0;
+        this.alarmType = alarm.alarmType || '';
+        this.alarmName = alarm.alarmName || '';
+        this.weekDayId = alarm.weekDayId || 0;
+        this.weekDay = alarm.weekDay || '';
+        this.dateId = alarm.dateId || 0;
+        this.date = alarm.date || '';
+        this.hourId = alarm.hourId || 0;
+        this.hour = alarm.hour || '';
+        this.minuteId = alarm.minuteId || 0;
+        this.minutes = alarm.minutes || '';
+        this.feederId = alarm.feederId || 0;
+        this.feeder = alarm.feeder || '';
+        this.meterName = alarm.meterName || '';
+        this.parameterId = alarm.parameterId || 0;
+        this.parameter = alarm.parameter || '';
+        this.parameterName = alarm.parameterName || '';
+        this.parameterValue = alarm.parameterValue || '';
+        this.conditionId = alarm.conditionId || 0;
+        this.condition = alarm.condition || '';
+        this.conditionValue = alarm.conditionValue || 0;
+        this.isSms = alarm.isSms || false;
+        this.isWhatsapp = alarm.isWhatsapp || false;
+        this.sMSMobileNumber = alarm.sMSMobileNumber || '';
+        this.isEmail = alarm.isEmail || false;
+        this.emailId = alarm.emailId || '';
+        this.isWhatsAppGroup = alarm.isWhatsAppGroup || false;
+        this.whatsAppGroupName = alarm.whatsAppGroupName || '';
+        this.whatsAppGroupAdminNumber = alarm.whatsAppGroupAdminNumber || '';
+        this.isNotify = alarm.isNotify || false;
+        this.clientId = alarm.clientId || 0;
+        this.alarmMeters = (alarm.alarmMeters || []).map(alarmMeter => new AlertSettingsMeter(alarmMeter));
+    }
+}

@@ -1,0 +1,51 @@
+<h4 mat-dialog-title>
+    <mat-toolbar role="toolbar" class="task-header">
+        <span>Manual Bill</span>
+        <span class="fx-spacer"></span>
+        <button mat-icon-button (click)="close()">
+            <mat-icon mat-list-icon>close</mat-icon>
+        </button>
+    </mat-toolbar>
+</h4>
+<mat-dialog-content>
+    <div class="person">
+        <form>
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px">
+                <mat-form-field fxFlex>
+                    <mat-label>Utitlity Type</mat-label>
+                    <mat-select [(ngModel)]="utilityTypeId" name="utilityTypeId" id="utilityTypeId"
+                        placeholder="Utility Type" (ngModelChange)="onUtilityChange($event)">
+                        <mat-option *ngFor="let item of utilityTypes;" [value]="item.value">{{item.label}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint>Please select an utility Type</mat-hint>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px">
+                <mat-form-field fxFlex>
+                    <mat-label>Meter Number</mat-label>
+                    <mat-select [(ngModel)]="meterId" name="meterId" id="meterId" placeholder="Meter Number">
+                        <mat-option *ngFor="let item of meterNumbers;" [value]="item.value">{{item.label}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint>Please select an Meter Number</mat-hint>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px">
+                <mat-form-field class="result" color="primary">
+                    <mat-label>Consumption</mat-label>
+                    <input type="text" id="consumption" name="consumption" [(ngModel)]="consumption" matInput>
+                </mat-form-field>
+
+                <div class="fury-flex-form-field">
+                    <button [disabled]="!meterId || !utilityTypeId || !consumption" (click)="onSave()" mat-icon-button
+                        class="example-icon" aria-label="Example icon-button with menu icon">
+                        <mat-icon>save</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</mat-dialog-content>

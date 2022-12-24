@@ -1,0 +1,144 @@
+<div fxLayout="column" style="padding: 27px;">
+
+  <div class="loading-indicator" *ngIf="showSpinner">
+    <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
+  </div>
+
+  <!-- fxLayout="row" fxLayout.xs="column"  -->
+  <mat-toolbar color="primary" class="position-fixed">
+    <img class="img-style" src="assets/img/fav-icon.png" [fxHide.xs]="true">
+    <span fxLayout="row" fxLayout.xs="column">Energy Report</span>
+  </mat-toolbar>
+
+  <mat-card fxLayout="column" fxLayoutGap="2%">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="2%">
+      <mat-form-field  >
+        <mat-select [(ngModel)]="meterType" name="meterType" id="meterTypeId" placeholder="Meter Type"
+          (selectionChange)="onMeterTypeChange($event.value)">
+          <mat-option *ngFor="let item of lstMeterType;" [value]="item.meterTypeName">{{item.meterTypeName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      
+        <mat-form-field fxFlex>
+          <mat-select [(ngModel)]="meterGroup" name="meterGroup" id="meterGroupId" placeholder="Meter Group"
+            (selectionChange)="onMeterGroupChange($event.value)">
+            <mat-option *ngFor="let item of lstMeterGroup;" [value]="item.id">{{item.description}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-select [(ngModel)]="selectedMeters" multiple placeholder="Select a Meter" class="multiSelectCustom"
+          [formControl]="form.controls['meters']">
+          <input class="myInput" #myInput matInput focused="'true'" type="text" (keyup)="search($event.target.value)"
+            autocomplete="off" placeholder="search">
+          <mat-divider></mat-divider>
+          <mat-option #allMetersSelected (click)="toggleMetersAllSelection()" [value]="0">Select All</mat-option>
+          <mat-option *ngFor="let item of lstMeterName" [value]="item.id"
+            (click)="toggleMeterPerOne(allMetersSelected.viewValue)"> {{item.deviceName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- <mat-form-field fxFlex>
+        <mat-select [(ngModel)]="meterName" name="meterName" id="meterNameId" placeholder="Meter Name">
+          <input class="myInput" #myInput matInput focused="'true'" type="text" (keyup)="search($event.target.value)"
+            autocomplete="off" placeholder="search">
+          <mat-divider></mat-divider>
+          <mat-option *ngFor="let item of lstMeterName;" [value]="item.meterID">{{item.meterName}}</mat-option>
+        </mat-select>
+      </mat-form-field> -->
+
+      <mat-form-field fxFlex>
+        <mat-select [(ngModel)]="reportType" name="reportType" id="reportTypeId" placeholder="Report Type" 
+        (selectionChange)="onReportTypeChange($event.value)">
+          <mat-option *ngFor="let item of lstReportType;" [value]="item.value">{{item.value}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex>
+        <mat-select [(ngModel)]="fromYear" name="fromYear" id="fromYearId" placeholder="FromYear">
+          <mat-option *ngFor="let item of lstFromYear;" [value]="item.value">{{item.value}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="2%">
+      <mat-form-field *ngIf="((reportType=='Weekly'||reportType=='Monthly')&&(blnCompare))">
+        <mat-select [(ngModel)]="toYear" name="toYear" id="toYearId" placeholder="To Year">
+          <mat-option *ngFor="let item of lstToYear;" [value]="item.value">{{item.value}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!-- *ngIf="reportType=='Daily'" -->
+      <mat-form-field *ngIf="reportType=='Daily'">
+        <mat-select [(ngModel)]="fromMonth" name="fromMonth" id="fromMonthId" placeholder="From Month">
+          <mat-option *ngFor="let item of lstFromMonth;" [value]="item.name">{{item.value}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <!-- *ngIf="reportType=='Daily'&&blnCompare" -->
+      <mat-form-field *ngIf="reportType=='Daily'&&blnCompare">
+        <mat-select [(ngModel)]="toMonth" name="toMonth" id="toMonthId" placeholder="To Month">
+          <mat-option *ngFor="let item of lstToMonth;" [value]="item.name">{{item.value}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="reportType=='Hourly'">
+        <mat-label>Date</mat-label>
+        <input matInput [matDatepicker]="fromDat" [(ngModel)]="fromDate">
+        <mat-datepicker-toggle matSuffix [for]="fromDat"></mat-datepicker-toggle>
+        <mat-datepicker #fromDat></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="reportType=='Hourly' && blnCompare">
+        <mat-label>Compare Date</mat-label>
+        <input matInput [matDatepicker]="toDat" [(ngModel)]="toDate">
+        <mat-datepicker-toggle matSuffix [for]="toDat"></mat-datepicker-toggle>
+        <mat-datepicker #toDat></mat-datepicker>
+      </mat-form-field>
+
+      <mat-checkbox [(ngModel)]="blnCompare" *ngIf="reportType!='Yearly'">Compare</mat-checkbox>
+
+      <button color="primary" mat-raised-button class="common-buttons" (click)="viewEstidamaChart()">
+        APPLY
+      </button>
+
+      <button color="primary" mat-raised-button class="common-buttons" (click)="generarPDF()">
+        PRINT
+      </button>
+
+    </div>
+
+  </mat-card>
+
+
+
+  <mat-card fxLayout="row" fxLayoutGap="10%">
+    <mat-card class="mat-elevation-z4 card-height consumption" fxLayoutGap="75px" fxFlexLayout="column">
+      <mat-icon class="consumption-icon">pages</mat-icon>
+      <h3 fxFlex>
+        Consumption
+        <b> {{consumption}}</b>
+      </h3>
+    </mat-card>
+    <mat-card class="mat-elevation-z4 card-height average" fxLayoutGap="75px" fxFlexLayout="column">
+      <mat-icon class="average-icon">pages</mat-icon>
+      <h3 fxFlex>
+        Average
+        <b>{{average}}</b>
+      </h3>
+    </mat-card>
+    <mat-card class="mat-elevation-z4 card-height peak" fxLayoutGap="35px" fxFlexLayout="column">
+      <mat-icon class="peak-icon">pages</mat-icon>
+      <h3 fxFlex>
+        Peak
+        <b>{{peak}}</b>
+      </h3>
+    </mat-card>
+  </mat-card>
+
+
+  <mat-card fxLayout="row" fxLayoutGap="10%">
+    <div id="echacontainer"></div>
+  </mat-card>
+
+</div>

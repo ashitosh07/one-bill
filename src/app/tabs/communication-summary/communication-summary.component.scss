@@ -1,0 +1,26 @@
+.toolbar-spacer {
+    flex: 1 1 auto;
+  }
+
+  .myInput {
+    height: 50px !important;
+    padding: 10px !important;
+  }
+  
+  .img-style{
+    width: 32px;
+  }
+
+  .seach-icon {
+    vertical-align: middle;
+    padding-top: 1%;
+    margin-left: 0%;
+    cursor: pointer;
+  }
+
+  .position-fixed{
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 5;
+  }

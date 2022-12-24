@@ -1,0 +1,69 @@
+<fury-page-layout mode="card" style="margin-top:20px">
+
+
+    <fury-page-layout-content fxLayout="column">
+        <mat-toolbar color="primary" class="position-fixed">
+            <img class="img-style" src="assets/img/fav-icon.png">
+            <span>Consumption Alert</span>
+            <span class="toolbar-spacer"></span>
+            <div class="fury-flex-form-field">
+
+                <button matTooltip="Reset" (click)="onReset()" mat-icon-button class="example-icon"
+                    aria-label="Example icon-button with menu icon">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+
+                <button matTooltip="Save" [disabled]="isData == false && disableSaveButton" (click)="onSave()"
+                    mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+                    <mat-icon>save</mat-icon>
+                </button>
+
+                <button matTooltip="Print" [disabled]="isData == false" (click)="onPrintSummary()" mat-icon-button
+                    class="example-icon" aria-label="Example icon-button with menu icon">
+                    <mat-icon>print</mat-icon>
+                </button>
+                <!-- [disabled]="isData == false" -->
+                <button matTooltip="Export" (click)="onExport()" mat-icon-button
+                    class="example-icon" aria-label="Example icon-button with menu icon">
+                    <mat-icon>import_export</mat-icon>
+                </button>
+
+            </div>
+
+        </mat-toolbar>
+        <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start stretch">
+            <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+                <fury-card-header>
+                </fury-card-header>
+                <fury-card-content fxLayout="column">
+                    <div class="result" fxLayout="column">
+                        <fury-bill-consumption-toolbar [billPeriods]="billPeriods" [utilityTypes]="utilityTypes"
+                            [consumptionRangeDatas]="consumptionAlerts" (disableSave)="disable($event)"
+                            (searchClicked)="onSearch($event)">
+                        </fury-bill-consumption-toolbar>
+                    </div>
+                    <div class="result padding-top" fxLayout="column">
+                        <fury-bill-consumption-details [dataSource]="failedBills" [hideHeader]="false">
+                        </fury-bill-consumption-details>
+                    </div>
+                </fury-card-content>
+            </fury-card>
+        </div>
+        <!-- </fury-page-layout-content>
+
+    <fury-page-layout-content [fxLayoutGap]="gap" fxLayout="column"> -->
+        <!-- <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start stretch">
+            <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+                <fury-card-content fxLayout="column">
+                    <div class="result" fxLayout="column">
+                        <fury-bill-consumption-details [dataSource]="failedBills" [hideHeader]="false">
+                        </fury-bill-consumption-details>
+                    </div>
+                </fury-card-content>
+            </fury-card>
+        </div> -->
+
+    </fury-page-layout-content>
+</fury-page-layout>

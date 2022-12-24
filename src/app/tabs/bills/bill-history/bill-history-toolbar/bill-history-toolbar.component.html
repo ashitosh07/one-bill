@@ -1,0 +1,124 @@
+<mat-dialog-content>
+    
+    <div class="person padding-bottom" >
+        <form>
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="8px">
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="8px" *ngIf="ownerId == 0">
+                    <mat-form-field class="result" color="primary" style="width: 160px;">
+                        <mat-label>From Date</mat-label>
+                        <input (click)="formDatepickerRef1.open()" id="fromDate" name="fromDate" [(ngModel)]="fromDate"
+                            (ngModelChange)="validateFromDateAndToDate()"
+                            (focus)="formDatepickerRef1.open()" [matDatepicker]="formDatepickerRef1" matInput readonly>
+                        <mat-datepicker-toggle [for]="formDatepickerRef1" matSuffix></mat-datepicker-toggle>
+                        <mat-datepicker #formDatepickerRef1></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field class="result" color="primary" style="width: 160px;">
+                        <mat-label>To Date</mat-label>
+                        <input (click)="formDatepickerRef2.open()" id="toDate" name="toDate" [(ngModel)]="toDate"
+                            (ngModelChange)="validateFromDateAndToDate()"
+                            (focus)="formDatepickerRef2.open()" [matDatepicker]="formDatepickerRef2" matInput readonly>
+                        <mat-datepicker-toggle [for]="formDatepickerRef2" matSuffix></mat-datepicker-toggle>
+                        <mat-datepicker #formDatepickerRef2></mat-datepicker>
+                        <small *ngIf="!isValidDate">To date should be greater than or equal to From date.</small>
+                    </mat-form-field>
+
+                    <mat-form-field class="result" color="primary" *ngIf="isHide">
+                        <mat-label>Unit Number</mat-label>
+                        <input type="text" id="unitNumber" name="unitNumber" [(ngModel)]="unitNumber" matInput>
+                    </mat-form-field>
+
+                    <!-- <mat-form-field class="result" color="primary">
+                        <mat-label>Unit Number Name</mat-label>
+                        <input type="text" [matAutocomplete]="tenant" id="TenantName" name="TenantName" matInput>
+                        <mat-autocomplete #tenant="matAutocomplete" (optionSelected)="selectTenant($event)">
+                            <mat-option *ngFor="let tenant of tenants; index as i" [value]="tenant.tenantName">
+                                {{ tenant.tenantName }}
+                            </mat-option>
+                        </mat-autocomplete>
+                        <mat-hint>Please select a Tenant name</mat-hint>
+                    </mat-form-field> -->
+
+                    <mat-form-field class="result" color="primary" *ngIf="role!='External'">
+                        <mat-label>Bill Period</mat-label>
+                        <mat-select id="billPeriod" name="billPeriod" (selectionChange)="onChangeBillPeriod($event.value)"
+                            [(value)]="billPeriodId">
+                            <mat-option *ngFor="let option of billPeriods" [value]="option.value">{{ option.label }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-hint>Please select a Bill period</mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field class="result" color="primary" *ngIf="role!='External' && isTenantVisible == true">
+                        <mat-label>Tenant Name</mat-label>
+                        <mat-select [(ngModel)]="selectedTenants" multiple placeholder="Select a tenant"
+                            class="multiSelectCustom" id="tenant" name="tenant" #tenantSelect>
+                            <input class="myInput" #myInput matInput focused="'true'" type="text" (keydown)="handleInput($event)"
+                                (keyup)="searchTenants($event.target.value)" autocomplete="off" placeholder="search">
+                            <mat-divider></mat-divider>
+                            <mat-option #allTenantsSelected (click)="toggleTenantsAllSelection()" [value]="0">Select All</mat-option>
+                            <mat-option *ngFor="let tenant of filteredTenants" [value]="tenant.id"
+                                (click)="toggleTenantsPerOne(allTenantsSelected.viewValue)"> {{ tenant.ownerName }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <!-- <mat-checkbox *ngIf="role!='External'" class = "example-margin" [(ngModel)] = "isFine" (change)="onChangeFine($event)"> 
+                        <label>Fine</label> 
+                    </mat-checkbox>
+
+                    <mat-checkbox *ngIf="role!='External'" class = "example-margin" [(ngModel)] = "isPenality" (change)="onChangePenality($event)"> 
+                        <label>Penality</label> 
+                    </mat-checkbox> -->
+
+
+                    <mat-form-field class="result" color="primary" *ngIf="(role!='External') && !isRejectedBills"
+                        style="width: 160px;">
+                        <mat-label>Bill Type</mat-label>
+                        <mat-select id="billType" name="billType" (selectionChange)="onChangeBillType($event.value)"
+                            [(value)]="billTypeId">
+                            <mat-option *ngFor="let option of billTypes" [value]="option.value">{{ option.label }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-hint>Please select a Bill Type</mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field class="result" color="primary"
+                        *ngIf="(role!='External') && !isApproveBills && !isRejectedBills" style="width: 160px;">
+                        <mat-label>Bill Status Type</mat-label>
+                        <mat-select id="billFeeType" name="billFeeType"
+                            (selectionChange)="onChangeBillFeeType($event.value)" [(value)]="billFeeTypeId">
+                            <mat-option *ngFor="let option of billFeeTypes" [value]="option.value">{{ option.label }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-hint>Please select a Bill Status Type</mat-hint>
+                    </mat-form-field>
+                    <div class="fury-flex-form-field">
+                        <button (click)="onSearch()" mat-icon-button>
+                            <mat-icon>search</mat-icon>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayoutGap="15px" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="15px" *ngIf="ownerId > 0">
+                <mat-form-field class="result" color="primary"
+                    *ngIf="ownerId > 0 && !isApproveBills && !isRejectedBills" style="width: 160px;">
+                <mat-label>Months</mat-label>
+                <mat-select id="months" name="months"
+                    (selectionChange)="onChangeMonths($event.value)" [(value)]="monthSelected">
+                    <mat-option *ngFor="let option of lstMonths" [value]="option.description">{{ option.description }}
+                    </mat-option>
+                </mat-select>
+                <mat-hint>Please select Months</mat-hint>
+                </mat-form-field>
+                <div class="fury-flex-form-field">
+                    <button (click)="onSearch()" mat-button class="buttonStyle">Search</button>
+                </div>
+            </div>
+            
+        </form>
+        
+
+        
+    </div>
+</mat-dialog-content>

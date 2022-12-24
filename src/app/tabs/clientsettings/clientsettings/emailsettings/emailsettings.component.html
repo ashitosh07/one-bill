@@ -1,0 +1,75 @@
+<div class="content" [formGroup]="emailSettings" fxLayout="column" fxLayoutGap="8px">
+    
+    <div fxLayout="row" fxLayoutGap="8px">
+
+        <mat-form-field fxFlex="auto" fxFlex="50%">
+            <mat-label>SMTP Server</mat-label>
+            <input formControlName="smtpServer" [(ngModel)]="smtpServer" matInput >
+            <mat-hint>This will be SMTP Server</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="auto" fxFlex="50%">
+            <mat-label>SMTP Port</mat-label>
+            <input formControlName="smtpPort" [(ngModel)]="smtpPort" type="number" matInput>
+            <mat-hint>This will be SMTP Port</mat-hint>
+        </mat-form-field>
+    
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="8px">
+
+        <mat-form-field fxFlex="auto" fxFlex="50%">
+            <mat-label>SMTP Username</mat-label>
+            <input formControlName="smtpUsername" [(ngModel)]="smtpUsername" matInput>
+            <mat-hint>This will be SMTP Username</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="auto" fxFlex="50%">
+            <mat-label>SMTP Password</mat-label>
+            <input [type]="inputType" formControlName="smtpPassword" [(ngModel)]="smtpPassword" matInput>
+            <button type="button" mat-icon-button matSuffix (click)="toggleVisibility()" matTooltip="Toggle Visibility">
+                <mat-icon *ngIf="visible">visibility</mat-icon>
+                <mat-icon *ngIf="!visible">visibility_off</mat-icon>
+            </button>
+            <mat-hint>This will be SMTP Password</mat-hint>
+        </mat-form-field>
+    
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="8px">
+
+        <mat-form-field fxFlex="auto" fxFlex="50%">
+            <mat-label>POP Server</mat-label>
+            <input formControlName="popServer" [(ngModel)]="popServer" matInput>
+            <mat-hint>This will be POP Server</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="auto" fxFlex="50%">
+            <mat-label>POP Port</mat-label>
+            <input formControlName="popPort" [(ngModel)]="popPort" type="number" matInput>
+            <mat-hint>This will be POP Port</mat-hint>
+        </mat-form-field>
+    
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="8px">
+
+        <mat-form-field fxFlex="auto" fxFlex="50%">
+            <mat-label>Noreply Username</mat-label>
+            <input formControlName="noreplyUsername" [(ngModel)]="noreplyUsername" matInput>
+            <mat-hint>This will be Noreply Username</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="auto" fxFlex="50%">
+            <mat-label>Noreply Password</mat-label>
+            <input [type]="inputTypeNoReply" formControlName="noreplyPassword" [(ngModel)]="noreplyPassword" matInput>
+            <button type="button" mat-icon-button matSuffix (click)="toggleVisibilityNoReply()" matTooltip="Toggle Visibility">
+                <mat-icon *ngIf="visibleNoReply">visibility</mat-icon>
+                <mat-icon *ngIf="!visibleNoReply">visibility_off</mat-icon>
+            </button>
+            <mat-hint>This will be Noreply Password</mat-hint>
+        </mat-form-field>
+    
+    </div>
+
+</div>

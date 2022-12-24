@@ -1,0 +1,118 @@
+<div mat-dialog-title>
+  <mat-toolbar role="toolbar" class="task-header">
+    <span>Bill Settings</span>
+    <span class="fx-spacer"></span>
+    <button mat-icon-button (click)="close()">
+      <mat-icon title="Close" mat-list-icon>close</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content>
+    <fury-card>
+
+      <fury-card-content class="padding-top">
+        <div class="person">
+          <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+            <mat-form-field fxFlex>
+              <mat-label>Bill Settings Name</mat-label>
+              <input type="text" formControlName="billSettingsName" matInput>
+              <app-show-errors [ctrl]="form.get('billSettingsName')"></app-show-errors>
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <mat-label>No. of Months</mat-label>
+              <input type="number" formControlName="averageMonthsNumber" matInput>
+              <app-show-errors [ctrl]="form.get('averageMonthsNumber')"></app-show-errors>
+              <mat-hint>Average Bill Amount will be calculated based on Number of Months</mat-hint>
+            </mat-form-field>
+
+          </div>
+        </div>
+
+        <div class="person" style="padding-top: 15px;">
+          <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+            <mat-form-field fxFlex>
+              <mat-label>Bill Format</mat-label>
+              <input type="text" formControlName="billFormat" matInput>
+            </mat-form-field>
+            <input class="profileButton" type="file" accept="*" (change)="uploadFile($event)" style="width: 90px;padding-top: 25px;">
+            <mat-form-field fxFlex>
+              <mat-label>Bill Due Days</mat-label>
+              <input type="number" formControlName="billDueDays" matInput>
+              <app-show-errors [ctrl]="form.get('billDueDays')"></app-show-errors>
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- <div class="person" >
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px">
+                  <mat-form-field fxFlex>
+                    <mat-label>Bill Period</mat-label>
+                    <input matInput [matAutocomplete]="billPeriodTypeId" formControlName="billPeriodType">
+                    <mat-autocomplete #billPeriodTypeId="matAutocomplete" (optionSelected)="selectBillPeriodType($event)">
+                      <mat-option *ngFor="let billPeriodType of filteredBillPeriodTypes; index as i" [value]="billPeriodType.description">{{ billPeriodType.description }}
+                      </mat-option>
+                    </mat-autocomplete>
+                    <app-show-errors [ctrl]="form.get('billPeriodType')"></app-show-errors>
+                  </mat-form-field>
+
+                   <mat-form-field fxFlex>
+                    <mat-label>Week Day</mat-label>
+                    <input type="text" formControlName="weekDay" matInput>
+                    <app-show-errors [ctrl]="form.get('weekDay')"></app-show-errors>
+                  </mat-form-field> 
+                
+                  <mat-form-field fxFlex>
+                    <mat-label>Display Bill Amount</mat-label>
+                    <input matInput [matAutocomplete]="billAmountType" formControlName="amountType">
+                    <mat-autocomplete #billAmountType="matAutocomplete" (optionSelected)="selectBillAmountType($event)">
+                      <mat-option *ngFor="let amountType of filteredBillAmountTypes; index as i" [value]="amountType.description">{{ amountType.description }}
+                      </mat-option>
+                    </mat-autocomplete>
+                    
+                    <app-show-errors [ctrl]="form.get('amountType')"></app-show-errors>
+                  </mat-form-field>
+                </div>
+              </div> -->
+        <div class="person">
+          <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+
+            <mat-form-field fxFlex>
+              <mat-label>Penalty Applied From</mat-label>
+              <input type="number" formControlName="penaltyAfter" matInput>
+              <app-show-errors [ctrl]="form.get('penaltyAfter')"></app-show-errors>
+            </mat-form-field>
+
+            <!-- <mat-form-field fxFlex>
+                    <mat-label>Terms And Conditions</mat-label>      
+                    <mat-select (selectionChange)="selectTermsConditions($event)" formControlName="termsAndCondition">
+                      <mat-option [value]="0">----Select----</mat-option>
+                      <mat-option *ngFor="let item of lstTermsAndConditions" [value]="item.description">
+                        {{ item.description }}
+                      </mat-option>
+                    </mat-select>
+                    <app-show-errors [ctrl]="form.get('termsAndConditionId')"></app-show-errors>
+                  </mat-form-field> -->
+            <mat-form-field fxFlex>
+              <mat-label>Tax Setting</mat-label>
+              <mat-select (selectionChange)="selectTaxSettings($event)" formControlName="taxName">
+                <mat-option [value]="0">----Select----</mat-option>
+                <mat-option *ngFor="let item of taxSettings" [value]="item.description">
+                  {{ item.description }}
+                </mat-option>
+              </mat-select>
+              <app-show-errors [ctrl]="form.get('taxId')"></app-show-errors>
+            </mat-form-field>
+          </div>
+        </div>
+      </fury-card-content>
+    </fury-card>
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button mat-button (click)="closeDialog()">CANCEL</button>
+    <button *ngIf="isCreateMode()" mat-button [disabled]="!form.valid">CREATE BILLSETTINGS</button>
+    <button *ngIf="isUpdateMode()" mat-button [disabled]="!form.valid">UPDATE BILLSETTINGS</button>
+  </mat-dialog-actions>
+</form>

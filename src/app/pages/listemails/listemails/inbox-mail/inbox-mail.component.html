@@ -1,0 +1,91 @@
+<div class="inbox-mail" fxLayout="column" fxFlex="grow">
+
+  <div class="header border-bottom" fxFlex="none" fxLayout="row" fxLayoutAlign="space-between center"
+    fxLayoutAlign.gt-xs="start center">
+    <button type="button" mat-icon-button [routerLink]="['../../']" matTooltip="Back to Inbox">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
+
+    <mat-divider fxHide fxShow.gt-xs></mat-divider>
+
+
+  </div>
+
+    <div class="mail-content" fxLayout="column">
+      <div class="head border-bottom" fxFlex="noshrink" fxLayout="row" fxLayoutAlign="space-between start">
+        <div fxLayout="column" fxLayoutAlign="start start">
+          <div class="subject">{{ (mail$).subject }}</div>
+          <div class="labels" fxLayout="row" fxLayoutGap="8px">
+            <fury-inbox-mail-label *ngFor="let label of (mail$).labels" [color]="label.color">
+              {{ label.name }}
+            </fury-inbox-mail-label>
+          </div>
+        </div>
+
+        <!-- <div class="actions" fxLayoutAlign="end center">
+          <fury-inbox-mail-star [isStarred]="(mail$).starred" (starred)="toggleStarred()">
+          </fury-inbox-mail-star>
+
+          <fury-inbox-mail-label-list [availableLabels]="availableLabels" [labels]="(mail$).labels"
+            (addLabel)="addLabel($event)" (removeLabel)="removeLabel($event)"></fury-inbox-mail-label-list>
+        </div> -->
+      </div>
+
+      <div class="info" fxFlex="noshrink" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-xs="row"
+        fxLayoutAlign.gt-xs="space-between">
+        <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+          <img class="picture" src="http://i.pravatar.cc/35?u={{ (mail$).from?.name }}">
+
+          <div fxLayout="column">
+            <div class="from">{{ (mail$).from?.name }}</div>
+            <div class="to secondary-text" fxLayout="row" fxLayoutAlign="start center">
+              to {{ (mail$).to?.name }}
+              <mat-icon>arrow_drop_down</mat-icon>
+            </div>
+          </div>
+        </div>
+
+        <div class="extra" fxFlexAlign.xs="end" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
+          <div class="when secondary-text">{{ (mail$).when?.fromNow() }}</div>
+          <button class="options icon" [matMenuTriggerFor]="mailOptions" mat-icon-button>
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <div class="content" fxFlex="grow" [innerHtml]="(mail$).content">
+      </div>
+
+      <div *ngFor="let attachment of fileName,index as i" class="extra" fxFlexAlign.xs="start" fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+        <mat-icon>attachments</mat-icon>
+        <div  class="when secondary-text under-line" >
+          <span (click)="downloadDocument()">{{ this.fileName[i] }}</span>
+       
+      </div>
+      </div>
+
+      <div class="reply border-top" fxFlex="noshrink" fxLayout="row" fxLayoutAlign="space-between center"
+       >
+      
+
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+          <button type="button" mat-button (click)="openCompose()">
+         
+            <mat-icon>reply</mat-icon>
+          </button>
+
+          <div class="text">Click to Reply
+          </div>
+       
+        </div>
+      </div>
+
+    </div>
+</div>
+
+<mat-menu #mailOptions="matMenu">
+  <button mat-menu-item (click)="enableIsread(false)">
+    <mat-icon>markunread_mailbox</mat-icon>
+    Mark as unread
+  </button>
+</mat-menu>

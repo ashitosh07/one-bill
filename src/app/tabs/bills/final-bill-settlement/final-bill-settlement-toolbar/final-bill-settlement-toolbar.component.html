@@ -1,0 +1,91 @@
+<mat-dialog-content>
+    <div class="person">
+        <form [formGroup]="form">
+            <div fxLayout="row" *ngIf="!isVisible">
+                <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                    formControlName="option" [(ngModel)]="selectedOption">
+                    <mat-radio-button (change)="radioChange($event)" class="example-radio-button marginRadioButton"
+                        *ngFor="let option of options" [value]="option">
+                        <div fxLayout="row" style="margin-right: 30px;">
+                            {{option.label}}
+                        </div>
+                    </mat-radio-button>
+                </mat-radio-group>
+            </div>
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px" class="padding-top">
+
+                <mat-form-field class="result" color="primary" [ngStyle]="{'width': (isHide?'400px':'320px')}">
+                    <mat-label>Tenant Name</mat-label>
+                    <input type="text" [matAutocomplete]="tenant" formControlName="tenantName" id="TenantName"
+                        name="TenantName" matInput (keyup)="searchTenant($event.target.value)" (keydown)="handleInput($event)">
+                    <mat-autocomplete #tenant="matAutocomplete" (optionSelected)="selectTenant($event)">
+                        <mat-option *ngFor="let tenant of filteredTenants; index as i" [value]="tenant.ownerName">
+                            {{ tenant.ownerName }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-hint *ngIf="selectedOption?.value == 1">Please select Tenant</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field class="result" color="primary" [ngStyle]="{'width': (isHide?'220px':'180px')}">
+                    <mat-label>Unit Number</mat-label>
+                    <!-- <input type="text" id="UnitNumber" name="UnitNumber" [(ngModel)]="unitNumber" matInput> -->
+
+                    <input type="text" [matAutocomplete]="unit" id="unitNumber" matInput formControlName="unitNumber"
+                        (input)="filterUnit($event.target.value)">
+                    <mat-autocomplete #unit="matAutocomplete" (optionSelected)="selectUnit($event)">
+                        <mat-option *ngFor="let unit of filteredUnits; index as i" [value]="unit.unitNumber">
+                            {{ unit.unitNumber }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-hint *ngIf="selectedOption?.value == 2">Please select Unit</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field class="result" color="primary" *ngIf="!isVisible && options && options.length>2"
+                    [ngStyle]="{'width': (isHide?'220px':'180px')}">
+                    <mat-label>Account Number</mat-label>
+
+                    <input type="text" [matAutocomplete]="accountNumber" matInput formControlName="accountNumber"
+                        (input)="filterAccountNumber($event.target.value)">
+                    <mat-autocomplete #accountNumber="matAutocomplete" (optionSelected)="selectAccountNumber($event)">
+                        <mat-option *ngFor="let accountNumber of filteredAccountNumbers; index as i"
+                            [value]="accountNumber.description">
+                            {{ accountNumber.description }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-hint *ngIf="selectedOption?.value == 3">Please select Account Number</mat-hint>
+                </mat-form-field>
+
+                <!-- <mat-form-field class="result" color="primary">
+                    <mat-label>Phone Number</mat-label>
+                    <input type="text" id="PhoneNumber" name="PhoneNumber" [(ngModel)]="phoneNumber" matInput>
+                </mat-form-field> -->
+
+                <mat-form-field class="result" color="primary" *ngIf="!isHide" style="width: 150px;">
+                    <mat-label>Bill Period</mat-label>
+                    <mat-select id="BillPeriod" name="BillPeriod" (selectionChange)="onChangeBillPeriod($event.value)"
+                        [(value)]="billPeriodId">
+                        <mat-option *ngFor="let option of billPeriods" [value]="option.value">{{ option.label }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="result" color="primary" *ngIf="!isHide" style="width: 150px;">
+                    <mat-label>settlement Date</mat-label>
+                    <input (click)="formDatepickerRef.open()" id="settlementDate" name="settlementDate"
+                        [(ngModel)]="settlementDate" (focus)="formDatepickerRef.open()"
+                        [matDatepicker]="formDatepickerRef" matInput readonly [ngModelOptions]="{standalone: true}">
+                    <mat-datepicker-toggle [for]="formDatepickerRef" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #formDatepickerRef></mat-datepicker>
+                </mat-form-field>
+
+                <div class="fury-flex-form-field">
+                    <button (click)="onSearch()" mat-icon-button
+                        [disabled]="options && options.length > 0 &&  !selectedOption" class="example-icon"
+                        aria-label="Example icon-button with menu icon">
+                        <mat-icon>search</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</mat-dialog-content>

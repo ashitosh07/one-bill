@@ -1,0 +1,120 @@
+<mat-dialog-content>
+  <div class="person padding-bottom">
+    <form>
+      <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="8px">
+        <mat-form-field class="result" color="primary">
+          <mat-label>From Date</mat-label>
+          <input
+            (click)="formDatepickerRef1.open()"
+            id="fromDate"
+            name="fromDate"
+            [(ngModel)]="fromDate"
+            (focus)="formDatepickerRef1.open()"
+            [matDatepicker]="formDatepickerRef1"
+            matInput
+            readonly
+          />
+          <mat-datepicker-toggle
+            [for]="formDatepickerRef1"
+            matSuffix
+          ></mat-datepicker-toggle>
+          <mat-datepicker #formDatepickerRef1></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="result" color="primary">
+          <mat-label>To Date</mat-label>
+          <input
+            (click)="formDatepickerRef2.open()"
+            id="toDate"
+            name="toDate"
+            [(ngModel)]="toDate"
+            (focus)="formDatepickerRef2.open()"
+            [matDatepicker]="formDatepickerRef2"
+            matInput
+            readonly
+            (dateChange)="validateSearchParameters()"
+          />
+          <mat-datepicker-toggle
+            [for]="formDatepickerRef2"
+            matSuffix
+          ></mat-datepicker-toggle>
+          <mat-datepicker #formDatepickerRef2></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="result" color="primary" *ngIf="isHide">
+          <mat-label>Unit Number</mat-label>
+          <input
+            type="text"
+            id="unitNumber"
+            name="unitNumber"
+            [(ngModel)]="unitNumber"
+            matInput
+            (dateChange)="validateSearchParameters()"
+          />
+        </mat-form-field>
+
+        <!-- <mat-form-field class="result" color="primary">
+                    <mat-label>Unit Number Name</mat-label>
+                    <input type="text" [matAutocomplete]="tenant" id="TenantName" name="TenantName" matInput>
+                    <mat-autocomplete #tenant="matAutocomplete" (optionSelected)="selectTenant($event)">
+                        <mat-option *ngFor="let tenant of tenants; index as i" [value]="tenant.tenantName">
+                            {{ tenant.tenantName }}
+                        </mat-option>
+                    </mat-autocomplete>
+                    <mat-hint>Please select a Tenant name</mat-hint>
+                </mat-form-field> -->
+
+        <mat-form-field
+          class="result"
+          color="primary"
+          *ngIf="role != 'External'"
+        >
+          <mat-label>Status</mat-label>
+          <mat-select
+            id="status"
+            name="status"
+            (selectionChange)="onChangeStatus($event.value)"
+            [(value)]="statusId"
+          >
+            <mat-option [value]="1">Success</mat-option>
+            <mat-option [value]="0">Failed</mat-option>
+          </mat-select>
+          
+        </mat-form-field>
+
+        <!-- <mat-checkbox *ngIf="role!='External'" class = "example-margin" [(ngModel)] = "isFine" (change)="onChangeFine($event)"> 
+                    <label>Fine</label> 
+                  </mat-checkbox>
+
+                  <mat-checkbox *ngIf="role!='External'" class = "example-margin" [(ngModel)] = "isPenality" (change)="onChangePenality($event)"> 
+                    <label>Penality</label> 
+                  </mat-checkbox> -->
+
+        <mat-form-field
+          class="result"
+          color="primary"
+          *ngIf="role != 'External'"
+        >
+          <mat-label>Modes</mat-label>
+          <mat-select
+            id="mode"
+            name="mode"
+            (selectionChange)="onChangeMode($event.value)"
+            [(value)]="modeId"
+          >
+            <mat-option *ngFor="let option of modes" [value]="option.value"
+              >{{ option.label }}
+            </mat-option>
+          </mat-select>
+          <mat-hint>Please select a Notification Mode</mat-hint>
+        </mat-form-field>
+
+        <div class="fury-flex-form-field">
+          <button (click)="onSearch()" [disabled]="isDisabled" mat-icon-button>
+            <mat-icon>search</mat-icon>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>

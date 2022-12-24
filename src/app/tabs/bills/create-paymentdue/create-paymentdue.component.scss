@@ -1,0 +1,28 @@
+.top-padding
+{
+    padding-top: 0.7%;
+}
+
+.bottom-padding
+{
+    padding-bottom: 2%;
+}
+
+.toolbar-spacer {
+    flex: 1 1 auto;
+  }
+
+  .img-style{
+    width: 32px;
+  }
+
+  .position-fixed{
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 5;
+  }
+
+  .header-align-right {
+    text-align: right;
+  } 

@@ -1,0 +1,92 @@
+<!-- <mat-toolbar role="toolbar" class="task-header"> -->
+  
+  
+<!-- </mat-toolbar> -->
+<mat-card fxLayout="column" fxLayoutGap="20px" style="padding: 0px 27px 27px 27px;min-height:550px;">
+  <!-- <span style="float: right;margin: 0px;">
+    <button mat-icon-button (click)="close()" style="float: right;">
+      <mat-icon title="Close" mat-list-icon>close</mat-icon>
+    </button>
+  </span> -->
+  <div style="padding-top:10px;"></div>
+  <mat-toolbar color="primary">
+    <img class="img-style" src="assets/img/fav-icon.png">
+    <span>Update Ticket</span>
+    <span class="toolbar-spacer"></span>
+    <span style="float: right;margin: 0px;">
+      <button mat-icon-button (click)="close()" style="float: right;">
+        <mat-icon title="Close" mat-list-icon>close</mat-icon>
+      </button>
+    </span>
+    <!-- <button  (click)="cancelData()" [disabled]="txtForm.pristine" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon class="icon-color" matTooltip="RESET">refresh</mat-icon>
+    </button>
+    <button (click)="updateData()" [disabled]="txtForm.invalid || isUploadSuccess == false" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon  class="icon-color" matTooltip="UPDATE">update</mat-icon>
+    </button> -->
+
+  </mat-toolbar>
+  
+  <!-- <div fxLayout="row" fxLayoutGap="20px" *ngIf="role!='External'">
+  
+    <mat-form-field fxFlex=" 50%">
+      <mat-select [(ngModel)]="entityName" name="entityName" [formControl]="txtForm.controls['entityName']" id="entityId" placeholder="Entity" (ngModelChange)="entityChanged()">
+        <mat-option *ngFor="let entity of lstEntities;" [value]="entity" >{{entity}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex=" 50%">
+      <mat-label>Entities</mat-label>
+      <input matInput [matAutocomplete]="entities" [formControl]="txtForm.controls['entities']" required>
+      <mat-autocomplete #entities="matAutocomplete" (optionSelected)="selectEntity($event)">
+          <mat-option *ngFor="let value of filteredEntities; index as i" [value]="value.entityName">
+              {{ value.entityName }}</mat-option>                    
+      </mat-autocomplete>
+    </mat-form-field>
+
+  </div> -->
+
+  <div fxLayout="row" fxFlex="100%" style="max-height: 350px;">
+    <quill-editor [@fadeInUp]
+    [formControl]="txtForm.controls['form']"
+    [styles]="{ flex: '1 1 auto'}"
+    class="quill mat-elevation-z16"
+    [(ngModel)]="text"
+    [placeholder]="'Ticket Message....'"
+    fxLayout="column"></quill-editor>
+  </div>
+
+  <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="6px">
+    <!-- <mat-form-field style="width: 50%;">
+      <mat-select [(ngModel)]="sentTo" name="sentTo" [formControl]="txtForm.controls['sendTo']" id="sendId" placeholder="Sent To">
+        <mat-option *ngFor="let item of lstsentTo;" [value]="item.id" >{{item.description}}</mat-option>
+      </mat-select>
+    </mat-form-field> -->
+
+    <input type="file" id="picture" (change)="uploadPhoto()" class="input-file" id="InputFile"
+    name="InputFile" #ticketPhoto accept="image/jpeg/pdf" max-file-size="100kb" [formControl]="txtForm.controls['ticketPhoto']"/>
+    <img src="{{image}}" style="width: 55px;height: 50px;">
+    <!-- *ngIf="type=='image' && image" -->
+  </div>
+  <mat-hint class="errorMessage" *ngIf="isUploadSuccess == false">{{ errorMessage }}</mat-hint>  
+
+  <div style="text-align: right;">
+    <button (click)="cancelData()" class="buttonStyle" [disabled]="txtForm.pristine" mat-button>RESET</button>
+    <button (click)="updateData()" style="margin-left: 20px;" class="buttonStyle" [disabled]="txtForm.invalid || isUploadSuccess == false" mat-button>UPDATE</button>
+  </div>
+
+  <div fxLayout="row" fxLayoutGap="20px" *ngIf="role=='ADMIN'">
+    <mat-form-field style="width: 50%;">
+      <mat-select [(ngModel)]="status" name="status" id="statusId" placeholder="Status">
+        <mat-option *ngFor="let item of lstStatus;" [value]="item.id" >{{item.description}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field style="width: 50%;">
+      <input required [(ngModel)]="assignedTo" name="assignedTo" matInput 
+        placeholder="Assigned To" id="assignedId">
+    </mat-form-field>
+     
+  </div>
+
+</mat-card>

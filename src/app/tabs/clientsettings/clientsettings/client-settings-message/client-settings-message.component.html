@@ -1,0 +1,100 @@
+<div class="content" [formGroup]="messageSettings" fxLayout="column" fxLayoutGap="8px">
+    
+    <div fxLayout="row" fxLayoutGap="8px">
+
+        <mat-form-field fxFlex="auto" fxFlex="50%">
+            <mat-label>Message Type</mat-label>
+            <mat-select formControlName="messageType" (selectionChange)="onMessageTypeChange()"
+            [(ngModel)]="messageType" >
+                <mat-option *ngFor="let option of messageTypes" [value]="option">
+                    {{ option }}
+                </mat-option>
+            </mat-select>
+            <mat-hint>This will be message type.</mat-hint>
+            <mat-error *ngIf="messageSettings.invalid">Message Type is required.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="auto" fxFlex="50%">
+            <mat-label>Sender Id</mat-label>
+            <input formControlName="senderId" [(ngModel)]="senderId" matInput >
+            <mat-hint>This will be unique Sender Id</mat-hint>
+        </mat-form-field>
+    
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="8px">
+
+        <mat-form-field fxFlex="auto" fxFlex="50%">
+            <mat-label>User Name</mat-label>
+            <input formControlName="userName" [(ngModel)]="userName" matInput >
+            <mat-hint>This will be unique User Name</mat-hint>
+        </mat-form-field>
+    
+        <mat-form-field fxFlex="auto" fxFlex="50%">
+            <mat-label>Password</mat-label>
+            <input [type]="inputType" formControlName="password" [(ngModel)]="password" matInput >
+            <button type="button" mat-icon-button matSuffix (click)="toggleVisibility()" matTooltip="Toggle Visibility">
+              <mat-icon *ngIf="visible">visibility</mat-icon>
+              <mat-icon *ngIf="!visible">visibility_off</mat-icon>
+          </button>
+            <mat-hint>This will be unique Password</mat-hint>
+        </mat-form-field>
+
+    </div>
+
+    <mat-form-field fxFlex="auto">
+        <mat-label>API Link</mat-label>
+        <input formControlName="apiLink" [(ngModel)]="apiLink" matInput 
+        pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?"
+    >
+        <mat-hint>This will be like http://wwww.example.com</mat-hint>
+    </mat-form-field>    
+
+    <button  mat-button color="primary"
+    [disabled]="senderId === '' || 
+    apiLink === '' || userName === '' || password === '' || messageType === '' "
+    (click)="saveMessage()">ADD SETTINGS</button>
+
+    <table class="example-container" [dataSource]="messageDataSource" mat-table matSort [ngStyle]="{display:blnShow}" fxFlex="auto">
+
+        <ng-container matColumnDef="delete">
+          <th>Delete</th>
+          <td *matCellDef="let row" class="actions-cell" mat-cell>
+            <mat-icon>more_horiz</mat-icon>
+          </td>
+        </ng-container>
+
+        <!-- fullName Column -->
+        <ng-container *ngFor="let column of messageColumns">
+          <ng-container *ngIf="column.isModelProperty" [matColumnDef]="column.property">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.name }}</th>
+            <td *matCellDef="let row" mat-cell>
+              {{ row[column.property] }}
+            </td>
+          </ng-container>
+        </ng-container>
+        
+
+        <!-- actions Column -->
+        <ng-container matColumnDef="actions">
+          <th *matHeaderCellDef class="actions-cell" mat-header-cell>Delete</th>
+          <td *matCellDef="let row" class="actions-cell" mat-cell (click)="deleteMessage(row)">
+            <mat-icon class="deleteIcon">delete</mat-icon>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="modify">
+          <th *matHeaderCellDef class="actions-cell" mat-header-cell>Modify</th>
+          <td *matCellDef="let row" class="actions-cell" mat-cell (click)="modifyMessage(row)">
+            <mat-icon class="modifyIcon">edit</mat-icon>
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="messageVisibleColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: messageVisibleColumns;" class="clickable route-animations-elements" mat-row>
+        </tr>
+        
+      </table>
+
+
+</div>

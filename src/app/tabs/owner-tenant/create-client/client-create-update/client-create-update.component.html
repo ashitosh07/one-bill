@@ -1,0 +1,440 @@
+<div mat-dialog-title>
+  <mat-toolbar role="toolbar" class="task-header">
+    <span>Client</span>
+    <span class="fx-spacer"></span>
+    <button mat-icon-button (click)="close()">
+        <mat-icon title="Close" mat-list-icon>close</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content>
+    <fury-card>
+      <mat-tab-group>
+        <mat-tab label="General">
+          <fury-card-content class="padding-top">
+            <div class="person">
+              <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+
+                <mat-form-field fxFlex class="titleSelector">
+                  <mat-label>Client Name</mat-label>
+                
+                  <mat-select [(ngModel)]="selectedClientName" formControlName="clientName" [disabled]="mode == 'update'">
+                    <mat-option *ngFor="let item of lstClientNames; index as i" [value]="item.description">
+                      {{ item.description }}</mat-option>
+                    </mat-select>
+                  <!-- <app-show-errors [ctrl]="form.controls.address.get('locationId')"></app-show-errors> -->
+                </mat-form-field>
+
+                <!-- <mat-form-field fxFlex class="titleSelector"  >
+                  <mat-label>Company Name</mat-label>
+                  
+                  <input type="text" formControlName="clientName" matInput>
+                  <app-show-errors [ctrl]="form.get('clientName')"></app-show-errors>
+                </mat-form-field> -->
+
+                <div class="profile">
+                  <div fxLayout="column">
+                    <div fxLayout="column" fxLayout.gt-sm="row">
+                      <img class="profileImage" src="{{image}}">
+                      <input class="profileButton" type="file" accept="image/*" (change)="uploadPhoto($event)">                  
+                    </div>
+                    <mat-hint class="errorMessage" *ngIf="isUploadSuccess == false">{{ errorMessage }}</mat-hint>  
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="person">
+              <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px">
+                <mat-form-field class="titleSelector" fxFlex>
+                  <mat-label>Title</mat-label>
+                  <input matInput [matAutocomplete]="title" formControlName="title">
+                  <mat-autocomplete #title="matAutocomplete" (optionSelected)="selectTitle($event)">
+                    <mat-option *ngFor="let title of filteredTitles; index as i" [value]="title.description">{{ title.description }}
+                    </mat-option>
+                  </mat-autocomplete>
+                  <app-show-errors [ctrl]="form.get('title')"></app-show-errors>
+                </mat-form-field>
+
+                <mat-form-field fxFlex>
+                  <mat-label>First Name</mat-label>
+                  <input type="text" formControlName="firstName" matInput>
+                  <app-show-errors [ctrl]="form.get('firstName')"></app-show-errors>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="person">
+              <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px">
+                <mat-form-field fxFlex>
+                  <mat-label>Last Name</mat-label>
+                  <input type="text" formControlName="lastName" matInput>
+                  <app-show-errors [ctrl]="form.get('lastName')"></app-show-errors>
+                </mat-form-field>
+               
+
+                <mat-form-field fxFlex>
+                  <mat-label>Email</mat-label>
+                  <input type="text" formControlName="email" matInput> 
+                  <app-show-errors [ctrl]="form.get('email')"></app-show-errors>
+                </mat-form-field>
+              </div>
+            </div>
+
+            <div class="person">
+              <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px">
+                <mat-form-field fxFlex>
+                  <mat-label>Mobile</mat-label>
+                  <input type="text" formControlName="phoneNo" matInput>
+                  <app-show-errors [ctrl]="form.get('phoneNo')"></app-show-errors>
+                </mat-form-field>
+
+                <mat-form-field fxFlex>
+                  <mat-label>Account Number</mat-label>
+                  <input type="text" formControlName="accountNumber" matInput>
+                  <app-show-errors [ctrl]="form.get('accountNumber')"></app-show-errors>
+                </mat-form-field>
+              </div>
+            </div>
+            
+            <div class="person">
+              <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px">
+                <!-- <mat-form-field fxFlex>
+                  <mat-label>Client Number</mat-label>
+                  <input type="text" formControlName="clientNumber" matInput>
+                  <app-show-errors [ctrl]="form.get('clientNumber')"></app-show-errors>
+                </mat-form-field> -->
+
+                <mat-form-field fxFlex>
+                  <mat-label>TRN Number</mat-label>
+                  <input type="number" formControlName="trnNo" matInput maxlength="15" (change)="checkTRNDuplication()" (keyup)="checkTRNDuplication()"
+                  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);if(this.value <= 0) this.value = ''">
+                  <mat-hint class="duplicate">{{ duplicateTRN }}</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field fxFlex>
+                  <mat-label>Utilities</mat-label>
+                  <mat-select [(ngModel)]="selectedUtilities" multiple formControlName="utilityList">                                
+                      <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">Select All</mat-option>
+                      <mat-option *ngFor="let utilityType of metadataUtilityType" [disabled]="utilityType.defaultValue == '1'" [optionSelected]="utilityType.selected" 
+                        [value]="utilityType.id" (click)="togglePerOne(allSelected.viewValue)"> {{utilityType.description}}
+                      </mat-option>                                
+                  </mat-select>
+                </mat-form-field>
+
+              </div>
+            </div>
+
+            <div class="person">
+              <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px">
+                <mat-form-field fxFlex>
+                  <mat-label>Business Start Date</mat-label>
+                  <input (click)="formDatepickerRef1.open()" (focus)="formDatepickerRef1.open()" (dateChange)="setBusinessEndDate()"
+                     [matDatepicker]="formDatepickerRef1" formControlName="businessStartDate" matInput >
+                  <mat-datepicker-toggle [for]="formDatepickerRef1" matSuffix></mat-datepicker-toggle>
+                  <mat-datepicker #formDatepickerRef1></mat-datepicker>
+                  <app-show-errors [ctrl]="form.get('businessStartDate')"></app-show-errors>
+                </mat-form-field>
+
+                <mat-form-field fxFlex>
+                  <mat-label>Business End Date</mat-label>
+                  <input (click)="formDatepickerRef2.open()" (focus)="formDatepickerRef2.open()" [matDatepicker]="formDatepickerRef2" 
+                    formControlName="businessEndDate" matInput (ngModelChange)="validateDates()">
+                  <mat-datepicker-toggle [for]="formDatepickerRef2" matSuffix></mat-datepicker-toggle>
+                  <mat-datepicker #formDatepickerRef2></mat-datepicker>
+                  <app-show-errors [ctrl]="form.get('businessEndDate')"></app-show-errors>
+                  <small class="duplicate" *ngIf="!isValidDate">Business End date should be greater than Business Start date.</small>
+                </mat-form-field>
+
+                <mat-form-field fxFlex>
+                  <mat-label>Status</mat-label>
+                  <input matInput [matAutocomplete]="statusId" formControlName="status">
+                  <mat-autocomplete #statusId="matAutocomplete" (optionSelected)="selectStatus($event)">
+                    <mat-option *ngFor="let status of filteredStatus; index as i" [value]="status.description">{{ status.description }}
+                    </mat-option>
+                  </mat-autocomplete>
+                  <app-show-errors [ctrl]="form.get('status')"></app-show-errors>
+                </mat-form-field>
+
+                
+              </div></div>
+          </fury-card-content>
+        </mat-tab>
+
+        <mat-tab label="Address Details">
+          <fury-card-content class="padding-top">
+            <div [formGroup]="form.controls.address" (keyup)="enableAddressValidators()">
+              <div class="person">
+                <!-- <button class="create right margin" (click)="addAddress()" type="button" mat-mini-fab color="primary">
+                  <mat-icon>add</mat-icon>
+                </button> -->
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px">
+                  <mat-form-field fxFlex>
+                    <mat-label>Address Type</mat-label>   
+                    <!-- (input)="getAddressType($event.target.value)" -->
+                    <input matInput [matAutocomplete]="addressTypes" [(ngModel)]="addressType" (input)="getAddressType($event.target.value)" formControlName="addressType">
+                    <mat-autocomplete #addressTypes="matAutocomplete" (optionSelected)="changeAddressType($event)">
+                      <mat-option *ngFor="let addressType of filteredAddressTypes; index as i" [value]="addressType.description">
+                        {{ addressType.description }}
+                      </mat-option>
+                    </mat-autocomplete>
+                    <app-show-errors [ctrl]="form.controls.address.get('addressTypeId')"></app-show-errors>
+                  </mat-form-field>
+                  <mat-form-field fxFlex>
+                    <mat-label>City</mat-label>
+                    <input type="text" formControlName="city" matInput>
+                    <app-show-errors [ctrl]="form.controls.address.get('city')"></app-show-errors>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="person">
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px">
+                  <mat-form-field fxFlex>
+                    <mat-label>Address 1</mat-label>
+                    <input type="text" formControlName="address1" matInput>
+                    <app-show-errors [ctrl]="form.controls.address.get('address1')"></app-show-errors>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex>
+                    <mat-label>Postal Code</mat-label>
+                    <input type="text" formControlName="zipPostalCode" matInput>
+                    <app-show-errors [ctrl]="form.controls.address.get('zipPostalCode')"></app-show-errors>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="person">
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px">
+                  <mat-form-field fxFlex>
+                    <mat-label>Address 2</mat-label>
+                    <input type="text" formControlName="address2" matInput>
+                    <app-show-errors [ctrl]="form.controls.address.get('address2')"></app-show-errors>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex>
+                    <mat-label>Country</mat-label>
+                    <input matInput [matAutocomplete]="country" formControlName="country" (keyup)="getFilteredCountry()" (selectionChange)="selectCountry($event)">
+                    <mat-autocomplete #country="matAutocomplete" (optionSelected)="selectCountry($event)">
+                      <mat-option *ngFor="let country of filteredCountries; index as i" [value]="country.description">
+                        {{ country.description }}</mat-option>
+                      </mat-autocomplete>
+                    <app-show-errors [ctrl]="form.controls.address.get('countryId')"></app-show-errors>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="person">
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px">
+                  <div fxFlex>
+                    <mat-form-field style="width: 87%;">
+                      <mat-label>Location</mat-label>                  
+                      <mat-select formControlName="location" [(ngModel)]="locationName" (selectionChange)="selectLocation($event)">
+                        <mat-option *ngFor="let item of location; index as i" [value]="item.description">
+                          {{ item.description }}</mat-option>
+                        </mat-select>
+                      <app-show-errors [ctrl]="form.controls.address.get('locationId')"></app-show-errors>                    
+                    </mat-form-field>
+                    
+                    <button class="create" (click)="createLocation()" style="height: 30px;width: 30px;margin-right: 0px; margin-left: 5px;padding-top: -5px;" type="button" mat-mini-fab color="primary">
+                      <mat-icon style="height: 10px;width: 10px;padding-top: -5px;margin-top: -25px;margin-left: -13px;">add</mat-icon>
+                    </button>
+                </div>
+                <div fxFlex>
+                  <mat-form-field style="width: 87%;">
+                    <mat-label>Area</mat-label>
+                   
+                    <mat-select formControlName="area" [(ngModel)]="areaName" (selectionChange)="selectArea($event)">
+                      <mat-option *ngFor="let item of area; index as i" [value]="item.description">
+                        {{ item.description }}</mat-option>
+                      </mat-select>
+                    <app-show-errors [ctrl]="form.controls.address.get('areaId')"></app-show-errors>
+                  </mat-form-field>
+
+                  <button class="create" (click)="createArea()" style="height: 30px;width: 30px;margin-right: 0px; margin-left: 5px;padding-top: -5px;" type="button" mat-mini-fab color="primary">
+                    <mat-icon style="height: 10px;width: 10px;padding-top: -5px;margin-top: -25px;margin-left: -13px;">add</mat-icon>
+                  </button>
+                </div>
+                </div>
+              </div>
+              <div class="person">
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px">
+                  <mat-form-field fxFlex>
+                    <mat-label>Email</mat-label>
+                    <input type="text" formControlName="email" matInput>
+                    <app-show-errors [ctrl]="form.controls.address.get('email')"></app-show-errors>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex>
+                    <mat-label>Phone No</mat-label>
+                    <input type="text" formControlName="phoneNumber" matInput>
+                    <app-show-errors [ctrl]="form.controls.address.get('phoneNumber')"></app-show-errors>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </fury-card-content>
+        </mat-tab>
+
+        <mat-tab label="Bank Details">
+          <fury-card-content class="padding-top">
+            <div [formGroup]="form.controls.bank" >
+              <div class="person">
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px">
+                  <mat-form-field fxFlex>
+                    <mat-label>Account Name</mat-label>
+                    <input type="text" formControlName="accountName" matInput>
+                    <app-show-errors [ctrl]="form.controls.bank.get('accountName')"></app-show-errors>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex>
+                    <mat-label>Bank Account Number</mat-label>
+                    <input type="text" formControlName="accountNo" matInput>
+                    <app-show-errors [ctrl]="form.controls.bank.get('accountNo')"></app-show-errors>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="person">
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px">
+                  <mat-form-field fxFlex>
+                    <mat-label>Bank Name</mat-label>
+                    <input type="text" formControlName="bankName" matInput>
+                    <app-show-errors [ctrl]="form.controls.bank.get('bankName')"></app-show-errors>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex>
+                    <mat-label>Bank Branch</mat-label>
+                    <input type="text" formControlName="bankAddress" matInput>
+                    <app-show-errors [ctrl]="form.controls.bank.get('bankAddress')"></app-show-errors>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="person">
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px">
+                  <mat-form-field fxFlex>
+                    <mat-label>Swift Code</mat-label>
+                    <input type="text" formControlName="swiftCode" matInput>
+                    <app-show-errors [ctrl]="form.controls.bank.get('swiftCode')"></app-show-errors>
+                  </mat-form-field>
+
+                  <mat-form-field fxFlex>
+                    <mat-label>IBAN</mat-label>
+                    <input type="text" formControlName="ibanNumber" matInput>
+                    <app-show-errors [ctrl]="form.controls.bank.get('ibanNumber')"></app-show-errors>
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </fury-card-content>
+        </mat-tab>
+
+        <mat-tab label="Document Details">
+          <fury-card-content class="padding-top">
+            <div class="person" style="width:750px">
+              <div fxLayout="column" fxLayout.gt-sm="row">
+                <div fxFlex="40%">
+                <mat-form-field class="titleSelector" style="width: 85%;margin-right: 0px;">
+                  <mat-label>Document Type</mat-label>
+                  <input matInput [matAutocomplete]="documentTypes" formControlName="documentType">
+                   <mat-autocomplete #documentTypes="matAutocomplete" (optionSelected)="selectDocumentType($event)">
+                    <mat-option *ngFor="let document of filteredDocumentTypes; index as i" [value]="document.description">
+                      {{ document.description }}</mat-option>                  
+                  </mat-autocomplete>
+                  <mat-hint class="hintSize" *ngIf="isDuplicate">{{validationMessage}}</mat-hint>
+                </mat-form-field>
+
+                <button class="create" (click)="createDocumentType()" style="height: 30px;width: 30px;margin-right: 0px;margin-left: 5px;padding-top: -5px;" type="button" mat-mini-fab color="primary">
+                  <mat-icon style="height: 10px;width: 10px;padding-top: -5px;margin-top: -25px;margin-left: -13px;">add</mat-icon>
+                </button>
+              </div>
+                <!-- accept="application/pdf" -->
+                <div class="document" >
+                  <input #fileInputDocument class="selectDocument" type="file" (change)="selectDocument($event)">
+                  <span
+                  [ngClass]="form.controls.documentType.value === '' || !selectedDocument || isDuplicate || !uploadSuccess ?'uploadButtonDisabled':'uploadButton'"
+                  (click)="uploadDocument()">UPLOAD</span>
+                </div>
+              </div>
+              <mat-hint class="errorMessage" *ngIf="isDocumentUploadSuccess == false">{{ errorMessage }}</mat-hint>  
+            </div>
+
+            <table [dataSource]="dataSource" mat-table matSort>
+
+              <!-- Checkbox Column -->
+              <ng-container matColumnDef="checkbox">
+                <th *matHeaderCellDef class="actions-cell" mat-header-cell>
+                  <mat-checkbox color="primary" (click)="$event.stopPropagation()"></mat-checkbox>
+                </th>
+                <td *matCellDef="let row" class="actions-cell" mat-cell>
+                  <mat-checkbox color="primary" (click)="$event.stopPropagation()"></mat-checkbox>
+                </td>
+              </ng-container>
+
+              <!-- Image Column -->
+              <ng-container matColumnDef="image">
+                <th *matHeaderCellDef class="image-cell" mat-header-cell></th>
+                <td *matCellDef="let row" class="image-cell" mat-cell>
+                  <img src="http://i.pravatar.cc/30?u={{ row.name }}">
+                </td>
+              </ng-container>
+
+              <ng-container matColumnDef="delete">
+                <th>Action</th>
+                <td *matCellDef="let row" class="actions-cell" mat-cell>
+                  <mat-icon>more_horiz</mat-icon>
+                </td>
+              </ng-container>
+
+              <!-- fullName Column -->
+              <ng-container *ngFor="let column of columns">
+                <ng-container *ngIf="column.isModelProperty" [matColumnDef]="column.property">
+                  <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.name }}</th>
+                  <td *matCellDef="let row" mat-cell>
+                    {{ row[column.property] }}
+                  </td>
+                </ng-container>
+              </ng-container>
+
+              <!-- document Column -->
+              <ng-container matColumnDef="document">
+                <th *matHeaderCellDef mat-header-cell>File Name</th>
+                <td *matCellDef="let row" mat-cell>
+                  <span class="under-line" (click)="downloadDocument(row)">{{row.document}}</span>
+                </td>
+              </ng-container>
+
+              <!-- actions Column -->
+              <ng-container matColumnDef="actions">
+                <th *matHeaderCellDef class="actions-cell" mat-header-cell>Action</th>
+                <td *matCellDef="let row" class="actions-cell" mat-cell (click)="deleteDocument(row)">
+                    <mat-icon class="deleteIcon">delete</mat-icon>
+                </td>
+              </ng-container>
+
+              <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+              <tr *matRowDef="let row; columns: visibleColumns;" class="clickable route-animations-elements" mat-row>
+              </tr>
+            </table>
+
+            <!-- <mat-paginator class="paginator" [pageSize]="pageSize"></mat-paginator> -->
+          </fury-card-content>
+        </mat-tab>
+      </mat-tab-group>
+    </fury-card>
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button mat-button (click)="closeDialog()">CANCEL</button>
+    <!-- <button *ngIf="isCreateMode()" mat-button [disabled]="!form.valid || !form.controls.address.valid || addressTypeId == 0 ||  !form.controls.bank.valid || this.duplicateTRN != ''">CREATE CLIENT</button> -->
+    <button *ngIf="isCreateMode()" mat-button [disabled]="form.invalid || !isValidDate || form.controls.address.invalid || form.controls.bank.invalid || duplicateTRN != ''">CREATE CLIENT</button>
+    <button *ngIf="isUpdateMode()" mat-button [disabled]="form.invalid || !isValidDate || form.controls.address.invalid || form.controls.bank.invalid || duplicateTRN != ''">UPDATE CLIENT</button>
+  </mat-dialog-actions>
+  <!-- [disabled]="!form.valid || !form.controls.address.valid || !form.controls.bank.valid || this.duplicateTRN != ''" -->
+  <!-- !form.valid || (!form.valid && form.touched) || (!form.valid && !form.pristine) || (addressTypeId == 0 && form.controls.address.valid) ||  -->
+  <!--[disabled]="!form.valid || !form.controls.address.valid ||  !form.controls.bank.valid" || (form.controls.address.valid && countryId == 0) -->
+</form>
+
+
+

@@ -1,0 +1,99 @@
+<div style="padding-bottom: 40px;clear: both;">
+  <button mat-icon-button (click)="close()" style="float: right;">
+    <mat-icon title="Close" mat-list-icon>close</mat-icon>
+  </button>
+</div>
+<mat-card fxLayout="column" fxLayoutGap="2%" style="padding: 0px 20px 27px 27px;" style="height:600px">
+  <mat-toolbar color="primary" class="position-fixed">
+    <img class="img-style" src="assets/img/fav-icon.png">
+    <span> Send Email</span>
+    <span class="toolbar-spacer"></span>
+    <button (click)="sendEmail()" [disabled]="txtForm.invalid || templateType == 0" mat-icon-button class="example-icon"
+      aria-label="Example icon-button with menu icon">
+      <mat-icon *ngIf="txtForm.invalid || templateType == 0" class="disabledButton" matTooltip="Send EMAIL">send</mat-icon>
+      <mat-icon *ngIf="txtForm.valid && templateType > 0" class="mat-icon-color" matTooltip="Send EMAIL">send</mat-icon>
+    </button>    
+  </mat-toolbar>
+  
+<div class="scroll-view">
+  <div fxLayout="row" fxLayoutGap="2%">
+    <div fxFlex="25">
+      <mat-form-field fxFlex>
+        <textarea [formControl]="txtForm.controls['emailTo']" required [(ngModel)]="emailTo" name="emailTo" matInput
+          placeholder="Email To" id="emailId"></textarea>
+        <!-- <mat-error *ngIf="txtForm.controls['emailTo'].hasError('required')">
+          Email To required
+        </mat-error> -->
+        
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="!hide" fxFlex="18">
+      <mat-form-field fxFlex="95%">
+        <mat-select name="entityTypes" [formControl]="txtForm.controls['entityTypes']" id="entityTypeId"
+          (selectionChange)="onChangeEntityType($event.value)" placeholder="Entity Type">
+          <mat-option value="Client">Clients</mat-option>
+          <mat-option value="Owner">Owners</mat-option>
+          <mat-option value="Tenant">Tenants</mat-option>
+        </mat-select>
+        <mat-hint>Please select Entity Type</mat-hint>        
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="!hide" fxFlex="25">
+      <mat-form-field fxFlex>
+        <mat-select [(ngModel)]="selectedEntity" name="entity" placeholder="Entity" multiple
+          [formControl]="txtForm.controls['entityName']">
+          <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">Select All</mat-option>
+          <mat-option *ngFor="let entity of filteredEntities,index as i" [optionSelected]="entity.selected"
+            [value]="entity.entityName" (click)="tosslePerOne(allSelected.viewValue)"> {{entity.entityName}}
+          </mat-option>
+        </mat-select>
+        <mat-hint>Please select Entities</mat-hint>
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="25">
+      <mat-form-field fxFlex>
+        <mat-select [(ngModel)]="templateType" name="templateType" [formControl]="txtForm.controls['templateType']"
+          id="templateId" placeholder="Template Type" (ngModelChange)="onTemplateTypeChange()">
+          <mat-option>None</mat-option>
+          <mat-option *ngFor="let item of lstTemplateType;" [value]="item.notificationTypeId">{{item.notificationType}}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="txtForm.controls['templateType'].hasError('required')"></mat-error>
+        <mat-hint>Please select Template Type</mat-hint>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div fxLayout="row">
+
+    <div fxFlex="90">
+      <mat-form-field fxFlex>
+        <input [formControl]="txtForm.controls['subject']" required [(ngModel)]="subject" name="subject" matInput
+          placeholder="Subject" id="subjectId">
+        <mat-error *ngIf="txtForm.controls['subject'].hasError('required')">
+          Subject required
+        </mat-error>
+        <mat-hint>Please enter Subject</mat-hint>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div fxLayout="row">
+
+    <quill-editor [@fadeInUp] #textId name="editor" [formControl]="txtForm.controls['form']"
+      [styles]="{ flex: ' 1 1 auto '}" class="quill mat-elevation-z16" [(ngModel)]="textData"
+      [placeholder]="'Enter text here....'" fxLayout="column">
+    </quill-editor>
+  </div>
+
+  <div fxLayout="row">
+    <div fxFlex="80">
+      <input [formControl]="txtForm.controls['file']" type="file" id="picture" #fileInput (change)="uploadPhoto($event)"
+        class="input-file" id="InputFile" name="InputFile" #ticketPhoto max-file-size="100kb" />
+    </div>
+  </div>
+</div>
+</mat-card>

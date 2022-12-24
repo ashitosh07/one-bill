@@ -1,0 +1,85 @@
+<div mat-dialog-title>
+  <mat-toolbar role="toolbar" class="task-header">
+    <span>Benchmark Setting</span>
+    <span class="fx-spacer"></span>
+    <button mat-icon-button (click)="close()">
+        <mat-icon title="Close" mat-list-icon>close</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+    <mat-dialog-content class="mat-dlg-content"> 
+     <fury-card>     
+       <fury-card-content>  
+
+        <div class="person padding-top">
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+
+              <mat-form-field fxFlex>
+                <mat-label>Client</mat-label>
+                <mat-select [(ngModel)]="clientId" name="clientId" id="clientId" placeholder="Client" formControlName="clientId" (selectionChange)="onChangeClient($event)">
+                  <mat-option *ngFor="let client of clients;" [value]="client.id" >{{client.description}}</mat-option>
+                </mat-select>
+                <mat-hint>Please select Client.</mat-hint> 
+              </mat-form-field>
+
+              <mat-form-field fxFlex>
+                <mat-select [(ngModel)]="meterTypeName" name="meterType" id="meterTypeId" placeholder="Meter Type" formControlName="meterTypeId" (selectionChange)="onMeterTypeChange($event)">
+                  <mat-option *ngFor="let item of meterTypes;" [value]="item.description" >{{item.description}}</mat-option>
+                </mat-select>
+                <mat-hint>Please select Meter Type.</mat-hint> 
+              </mat-form-field>
+
+              <mat-form-field fxFlex> 
+                  <mat-label>Select Meter</mat-label>
+                  <mat-select [(ngModel)]="selectedMeters"  class="multiSelectCustom" formControlName="meter" multiple (selectionChange)="onChangeMeter($event)">
+                    <input class="myInput" #myInput matInput focused="'true'" type="text"
+                          (keyup)="searchMeter($event.target.value)" autocomplete="off" placeholder="search">
+                    <mat-divider></mat-divider>
+                    <mat-option #allMetersSelected (click)="toggleMeterTypesAllSelection()" [value]="0">Select All</mat-option>
+                    <mat-option *ngFor="let meter of meters; index as i" (click)="toggleMetersPerOne(allMetersSelected.viewValue)"
+                      [value]="meter.id">{{ meter.deviceName }}</mat-option>
+                  </mat-select>
+                  <mat-hint>Please select Meter.</mat-hint> 
+                </mat-form-field>                  
+
+            </div>
+        </div>
+
+        <div class="person padding-top">
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+
+              <mat-form-field fxFlex>
+                <mat-label>Select Parameter</mat-label>
+                <mat-select (selectionChange)="onChangeParameter($event)" formControlName="parameterId">
+                  <mat-option *ngFor="let parameter of parameters; index as i" [value]="parameter.id">{{ parameter.description }}</mat-option>
+                </mat-select>
+                <mat-hint>Please select Parameter.</mat-hint> 
+              </mat-form-field>
+
+              <mat-form-field fxFlex>
+                <mat-label>Alarm Type</mat-label>
+                <mat-select id="alarmType" name="alarmType" (selectionChange)="onChangeAlarmType($event)" formControlName="type">
+                  <mat-option *ngFor="let item of alarmTypes; index as i" [value]="item.description">
+                    {{ item.description }}</mat-option>
+                  </mat-select>
+                <mat-hint>Please select Alarm Type</mat-hint>
+              </mat-form-field>
+
+              <mat-form-field fxFlex>
+                <mat-label>Target</mat-label>
+                <input type="text" matInput formControlName="target">
+                <mat-hint>Please enter Target</mat-hint>
+              </mat-form-field>
+
+            </div>
+        </div>
+
+       </fury-card-content>
+     </fury-card>
+    </mat-dialog-content>
+    <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center" class="padding-top">
+        <button mat-button [disabled]="!form.valid">CREATE BENCHMARK SETTING</button>
+    </mat-dialog-actions> 
+</form>

@@ -1,0 +1,358 @@
+.padding{
+  padding:0 0 24px 0;
+}
+
+.content{
+    margin-top: 1%;
+}
+
+.img-style{
+  width: 32px;
+}
+
+ul {
+  margin: 20px;
+}
+
+.label-color {
+  position: relative;
+}
+.label-color label {
+  padding-left: 20px;
+}
+.label-color .color-box {
+  width: 10px;
+  height: 10px;
+  display: inline-block;
+  background-color: #ccc;
+  position: absolute;
+  left: 5px;
+  top: 5px;
+}
+
+.heading
+{
+    background: #1976d2;
+    font-size: 17px;
+    height: 0px;
+}
+
+
+.img-style{
+    width: 32px;
+  }
+
+ .common-buttons{
+     height: 50%;
+ } 
+
+//  .active {
+//   background-color: #0051B4;
+//   color: white;
+//   //padding: 8px 5px 8px 5px;
+//   line-height: 48px;
+// }
+
+// .inactive {
+//   //padding: 0px 0px;
+//   line-height: 48px;
+// }
+
+.mat-button-toggle-checked {
+  background-color:#0051B4;
+  color: white !important;
+}
+
+ .mat-card[class*=mat-elevation-z].consumption {
+    box-shadow: 0 2px 1px -1px orangered, 
+                0 1px 1px 0 orangered, 
+                0 1px 3px 0 orangered;
+}
+.mat-card[class*=mat-elevation-z].average {
+   box-shadow: 0 2px 1px -1px rgb(43, 187, 24), 
+               0 1px 1px 0 rgb(43, 187, 24), 
+               0 1px 3px 0 rgb(43, 187, 24);
+}
+.mat-card[class*=mat-elevation-z].peak {
+   box-shadow: 0 2px 1px -1px red, 
+               0 1px 1px 0  red, 
+               0 1px 3px 0  red;
+}
+
+.card-height{
+    min-width: 26%;
+}
+
+.consumption-icon{
+    background-color: orangered;
+    color: white;
+}
+
+.average-icon{
+    background-color:  rgb(43, 187, 24);
+    color: white;
+}
+
+.peak-icon{
+    background-color: red;
+    color: white;
+}
+
+.myInput {
+    height: 50px !important;
+    padding: 10px !important;
+  }
+
+ .electricityReminder
+{
+  background: rgb(211, 46, 68);
+  color: rgb(255, 255, 255);  
+  max-width: 100%;
+}
+
+.waterReminder
+{
+  background: rgb(114, 168, 27);
+  color: rgb(255, 255, 255);  
+  max-width: 100%;
+}
+
+.btuReminder
+{
+  background:  rgb(3, 169, 244);
+  color: rgb(255, 255, 255);  
+  max-width: 100%;
+}
+.gasReminder
+{
+  background: rgb(63, 81, 181);
+  color: rgb(255, 255, 255);  
+  max-width: 100%;
+}
+.datacounter
+{
+  font-size: large;
+  vertical-align: middle;
+  margin: 0px;
+  padding-left: 10%;
+  font-weight: bold;
+}
+
+.fontSize {
+  font-size: large;
+  vertical-align: middle;
+  font-weight: bold;
+}
+
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.customRowFlexContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+ 
+}
+
+.customColumnFlexContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 5px 5px 5px 5px;
+  justify-content: space-evenly;
+}
+
+.customCardHeader {
+  flex-direction: row;
+  flex: auto;
+  justify-content: flex-end;
+  align-items: flex-end;
+  font-size: small;
+  color: #636e72;
+  
+}
+
+.customCardHighHeader {
+  flex-direction: row;
+  flex: auto;
+  justify-content: flex-end;
+  align-items: flex-end;
+  font-size: medium;
+  // color: #e17055;
+  // font-weight: bold;
+  font-size: small;
+  color: #636e72;
+}
+
+.customCardHeaderValue {
+  flex-direction: row;
+  flex: auto;
+  justify-content: flex-end;
+  align-items: flex-end;
+  font-size: medium;
+  font-weight: bold;
+  padding: 5px 5px 5px 5px;
+  min-width: 1fr;
+  color: rgb(9, 75, 151);
+}
+
+.customCardHighHeaderValue {
+  flex-direction: row;
+  flex: auto;
+  justify-content: flex-end;
+  align-items: flex-end;
+  font-size: large;
+  font-weight: bold;
+  padding: 5px 5px 5px 5px;
+  min-width: 1fr;
+  // color: rgb(9, 75, 151);
+  color:#FD7272;
+  font-size: 25px;
+}
+
+
+.customUtilityType {
+  font-size: large;
+  font-weight: bold;
+  margin: 10px 10px 10px 10px;
+}
+
+.position-fixed{
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.toolBar {
+  font-size: x-large;
+  font-weight: bold;
+  line-height: 50px;
+}
+
+.customMatToolbar {
+  // max-height: 40px !important;
+  font-weight: 35px;
+  font-size: larger;
+  margin-left : 20px;
+  margin-bottom: -20px;
+}
+
+h6 > span {
+  color: #40407a !important;
+}
+
+.energyCost
+{
+  font-size: x-large;
+  vertical-align: middle;
+  margin: 0px;
+  padding: 25px 0px 10px 0px;
+  font-weight: bold;
+}
+
+.gain {
+  color: #5cb85c;  
+  padding: 0px 10px 0px 10px;
+  font-weight: bolder;
+  font-size: large;
+}
+
+.loss {
+  color: #d9534f;
+  padding: 0px 10px 0px 10px;
+  font-weight: bolder;
+  font-size: large;
+}
+
+.alignRight {
+  float: right;
+}
+
+.topPadding {
+  padding-top: 20px;
+}
+
+.tileHeading {
+  font-weight: bold;
+}
+
+
+//Group-wise Energy Cost
+#result {
+  text-align: right;
+  color: gray;
+  min-height: 2em;
+}
+.table-sparkline {
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+// mat-header-cell {
+//   font-weight: bold;
+//   text-align: left;
+// }
+// td, th {
+//   padding: 5px;
+//   border-bottom: 1px solid silver;
+//   height: 20px;
+// }
+.mat-cell,.mat-row {
+  padding: 15px;
+  border-bottom: 1px solid silver;
+  height: 20px;
+}
+.mat-header-cell, .mat-header-row {
+  padding: 15px;
+  border-bottom: 1px solid silver;
+  height: 20px;
+  font-weight: bolder;
+  text-align: left;
+  border-top: 2px solid gray;
+  border-bottom: 2px solid gray;
+  color: black;
+}
+.highcharts-tooltip>span {
+  background: white;
+  border: 1px solid silver;
+  border-radius: 3px;
+  box-shadow: 1px 1px 2px #888;
+  padding: 8px;
+}
+
+.header-align-right {
+  text-align: right;
+}
+
+  /* Absolute Center Spinner */
+  .loading-indicator {
+    position: fixed;
+    z-index: 999;
+    height: 2em;
+    width: 2em;
+    overflow: show;
+    margin: auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+  }
+  
+  /* Transparent Overlay */
+  .loading-indicator:before {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.3);
+  }

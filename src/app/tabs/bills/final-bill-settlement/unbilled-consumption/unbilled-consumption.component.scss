@@ -1,0 +1,30 @@
+.form-control label,
+.form-control input,
+.form-control button,
+.form-control select {
+    display: block;
+    display: inline;
+}
+ul {
+    margin: 20px;
+}
+
+.label-color {
+    position: relative;
+}
+.label-color label {
+    padding-left: 20px;
+}
+.label-color .color-box {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    background-color: #ccc;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}
+.mat-table{
+    width: 100%;
+    overflow-x: scroll;
+}

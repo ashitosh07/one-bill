@@ -1,0 +1,117 @@
+
+<mat-card fxLayout="column" fxLayoutGap="20px" style="padding: 27px 27px 27px 27px;">
+  <mat-toolbar color="primary" class="position-fixed">
+    <img class="img-style" src="assets/img/fav-icon.png">
+    <span>Create Template</span>
+    <span class="toolbar-spacer"></span>    
+    <button (click)="cancelData()" [disabled]="txtForm.pristine" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon class="white-icon" matTooltip="RESET">refresh</mat-icon>
+    </button>
+    <button (click)="updateData()" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon class="white-icon" matTooltip="UPDATE">update</mat-icon>
+    </button>
+  </mat-toolbar>
+  <!-- [disabled]="txtForm.invalid" -->
+  <div fxLayout="row" fxLayoutGap="20px">
+
+    <mat-form-field fxFlex="33%">
+      <mat-label>Notification Category</mat-label>
+      <mat-select [(ngModel)]="notificationCategory" name="notificationCategory" [formControl]="txtForm.controls['notificationCategory']" 
+      id="notificationCategoryId" placeholder="Notification Category" (ngModelChange)="onNotificationCategoryChange()" required>
+        <mat-option>--Select--</mat-option>
+        <mat-option *ngFor="let item of lstNotificationCategory;" [value]="item.id" >{{item.description}}</mat-option>
+      </mat-select>
+      <mat-hint>Please select Notification Category</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="33%">
+      <mat-label>Template Type</mat-label>
+      <mat-select [(ngModel)]="templateType" name="templateType" [formControl]="txtForm.controls['templateType']" id="templateId" 
+      placeholder="Template Type" (ngModelChange)="onTemplateTypeChange()" required>
+        <mat-option>--Select--</mat-option>
+        <mat-option *ngFor="let item of lstTemplates;" [value]="item.id" >{{item.description}}</mat-option>
+      </mat-select>
+      <mat-hint>Please select Template Type</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="33%">
+      <mat-label>Notification Mode</mat-label>
+      <mat-select [(ngModel)]="notificationMode" name="notificationMode" [formControl]="txtForm.controls['notificationMode']" 
+        id="notificationModeId" placeholder="Notification Mode" (ngModelChange)="onNotificationModeChange()" required>
+        <mat-option>--Select--</mat-option>
+        <mat-option *ngFor="let item of lstNotificationMode;" [value]="item.id" >{{item.description}}</mat-option>
+      </mat-select>
+      <mat-hint>Please select Notification Mode</mat-hint>
+    </mat-form-field>
+
+  </div>
+  <div fxLayout="row" fxLayoutGap="20px">
+    <mat-checkbox class="formulaLabel" color="primary" [checked]="isEnableAutoSend" [formControl]="txtForm.controls['isEnableAutoSend']" (change)="enableAutoSendChanged($event)">Enable Auto Send</mat-checkbox>
+  </div>
+  <div fxLayout="row" fxLayoutGap="20px">
+
+    <mat-form-field fxFlex="25%">
+      <mat-label>Condition</mat-label>
+      <mat-select [(ngModel)]="conditionName" name="condition" required id="conditionId" [formControl]="txtForm.controls['condition']" 
+        placeholder="Conditions" [disabled]="isEnableAutoSend == false" (ngModelChange)="onConditionChange()">
+        <mat-option>--Select--</mat-option>
+        <mat-option *ngFor="let item of lstConditions;" [value]="item.description" >{{item.description}}</mat-option>
+      </mat-select>
+      <mat-hint *ngIf="isEnableAutoSend == true">Please select Condition</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="25%" *ngIf="isEnableAutoSend == true">
+      <mat-label>Days</mat-label>
+      <input [formControl]="txtForm.controls['days']" [(ngModel)]="days" matInput maxlength="4" required>
+      <mat-hint>Please enter Days</mat-hint>
+      <!-- <mat-error *ngIf="txtForm.controls['days'].errors?.required">
+        Accepts only Alphanumeric with space
+      </mat-error> -->
+    </mat-form-field>
+
+    <mat-form-field fxFlex="25%">
+      <mat-label>Keyword</mat-label>
+      <mat-select [(ngModel)]="keyword" name="keyword" id="keywordId" placeholder="Keyword" (ngModelChange)="onKeywordChange()">
+        <mat-option>--Select--</mat-option>
+        <mat-option *ngFor="let item of lstkeyword;" [value]="item.description" >{{item.description}}</mat-option>
+      </mat-select>
+      <mat-hint class="errorMessage">{{ keywordError }}</mat-hint>
+    </mat-form-field>
+
+    <button class="create" (click)="addKeyword(textId)" type="button" mat-mini-fab color="primary">      
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+  <div fxLayout="row">
+
+    <mat-form-field fxFlex="100%" *ngIf="notificationModeName == 'Email'">
+      <mat-label>Subject</mat-label>
+      <input [formControl]="txtForm.controls['subject']" required [(ngModel)]="subject" matInput maxlength="1000">
+      <!-- <mat-error *ngIf="txtForm.controls['subject'].hasError('required')">
+        Subject required
+      </mat-error> -->
+      <mat-hint>Please enter Subject</mat-hint>
+      <mat-error *ngIf="txtForm.controls['subject'].errors?.pattern">
+        Accepts only Alphanumeric with space
+      </mat-error>
+    </mat-form-field>
+
+  </div>
+
+  <div fxLayout="row" *ngIf="notificationModeName == 'Email'" fxFlex="100%">
+    <quill-editor [@fadeInUp] #textId
+    [formControl]="txtForm.controls['form']"
+    [styles]="{ flex: '1 1 auto'}"
+    class="quill mat-elevation-z16 textWidth"
+    [(ngModel)]="textData" 
+    [placeholder]="'Enter text here....*'"
+    fxLayout="column"></quill-editor>    
+  </div>
+  
+  <div fxLayout="row" *ngIf="notificationModeName != 'Email'" fxFlex="100%"> 
+    <textarea class="text" #text rows="10" cols="130" (click)="getCaretPos(text)" (keyup)="getCaretPos(text)" [(ngModel)]="texts" [formControl]="txtForm.controls['texts']" 
+      placeholder="Enter text here....*"></textarea>
+  </div>  
+
+</mat-card>  

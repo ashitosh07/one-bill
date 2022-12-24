@@ -1,0 +1,53 @@
+<fury-page>
+  <fury-title class="title">
+      <!-- <mat-icon [@scaleIn]>description</mat-icon>
+      <span [@fadeInRight]></span> -->
+  </fury-title>
+
+
+  <div fxLayout="column" fxLayoutAlign="start center">
+    <div [@fadeInUp] class="card">
+      <mat-horizontal-stepper #stepper="matHorizontalStepper" [linear]="true">
+          <mat-step [stepControl]="form">
+          <form [formGroup]="form" (ngSubmit)="save()">
+            <ng-template matStepLabel>Bill Tag</ng-template>
+          <fury-card>
+        
+            <fury-card-content class="padding-top">
+               <div class="person">
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px">
+                  <mat-form-field fxFlex>
+                    <mat-label>Bill Settings</mat-label>
+                    <input matInput [matAutocomplete]="billSettingsId" formControlName="billSettingsName">
+                    <mat-autocomplete #billSettingsId="matAutocomplete" (optionSelected)="selectBillSettings($event)">
+                      <mat-option *ngFor="let billSettings of metadataBillSettingsTypes; index as i" [value]="billSettings.description">{{ billSettings.description }}
+                      </mat-option>
+                    </mat-autocomplete>
+                    <app-show-errors [ctrl]="form.get('billSettingsName')"></app-show-errors>
+                  </mat-form-field>
+  
+                  <mat-form-field fxFlex>
+                    <mat-label>Clients</mat-label>
+                    <input matInput [matAutocomplete]="clientName" formControlName="clientName">
+                    <mat-autocomplete #clientName="matAutocomplete" (optionSelected)="selectClients($event)">
+                      <mat-option *ngFor="let client of clients; index as i" [value]="client.label">{{ client.label }}
+                      </mat-option>
+                    </mat-autocomplete>
+                    <app-show-errors [ctrl]="form.get('clientName')"></app-show-errors>
+                  </mat-form-field>
+                </div>
+              </div>
+            </fury-card-content>
+      </fury-card>
+    
+    <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+      <button  mat-button   >SAVE BILLTAG</button>
+      
+    </mat-dialog-actions>
+          </form>
+        </mat-step>
+      </mat-horizontal-stepper>
+      </div>
+    </div>
+  </fury-page>
+  

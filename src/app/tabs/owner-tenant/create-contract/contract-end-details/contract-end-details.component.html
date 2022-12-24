@@ -1,0 +1,55 @@
+<h4 mat-dialog-title>
+    <mat-toolbar role="toolbar" class="task-header">
+        <span>End Contract</span>
+        <span class="fx-spacer"></span>
+        <button mat-icon-button (click)="close()">
+            <mat-icon mat-list-icon>close</mat-icon>
+        </button>
+    </mat-toolbar>
+</h4>
+<mat-dialog-content>
+    <div class="person padding-top">
+        <form [formGroup]="form">
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px">
+
+                <mat-form-field class="result columnWidth" color="primary" fxFlex>
+                    <mat-label>Total Outstanding Amount</mat-label>
+                    <input type="number" readonly formControlName="totalOutstandingAmount"
+                        [ngModel]="totalOutstandingAmount | number: roundFormat | noComma" matInput>
+                </mat-form-field>
+
+                <mat-form-field class="result columnWidth" color="primary" fxFlex>
+                    <mat-label>Security Deposit in hand</mat-label>
+                    <input type="number" readonly formControlName="totalSecurityDepositAmount"
+                        [ngModel]="totalSecurityDepositAmount | number: roundFormat | noComma" matInput>
+                </mat-form-field>
+
+
+                <mat-form-field class="result columnWidth" color="primary" fxFlex>
+                    <mat-label>Contract End Date</mat-label>
+                    <input (click)="formDatepickerRef1.open()" [matDatepicker]="formDatepickerRef1"
+                        formControlName="contractEndDate" matInput>
+                    <mat-datepicker-toggle [for]="formDatepickerRef1" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #formDatepickerRef1></mat-datepicker>
+                    <mat-hint>Please select End Date</mat-hint>
+                    <small *ngIf="!validateDates()">Contract end date should be greater than Contract date.</small>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="column padding-top" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px">
+
+                <mat-form-field class="result columnWidth" color="primary" fxFlex>
+                    <mat-label>Reason for Contract End</mat-label>
+                    <input type="text" formControlName="reasonForContractEnd" matInput>
+                </mat-form-field>
+            </div>
+
+            <div class="rightAlign">
+                <button mat-button (click)='close()'>CANCEL</button>
+                <button mat-button (click)="onEndContract()"
+                    [disabled]="!checkDues && this.form.controls.totalOutstandingAmount.value>0">END
+                    CONTRACT</button>
+            </div>
+        </form>
+    </div>
+</mat-dialog-content>

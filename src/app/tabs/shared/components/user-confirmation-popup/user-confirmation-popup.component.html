@@ -1,0 +1,10 @@
+<div class="heading">
+  Confirm Action  
+</div>
+
+<div class="mat-dlg-content contentStyle">{{confirmMessage}}</div>
+
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="end center" class="bottomPadding">
+  <button mat-button (click)="getConfirmation(false)">NO</button>
+  <button mat-button class="buttonStyle" (click)="getConfirmation(true)">YES</button>
+</mat-dialog-actions>

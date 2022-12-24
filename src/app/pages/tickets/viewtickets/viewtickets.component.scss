@@ -1,0 +1,132 @@
+@import "var";
+
+.img-style{
+  width: 32px;
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+
+.img-style{
+  width: 32px;
+}
+mat-icon:hover {
+  cursor: pointer;
+}
+
+img:hover {
+  cursor: pointer;
+}
+
+.inbox-mail {
+
+  .header {
+    height: $inbox-header-height;
+    padding-left: $spacing/3;
+    padding-right: $spacing/3;
+
+    .mat-icon-button, .button {
+      margin-left: $spacing/3;
+      margin-right: $spacing/3;
+    }
+
+    .vertical-divider {
+      width: 1px;
+      height: calc(100% - #{$spacing});
+      margin: $spacing/2 $spacing/3;
+    }
+  }
+
+  .mail-content {
+    ::ng-deep .scroll-content {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+  }
+
+  .head {
+    padding: $spacing;
+
+    .subject {
+      font: var(--font-title);
+    }
+  }
+
+  .info {
+    padding: $spacing;
+
+    .picture {
+      height: 40px;
+      width: 40px;
+      //border-radius: 50%;
+    }
+
+    .from {
+      font: var(--font-subheading-1);
+      white-space: nowrap;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+
+    }
+
+    .to {
+      white-space: nowrap;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+      font: var(--font-body-1);
+    }
+
+    .extra {
+
+      .when {
+        white-space: nowrap;
+        overflow-x: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+
+  .content {
+    padding: 0 $spacing $spacing;
+  }
+
+  .reply {
+    padding: $spacing;
+    cursor: pointer;
+  }
+
+  .replying {
+    padding: $spacing;
+
+    .actions {
+      margin-top: $spacing;
+    }
+  }
+}
+
+  
+.heading
+{
+    background: #1976d2;
+    font-size: 17px;
+    height: 0px;
+}
+
+.bottomPadding {
+  padding-bottom: 0px;
+}
+
+.leftMargin {
+  margin-left: 15px;
+}
+
+.ticketCard {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+}

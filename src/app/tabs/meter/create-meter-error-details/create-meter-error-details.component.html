@@ -1,0 +1,119 @@
+<fury-page-layout mode="card" style="margin-top: 27px;">
+
+    <div class="loading-indicator" *ngIf="showSpinner">
+        <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
+    </div>
+    
+    <fury-page-layout-content fxLayout="column">
+        <mat-toolbar color="primary" class="position-fixed">
+            <img class="img-style" src="assets/img/fav-icon.png">
+            <span>Meter Fault Report</span>
+            <span class="toolbar-spacer"></span>
+            <!-- (sendEmailClicked)="onSendEmail()" (printClicked)="onPrintSummary()" -->
+            <fury-payment-history-footer-toolbar [show]="false" [visible]="false" (exportClicked)="onExport()">
+            </fury-payment-history-footer-toolbar>
+        </mat-toolbar>
+        <!-- <fury-card-header></fury-card-header> -->
+        <fury-card class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+            <fury-card-content>
+                <div class="person bottom-padding padding-top" style="margin-top: 2% !important;">
+                    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+
+                        <!-- <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px" *ngIf="role == 'ems'"> -->
+
+                            <mat-form-field class="result" color="primary" fxFlex="15%">
+                                <mat-label>From Date</mat-label>
+                                <input (click)="formDatepickerRef1.open()" id="FromDate" name="FromDate"
+                                    [(ngModel)]="fromDate" (focus)="formDatepickerRef1.open()"
+                                    [matDatepicker]="formDatepickerRef1" matInput readonly>
+                                <mat-datepicker-toggle [for]="formDatepickerRef1" matSuffix></mat-datepicker-toggle>
+                                <mat-datepicker #formDatepickerRef1></mat-datepicker>
+                            </mat-form-field>
+
+                            <mat-form-field class="result" color="primary" fxFlex="15%">
+                                <mat-label>To Date</mat-label>
+                                <input (click)="formDatepickerRef2.open()" id="ToDate" name="ToDate" [(ngModel)]="toDate"
+                                    (focus)="formDatepickerRef2.open()" [matDatepicker]="formDatepickerRef2" matInput
+                                    readonly>
+                                <mat-datepicker-toggle [for]="formDatepickerRef2" matSuffix></mat-datepicker-toggle>
+                                <mat-datepicker #formDatepickerRef2></mat-datepicker>
+                            </mat-form-field>
+
+                            <mat-form-field fxFlex="15%">
+                                <mat-select [(ngModel)]="meterTypeName" name="meterType" id="meterTypeId" placeholder="Select a Meter Type"
+                                (selectionChange)="onMeterTypeChange($event)">
+                                <mat-option *ngFor="let item of meterTypes;" [value]="item.description">{{item.description}}</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+
+                            <form [formGroup]="form">
+                                <!-- <mat-form-field class="result" color="primary" style="width: 400px;">
+                                    <mat-label>Unit</mat-label>
+                                    <input type="text" [matAutoc6omplete]="unit" formControlName="unitNumber" name="unitNumber" matInput>                                
+                                    <mat-autocomplete #unit="matAutocomplete" (optionSelected)="selectUnit($event)">
+                                        <mat-option *ngFor="let unit of filteredUnits; index as i" [value]="unit.description">
+                                            {{ unit.description }}
+                                        </mat-option>
+                                    </mat-autocomplete>
+                                </mat-form-field> -->
+
+                                <mat-form-field fxFlex>
+                                    <mat-label>Meters</mat-label>
+                                    <mat-select [(ngModel)]="selectedMeters" multiple formControlName="meterId">
+                                        <input class="myInput" #myInput matInput focused="'true'" type="text" (keydown)="handleInput($event)" 
+                                            (keyup)="searchMeterType($event.target.value)" autocomplete="off"
+                                            placeholder="search">
+                                        <mat-divider></mat-divider>
+                                        <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">Select All
+                                        </mat-option>
+                                        <mat-option *ngFor="let meter of metadataMeters" [optionSelected]="meter.selected"
+                                            [value]="meter.id" (click)="togglePerOne(allSelected.viewValue)">
+                                            {{meter.deviceName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <div class="top-padding">
+                                    <button (click)="getMeterErrorDetails()" mat-button>
+                                    <mat-icon>search</mat-icon> 
+                                    </button>
+                                </div>
+                            </form> 
+                        <!-- </div>  -->
+                        <!-- <div class="top-padding" *ngIf="role != 'ems'"> 
+                            <button (click)="getMeterErrorDetails()" style="background-color: f5f5f5;" mat-button>
+                            Generate   
+                            </button>
+                        </div> -->
+
+                    </div>
+                </div>
+
+                <!-- <div class="padding" fxLayout="column">
+                    <fury-dynamic-table-structure [tableData]="dataSource" [columnNames]="columns" >
+                    </fury-dynamic-table-structure>
+                </div> -->
+
+                <fury-list [columns]="displayedColumns" class="list" fxFlex="grow" fxLayout="column" (filterChange)="onFilterChange($event)">
+
+                    <table [dataSource]="dataSource" mat-table matSort class="list">
+
+                        <ng-container *ngFor="let column of displayedColumns">
+                            <ng-container *ngIf="column.isModelProperty" [matColumnDef]="column.property">
+                                <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.name }}</th>
+                                <td *matCellDef="let row" mat-cell>
+                                    {{ row[column.property] }}
+                                </td>
+                            </ng-container>
+                        </ng-container>
+
+                        <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+                        <tr *matRowDef="let row; columns: visibleColumns;" class="clickable route-animations-elements" mat-row></tr>
+
+                    </table>
+                    <mat-paginator class="paginator" [pageSize]="pageSize"></mat-paginator>
+                </fury-list>
+
+            </fury-card-content>
+        </fury-card>
+    </fury-page-layout-content>
+</fury-page-layout>

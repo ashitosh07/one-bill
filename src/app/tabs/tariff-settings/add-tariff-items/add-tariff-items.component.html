@@ -1,0 +1,52 @@
+<div mat-dialog-title>
+    <mat-toolbar role="toolbar" class="task-header">
+        <span>Add {{type}}</span>
+        <span class="fx-spacer"></span>
+        <button mat-icon-button (click)="close()">
+            <mat-icon title="Close" mat-list-icon>close</mat-icon>
+        </button>
+    </mat-toolbar>
+</div>
+
+<form [formGroup]="tariff_items_create" (ngSubmit)="save()">
+    <mat-dialog-content>
+        <fury-card>
+            <fury-card-content class="padding-top">
+                <div class="person">
+                    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px">
+                        <mat-form-field fxFlex>
+                            <mat-label>{{type}} Name</mat-label>
+                            <input formControlName="itemName" matInput required>
+                            <mat-hint>This will be {{type}} name.</mat-hint>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlex>
+                            <mat-label>Sub Items</mat-label>
+                            <mat-select [(ngModel)]="selectedSubItems" multiple formControlName="subItem_select">
+                                <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">Select All
+                                </mat-option>
+                                <mat-option *ngFor="let item of subItems" [optionSelected]="item.selected"
+                                    [value]="item.id" (click)="tosslePerOne(allSelected.viewValue)">
+                                    {{item.description}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="person">
+                    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px">
+                        <app-table-structure [visibleUpdateButton]="true" [visibleDeleteButton]="true"
+                            style="width: 100%;" [tableData]="dataSource" [columns]="columns"
+                            (updateRow)="onUpdateRow($event)" (deleteRow)="onDeleteRow($event)">
+                        </app-table-structure>
+                    </div>
+                </div>
+            </fury-card-content>
+        </fury-card>
+    </mat-dialog-content>
+
+    <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button (click)="closeDialog()">CANCEL</button>
+        <button mat-button>{{buttonName}}</button>
+    </mat-dialog-actions>
+</form>

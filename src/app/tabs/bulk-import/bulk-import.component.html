@@ -1,0 +1,127 @@
+<fury-page-layout mode="card">
+  <fury-page-layout-header>
+    <fury-breadcrumbs [@fadeInRight] [crumbs]="[]" current="Import Data"></fury-breadcrumbs>
+  </fury-page-layout-header>
+  <fury-page-layout-content [@fadeInUp] [fxLayoutGap]="gap" fxLayout="column">
+    <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+      fxLayoutAlign.gt-sm="start stretch">
+      <fury-card [fxFlex.gt-sm]="col2" fxFlex="grow">
+        <fury-card-header style="background-color: whitesmoke">
+          <fury-card-header-heading>Import data in bulk</fury-card-header-heading>
+        </fury-card-header>
+        <fury-card-header style="background-color:white; padding: 12px !important;font-family: Roboto;font-weight: bold;">
+          <fury-card-header-heading style="color: #1976d2;">Note: *Please select the correct tower from top toolbar before importing data via template.</fury-card-header-heading>
+        </fury-card-header>
+        <fury-card-content fxLayout="column">
+          <div class="flex-container" fxLayout="column">
+            <form [formGroup]="fileUploadForm" (ngSubmit)="onFormSubmit()">
+              <div class="padding-top" fxLayout="column" fxLayoutGap="16px">
+                <div fxFlex="auto" fxLayout="column">
+                  <div class="person">
+                    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+                      <mat-form-field fxFlex>
+                        <mat-select [(ngModel)]="entityDataType" name="entityDataType" id="entityDataTypeId"
+                          placeholder="Entity Type" [ngModelOptions]="{ standalone: true }"
+                          (selectionChange)="setFileTemplate($event)">
+                          <mat-option *ngFor="let item of entityDataTypes" [value]="item.id">
+                            {{ item.description }}
+                          </mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <div fxFlex>
+                        <button color="primary" mat-raised-button style="margin-top: 7px !important; margin-bottom: 7px"
+                          type="button" [disabled]="isDisabled" title="Download" (click)="downloadFile()">
+                          TEMPLATE
+                        </button>
+                      </div>
+                      <div *ngIf="displayAccountHeads">
+                        <mat-form-field fxFlex>
+                          <mat-select [(ngModel)]="accountHead" name="accountHead" id="accountHeadId"
+                            placeholder="Bill Heads" [ngModelOptions]="{ standalone: true }">
+                            <mat-option *ngFor="
+                                let accountHead of accountHeadsForImports;
+                                index as i
+                              " [value]="accountHead.id">
+                              {{ accountHead.accountHeadName }}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+
+                      <div fxFlex>
+                        <label for="myfile" class="custom-file-upload">
+                          <input type="file" size="110" id="myfile" name="myfile" class="input-file"
+                            (change)="onFileSelect($event)"  #UploadFileInput style="align-self: baseline" />
+                        </label>
+                      </div>
+
+                      <div fxFlex>
+                        <button color="primary" mat-raised-button style="margin-top: 7px" type="submit">
+                          <span>UPLOAD</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <fury-card *ngIf="data" [fxFlex.gt-sm]="col2" fxFlex="grow"
+                    style="margin-top: 20px">
+                    <fury-card-header class="card-header">
+                      <fury-card-header-heading>Excel Data Preview</fury-card-header-heading>
+                    </fury-card-header>
+                    <fury-card-content fxLayout="column">
+                      <div  id="excelDiv" class="table-wrapper" >
+                        <table id="excelTable" onloadeddata="resizeTable()">
+                          <tr *ngFor="let row of data">
+                            <td *ngFor="let val of row">
+                              {{ val }}
+                            </td>
+                          </tr>
+                        </table>
+                        
+                      </div>
+                    </fury-card-content>
+                  </fury-card>
+                
+
+                  <div *ngIf="displaySpinner" class="d-flex justify-content-center">
+                    <div class="spinner-border" role="status">
+                      <span class="sr-only" id="loading"></span>
+                    </div>
+                  </div>
+                  <!-- <app-table-structure [tableData]="data"></app-table-structure> -->
+                  <div *ngIf="gotResponse && displaySuccessMessage" class="alert-green">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    {{ displaySuccessMessage }}
+                  </div>
+                  <div *ngIf="gotResponse && displayFailedMessage" class="alert-red">
+                    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                    {{ displayFailedMessage }}
+                  </div>
+                  <fury-card *ngIf="gotResponse && displayFailedMessage" [fxFlex.gt-sm]="col2" fxFlex="grow"
+                    style="margin-top: 20px">
+                    <fury-card-header class="card-header">
+                      <fury-card-header-heading>Logs</fury-card-header-heading>
+                    </fury-card-header>
+                    <fury-card-content fxLayout="column">
+                      <div *ngIf="gotResponse && displayFailedMessage" class="table-wrapper-response">
+                        <!-- <p>{{ displaySuccessMessage}}</p> -->
+                        <!-- <p>{{ displayFailedMessage}}</p> -->
+
+                        <table>
+                          <tr *ngFor="let val of bulkImportResult.errorMessage">
+                            <td>
+                              {{ val }}
+                            </td>
+                          </tr>
+                        </table>
+                      </div>
+                    </fury-card-content>
+                  </fury-card>
+                </div>
+              </div>
+            </form>
+          </div>
+        </fury-card-content>
+      </fury-card>
+    </div>
+  </fury-page-layout-content>
+</fury-page-layout>

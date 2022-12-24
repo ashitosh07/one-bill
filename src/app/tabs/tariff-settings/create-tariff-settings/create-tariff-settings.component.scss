@@ -1,0 +1,154 @@
+@import "var";
+
+:host {
+  background: url('/assets/img/backgrounds/form-wizard.jpg');
+  background-size: cover;
+  display: block;
+}
+
+.title {
+  color: white;
+}
+
+.card {
+  margin: $spacing;
+  max-width: 100%;
+  border-radius: $border-radius;
+  overflow: hidden;
+
+  @include mat-elevation(10);
+
+  .heading {
+    font: var(--font-title);
+  }
+
+  .subheading {
+    font: var(--font-subheading-1);
+  }
+
+  .content {
+    margin: $spacing/2 0;
+
+    .checkbox {
+      margin-top: $spacing/2;
+    }
+  }
+
+  .actions {
+    margin-top: $spacing;
+    padding: $spacing $spacing/3 0;
+  }
+}
+
+.copyright {
+  position: absolute;
+  bottom: $spacing;
+  right: $spacing;
+  color: white;
+}
+
+.padding{
+  padding-bottom: 0px;
+}
+
+
+.titleSelector {
+  margin-top: auto;
+  margin-right: 24px;
+}
+
+.profile {
+  width: 50%;
+  display: flex;
+}
+
+.profileImage {
+  height: 100px;
+  margin-left: 24px;
+  margin-right: 10px;
+  padding: 10px;
+}
+
+.profileButton {
+  align-self: center;
+  padding: 3px 15px;
+}
+
+.document {
+  width: 50%;
+  display: flex;
+}
+
+.selectDocument {
+  width: inherit;
+  margin-right: 30px;
+  align-self: center;
+  padding: 3px 15px;
+  overflow: hidden;
+}
+
+.uploadButton {
+  align-self: center;
+  padding: 5px 15px;
+  border: 1px solid grey;
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px grey;
+  cursor: pointer;
+}
+
+.uploadButtonDisabled {
+  align-self: center;
+  padding: 5px 15px;
+  border: 1px solid rgba(0, 0, 0, 0.26);
+  border-radius: 3px;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.26);
+  color: rgba(0, 0, 0, 0.26);
+}
+
+.deleteIcon {
+  cursor: pointer;
+}
+
+.company {
+  align-self: center;
+  margin-left: 24px;
+}
+
+.companyName {
+  margin-top: 10px;
+  margin-right: 24px;
+}
+
+.mat-slide-toggle{
+  padding-right: 10px;
+}
+
+.hide
+{
+  display: none;
+}
+.under-line{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.duplicateMessage
+{
+  color: red;
+  font-size:small;
+}
+
+.duplicate
+{
+  color: red;
+}
+
+.task-header {
+  background-color: transparent;
+  padding: 0 5px;
+   height: 20px;
+}
+
+.fx-spacer {
+  flex: 1 1 auto;
+}

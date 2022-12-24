@@ -1,0 +1,22 @@
+<mat-dialog-content>
+    <div class="person">
+        <form>
+
+            <button matTooltip="Email" [disabled]="!hide" *ngIf="show" (click)="onSendReceipt()" mat-icon-button class="example-icon"
+                aria-label="Example icon-button with menu icon">
+                <mat-icon>email</mat-icon>
+            </button>
+
+            <button matTooltip="Print" [disabled]="!hide" *ngIf="visible" (click)="onPrint()" mat-icon-button class="example-icon"
+                aria-label="Example icon-button with menu icon">
+                <mat-icon>print</mat-icon>
+            </button>
+            <!-- [disabled]="!hide" -->
+            <button matTooltip="Export" [disabled]="!hide" (click)="onExport()" *ngIf="ownerId == 0" mat-icon-button class="example-icon"
+                aria-label="Example icon-button with menu icon">
+                <mat-icon>import_export</mat-icon>
+            </button>
+
+        </form>
+    </div>
+</mat-dialog-content>

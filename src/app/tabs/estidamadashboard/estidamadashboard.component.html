@@ -1,0 +1,193 @@
+<div fxLayout="column" fxLayoutGap="2%" style="padding: 27px;">
+
+  <!-- <div class="container"> -->
+  <!-- <div class="mtype" style="padding: 1% 1% 1% 1%; "> -->
+  <!-- <mat-card class="mat-elevation-z4"> -->
+
+  <!-- <mat-toolbar color="primary">
+        <img class="img-style" src="assets/img/fav-icon.png">
+        <span>Estidama Dashboard</span>
+      </mat-toolbar> -->
+  
+  <div class="loading-indicator" *ngIf="showSpinner">
+    <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
+  </div>
+  
+  <mat-toolbar color="primary" class="position-fixed">
+    <img class="img-style" src="assets/img/fav-icon.png" [fxHide.xs]="true">
+    <span fxLayout="row" fxLayout.xs="column">Dashboard</span>
+  </mat-toolbar>
+  <!-- </mat-card> -->
+  <!-- </div> -->
+
+  <!-- <div class="mtype" style="padding: 1% 1% 1% 1%; "> -->
+
+  <mat-card fxLayout="column" fxLayoutGap="1%">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="2%" style="width: 90%;">
+
+      <mat-form-field>
+        <mat-select [(ngModel)]="meterTypeName" name="meterType" id="meterTypeId" placeholder="Select a Meter Type"
+          (selectionChange)="onMeterTypeChange($event.value)">
+          <mat-option *ngFor="let item of lstMeterType;" [value]="item.meterTypeName">{{item.meterTypeName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>      
+      
+      <mat-form-field>
+        <mat-select [(ngModel)]="meterGroup" name="meterGroup" id="meterGroupId" placeholder="Select a Meter Group"
+          (selectionChange)="onMeterGroupChange($event.value)">
+          <mat-option *ngFor="let item of lstMeterGroup;" [value]="item.id">{{item.description}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select [(ngModel)]="selectedMeters" multiple placeholder="Select a Meter" class="multiSelectCustom"
+          [formControl]="form.controls['meters']">
+          <input class="myInput" #myInput matInput focused="'true'" type="text" (keyup)="search($event.target.value)"
+            autocomplete="off" placeholder="search">
+          <mat-divider></mat-divider>
+          <mat-option #allMetersSelected (click)="toggleMetersAllSelection()" [value]="0">Select All</mat-option>
+          <mat-option *ngFor="let item of lstMeter" [value]="item.id"
+            (click)="toggleMeterPerOne(allMetersSelected.viewValue)"> {{item.deviceName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- <mat-form-field>
+          <mat-select [(ngModel)]="meterId" name="meter" id="meterId" placeholder="Select a Meter"
+            (ngModelChange)="onDropdownChange()">
+            <input class="myInput" #myInput matInput focused="'true'" type="text" (keyup)="search($event.target.value)"
+              autocomplete="off" placeholder="search">
+            <mat-divider></mat-divider>
+            <mat-option *ngFor="let item of lstMeter;" [value]="item.meterID">{{item.meterName}}</mat-option>
+          </mat-select>
+        </mat-form-field> -->
+
+      <mat-form-field>
+        <mat-label>Date</mat-label>
+        <input [matDatepicker]="datepickerRef" matInput [(ngModel)]="datFrom">
+        <mat-datepicker-toggle [for]="datepickerRef" matSuffix></mat-datepicker-toggle>
+      </mat-form-field>
+      <mat-datepicker #datepickerRef></mat-datepicker>
+
+      <button color="primary" mat-raised-button class="okButton" (click)="getData()">OK</button>
+    </div>
+  </mat-card>
+
+
+  <!-- </div> -->
+
+
+  <div fxLayout="row wrap" style="padding: 1% 0% 1% 0%; ">
+
+    <div fxFlex="49%">
+      <mat-card class="mat-elevation-z4">
+        <div style="min-width: 310px; height: 330px; margin: 0 auto" id="edcontainer1"></div>
+        <div fxLayout="row" fxLayoutGap="15%" class="content">
+          <div fxLayout="column">
+            <b>Consumption</b>
+            <b>{{hourlyConsumption}}</b>
+          </div>
+          <div fxLayout="column">
+            <b>Average</b>
+            <b>{{hourlyAverage}}</b>
+          </div>
+          <div fxLayout="column">
+            <b>High</b>
+            <b>{{hourlyPeak}}</b>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <div fxFlex="2%"></div>
+    <div fxFlex="49%">
+      <mat-card class="mat-elevation-z4">
+
+        <div style="min-width: 310px; height: 330px; margin: 0 auto" id="edcontainer5"></div>
+        <div fxLayout="row" fxLayoutGap="15%" class="content">
+          <div fxLayout="column">
+            <b>Consumption</b>
+            <b>{{dailyConsumption}}</b>
+          </div>
+          <div fxLayout="column">
+            <b>Average</b>
+            <b>{{dailyAverage}}</b>
+          </div>
+          <div fxLayout="column">
+            <b>High</b>
+            <b>{{dailyPeak}}</b>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+
+  <div class="content" fxLayout="row wrap" style="padding: 1% 0% 1% 0%; ">
+    <!-- <div fxFlex="2%"></div> -->
+    <div fxFlex="100%" style="align-self: center;">
+      <mat-card>
+        <div id="edcontainer6"></div>
+        <div fxLayout="row" fxLayoutGap="30%" class="content">
+          <div fxLayout="column">
+            <b>Consumption</b>
+            <b>{{weeklyConsumption}}</b>
+          </div>
+          <div fxLayout="column">
+            <b>Average</b>
+            <b>{{weeklyAverage}}</b>
+          </div>
+          <div fxLayout="column">
+            <b>High</b>
+            <b>{{weeklyPeak}}</b>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+
+  </div>
+
+  <div class="content" fxLayout="row wrap" style="padding: 1% 0% 1% 0%; ">
+    <div fxFlex="49%">
+      <mat-card class="mat-elevation-z4">
+        <div style="min-width: 310px; height: 330px; margin: 0 auto" id="edcontainer3"></div>
+        <div fxLayout="row" fxLayoutGap="15%" class="content">
+          <div fxLayout="column">
+            <b>Consumption</b>
+            <b>{{monthlyConsumption}}</b>
+          </div>
+          <div fxLayout="column">
+            <b>Average</b>
+            <b>{{monthlyAverage}}</b>
+          </div>
+          <div fxLayout="column">
+            <b>High</b>
+            <b>{{monthlyPeak}}</b>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+    <div fxFlex="2%"></div>
+    <div fxFlex="49%">
+      <mat-card>
+        <div style="min-width: 310px; height: 330px; margin: 0 auto" id="edcontainer4"></div>
+        <div fxLayout="row" fxLayoutGap="15%" class="content">
+          <div fxLayout="column">
+            <b>Consumption</b>
+            <b>{{yearlyConsumption}}</b>
+          </div>
+          <div fxLayout="column">
+            <b>Average</b>
+            <b>{{yearlyAverage}}</b>
+          </div>
+          <div fxLayout="column">
+            <b>High</b>
+            <b>{{yearlyPeak}}</b>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+
+  </div>
+
+  <!-- </div> -->

@@ -1,0 +1,86 @@
+<mat-dialog-content>
+  <div class="person">
+    <form>
+      <div
+        fxLayout="column"
+        fxLayout.gt-sm="row"
+        fxLayoutAlign="end end"
+        fxLayoutGap.gt-sm="24px"
+      >
+        <!-- <div class="fury-flex-form-field">
+                    <button matTooltip="SMS" mat-icon-button class="material-icons" (click)="onSendSMS()">
+                        <mat-icon>textsms</mat-icon>
+                    </button>
+                </div> -->
+        <div class="fury-flex-form-field">
+          <mat-button-toggle-group>
+            <mat-button-toggle class="example-icon favorite-icon">
+              <button
+                [disabled]="!(mode === 'Approved')"
+                matTooltip="Email"
+                mat-icon-button
+                class="example-icon favorite-icon"
+              >
+                <mat-icon>email</mat-icon>
+              </button>
+            </mat-button-toggle>
+            <mat-button-toggle
+              class="split-button-1 drop-down-button"
+              [matMenuTriggerFor]="dropdownMenuOne"
+            >
+              <mat-icon>arrow_drop_down</mat-icon>
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+
+          <mat-menu #dropdownMenuOne="matMenu">
+            <div mat-menu-item>
+              <button
+                [disabled]="!(mode === 'Approved')"
+                matTooltip="Email"
+                mat-icon-button
+                class="example-icon favorite-icon"
+                (click)="onSendInvoice('Invoice')"
+              >
+                Send Invoice
+              </button>
+            </div>
+          </mat-menu>
+        </div>
+
+        <div class="fury-flex-form-field">
+          <button
+            matTooltip="Print"
+            mat-icon-button
+            class="example-icon"
+            (click)="onPrint()"
+          >
+            <mat-icon>print</mat-icon>
+          </button>
+        </div>
+
+        <div class="fury-flex-form-field">
+          <button
+            matTooltip="Summary"
+            mat-icon-button
+            class="material-icons"
+            (click)="onPrintSummary()"
+          >
+            <mat-icon>assignment</mat-icon>
+          </button>
+        </div>
+
+        <div class="fury-flex-form-field">
+          <button
+            [disabled]="!showAprrovedButton"
+            matTooltip="Approve"
+            mat-icon-button
+            class="material-icons"
+            (click)="onApprove()"
+          >
+            <mat-icon>verified_user</mat-icon>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>

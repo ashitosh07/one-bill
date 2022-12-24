@@ -1,0 +1,135 @@
+<div mat-dialog-title>
+    <mat-toolbar role="toolbar" class="task-header">
+      <span>User Creation</span>
+      <span class="fx-spacer"></span>
+      <button mat-icon-button (click)="close()">
+          <mat-icon title="Close" mat-list-icon>close</mat-icon>
+      </button>
+    </mat-toolbar>
+  </div>
+
+<form [formGroup]="user_create" (ngSubmit)="save()">
+    <mat-dialog-content>
+        <fury-card>
+            <fury-card-content class="padding-top">
+                <div class="person">
+                    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+                        <mat-form-field fxFlex>
+                            <mat-label>User Name</mat-label>
+                            <input formControlName="username" matInput required>
+                            <mat-hint *ngIf="mode=='create'">This will be User name.</mat-hint>
+                            <app-show-errors [ctrl]="user_create.get('username')"></app-show-errors>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlex>
+                            <mat-label>Role</mat-label>
+                            <input matInput [matAutocomplete]="roleId" formControlName="role" (click)="getRoles()" (focus)="getRoles()">
+                            <mat-autocomplete #roleId="matAutocomplete" (optionSelected)="onChangeRoles($event)">
+                                <mat-option *ngFor="let option of filteredRoles; index as i" [value]="option.description">{{ option.description }}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <mat-hint>This will be Role.</mat-hint>
+                            <app-show-errors [ctrl]="user_create.get('role')"></app-show-errors>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <!-- <div class="actions" style="text-align: right;">
+                    <button class="create" (click)="createDesignation()" type="button" mat-mini-fab color="primary">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div> -->
+                <div class="person padding-top">
+                    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+                        <mat-form-field fxFlex="48%">
+                            <mat-label>Password</mat-label>
+                            <input [type]="inputType" formControlName="password" matInput required>
+                            <button type="button" [disabled]="mode=='update'" mat-icon-button matSuffix (click)="toggleVisibility()" matTooltip="Toggle Visibility">
+                                <mat-icon *ngIf="visible">visibility</mat-icon>
+                                <mat-icon *ngIf="!visible">visibility_off</mat-icon>
+                              </button>
+                            <mat-hint *ngIf="mode=='create'">This will be Password.</mat-hint>
+                            <!-- <small *ngIf="user_create?.get('password').invalid">Password should contain 1 Uppercase, 1 Special character and minimum 8 charaters long.</small> -->
+                            <mat-error *ngIf="user_create?.get('password').invalid">Password should contain 1 Uppercase, 1 Special character and minimum 8 charaters long.</mat-error>
+                            <!-- <app-show-errors [ctrl]="user_create?.get('password')"></app-show-errors> -->
+                            <!-- <button  formControlName="password"  (onclick)="resetPassword()">Reset Password</button> -->
+                        </mat-form-field>
+                        <div fxFlex>
+                            <mat-form-field style="width: 83%;">
+                                <mat-label>Designation</mat-label>
+                                <!-- <input formControlName="designation"  matInput required> -->
+                                <input matInput [matAutocomplete]="designationId" formControlName="designation" required (click)="getFilteredDesignations()" (focus)="getFilteredDesignations()">
+                                <mat-autocomplete #designationId="matAutocomplete" (optionSelected)="onChangeDesignation($event)">
+                                    <mat-option *ngFor="let option of filteredDesignations; index as i" [value]="option.description">{{ option.description }}
+                                    </mat-option>
+                                </mat-autocomplete>                            
+                                <mat-hint>This will be Designation.</mat-hint>
+                                <app-show-errors [ctrl]="user_create.get('designation')"></app-show-errors>
+                            </mat-form-field> 
+                            
+                            <button class="create" (click)="createDesignation()" style="height: 30px;width: 30px; margin-left: 10px;padding-top: 5px;" type="button" mat-mini-fab color="primary">
+                                <mat-icon style="height: 10px;width: 10px;padding-top: -5px;margin-top: -35px;margin-left: -15px;">add</mat-icon>
+                            </button>    
+                        
+                        </div>                 
+                    </div>
+                </div>                
+
+                <div class="person padding-top">
+                    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+                        <mat-form-field fxFlex>
+                            <mat-label>Email</mat-label>
+                            <input formControlName="email" matInput required>
+                            <mat-hint *ngIf="mode=='create'">This will be Email.</mat-hint>
+                            <app-show-errors [ctrl]="user_create.get('email')"></app-show-errors>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlex>
+                            <mat-label>Clients</mat-label>
+                            <!-- (selectionChange)="onChangeClients($event.value)" -->
+
+                            <mat-select [(ngModel)]="selectedClients"  multiple formControlName="client_select">                                
+                                <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">Select All</mat-option>
+                                <mat-option *ngFor="let client of clients" [optionSelected]="client.selected" [value]="client.value" (click)="tosslePerOne(allSelected.viewValue)"> {{client.label}}
+                                      <!-- <mat-checkbox [checked]="client.selected"></mat-checkbox>  -->
+                                </mat-option>                                
+                            </mat-select>
+
+                            <!--<input matInput [matAutocomplete]="clientName" formControlName="client_select" multiple>
+                            <mat-autocomplete #clientName="matAutocomplete" [(ngModel)]="clients" (optionSelected)="onChangeClients($event.value)" >
+                                <mat-option *ngFor="let client of clients;" [value]="client.value">{{ client.label }}
+                                    <mat-checkbox [checked]="client.selected"></mat-checkbox> 
+                                </mat-option>
+                            </mat-autocomplete>
+                             <app-show-errors [ctrl]="user_create.get('clientName')"></app-show-errors> -->
+                        </mat-form-field>
+                </div>
+                </div>
+                <div class="person padding-top">
+                    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">                        
+                        <div class="profile">
+                            <img class="profileImage" src="{{image}}" style="width: 100px;height: 100px;border-radius: 50%;">
+                            
+                        </div>                        
+                        <mat-form-field fxFlex>
+                            <mat-label>Actions</mat-label>
+                            <mat-select [(ngModel)]="selectedActions"  multiple formControlName="action_select">                                
+                                <mat-option #allActionsSelected (click)="toggleAllActionSelection()" [value]="0">Select All</mat-option>
+                                <mat-option *ngFor="let action of actions" [optionSelected]="action.selected" [value]="action.value" (click)="tossleActionsPerOne(allActionsSelected.viewValue)"> {{action.label}}
+                                </mat-option>                                
+                            </mat-select>
+                         </mat-form-field>
+                    </div>
+                    <input class="profileButton" type="file" #fileInput accept="image/*" (change)="uploadPhoto($event)" style="text-align: center;">
+                    
+                </div>
+                <mat-hint class="errorMessage" *ngIf="isUploadSuccess == false">{{ errorMessage }}</mat-hint>  
+            </fury-card-content>
+        </fury-card>
+    </mat-dialog-content>
+    
+    <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button (click)="closeDialog()">CANCEL</button>    
+        <button *ngIf="isCreateMode()" mat-button [disabled]="!user_create.valid">CREATE USER</button>
+        <button *ngIf="isUpdateMode()" mat-button [disabled]="!user_create.valid">UPDATE USER</button>
+      </mat-dialog-actions>
+</form>

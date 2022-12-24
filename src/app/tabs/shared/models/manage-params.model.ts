@@ -1,0 +1,35 @@
+export interface ManageParams {
+    unitNumber?: string;
+    tenantId?: string;
+    phoneNumber?: string;
+    billFeeType?: string;
+    billType?: number;
+    consumptionTypeId?: number;
+    consumptionType?: string;
+    utilityTypeId?: string;
+    utilityType?: string;
+    billPeriodId?: string;
+    fromDate?: string;
+    toDate?: string;
+    startDate?: string;
+    endDate?: string;
+    processDate?: string;
+    settlementDate?: string;
+    clientId?: number;
+    paymentMode?: string;
+    days?: number;
+    percentage?: number;
+    isFine?: boolean;
+    isPenalty?: boolean;
+    paymentId?: number;
+    statusId?: number;
+    modeId?: number;
+    countryId?: number;
+    areaId?: number;
+    locationId?: number;
+    strClientId?: string;
+    fromBillPeriodId?: number;
+    toBillPeriodId?: number;
+    tenantIds?: number[];
+    tenantName?: string;
+}

@@ -1,0 +1,45 @@
+
+<mat-card fxLayout="column" fxLayoutGap="20px" style="padding: 27px 27px 27px 27px;">
+
+  <mat-toolbar color="primary" class="position-fixed">
+    <img class="img-style" src="assets/img/fav-icon.png">
+    <span>SMS Template</span>
+    <span class="toolbar-spacer"></span>
+    <button (click)="cancelData()" [disabled]="txtForm.pristine" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon  matTooltip="RESET">refresh</mat-icon>
+  </button>
+  <button (click)="updateData()" [disabled]="txtForm.invalid" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon matTooltip="UPDATE" >update</mat-icon>
+</button>
+  </mat-toolbar>
+  
+    <div fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field style="width: 40%;">
+        <mat-select [(ngModel)]="templateType" name="templateType" [formControl]="txtForm.controls['templateType']" id="templateId" placeholder="Template Type" (ngModelChange)="onTemplateTypeChange()">
+          <mat-option>None</mat-option>
+
+          <mat-option *ngFor="let item of lstTemplates;" [value]="item.id" >{{item.description}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+  
+      <mat-form-field style="width: 40%;">
+        <mat-select [(ngModel)]="keyword" name="keyword" [formControl]="txtForm.controls['keyword']" id="keywordId" placeholder="Keyword">
+          <mat-option *ngFor="let item of lstkeyword;" [value]="item.description" >{{item.description}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button class="create" (click)="addKeyword(textId)" type="button" mat-mini-fab color="primary">
+        <mat-icon>add</mat-icon>
+      </button>
+
+    </div>
+  
+    <div fxLayout="row">
+ 
+        <textarea class="textId" #textId rows="10" cols="130"  [(ngModel)]="textData" [formControl]="txtForm.controls['textData']" placeholder="Enter text here...."></textarea>
+    </div>
+  
+
+  
+  
+  </mat-card>

@@ -1,0 +1,168 @@
+<mat-toolbar color="primary">
+  <img class="img-style" src="assets/img/fav-icon.png">
+
+  <span>Ticket View</span>
+ 
+</mat-toolbar>
+
+<div class="inbox-mail" fxLayout="column" fxFlex="grow">
+
+    <div class="header border-bottom" fxFlex="none"
+         fxLayout="row" fxLayoutAlign="space-between center"
+         fxLayoutAlign.gt-xs="start center">
+      <button type="button" mat-icon-button [routerLink]="['/tickets/list']" matTooltip="Back to Inbox">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+  
+      <mat-divider fxHide fxShow.gt-xs></mat-divider>
+        <button type="button" mat-icon-button (click)="showPopupData()" >
+        <mat-icon>reply</mat-icon>
+      </button>
+      <div class="text">Click to Reply
+      </div>
+    
+    </div>
+    
+    <fury-scrollbar>
+      
+      <div class="mail-content" fxLayout="column" style="padding: 1% 1% 1% 1%;" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="6px">
+        <mat-card class="mat-elevation-z4 ticketCard" fxFlex="99%">
+        <div class="head border-bottom" fxFlex="noshrink" fxLayout="row" fxLayoutAlign="space-between start">
+
+          <div fxLayout="column" fxLayoutAlign="start start">
+            <div class="subject">
+
+              {{dctData['sentToName']}} - {{dctData['title']}} 
+        
+            </div>
+            <div class="labels" fxLayout="row" fxLayoutGap="8px">
+            </div>
+          </div>
+          <div class="subject" fxFlexAlign.xs="end" fxLayout="column" fxLayoutAlign="end" >{{dctData['ticketNumber']}}</div>
+
+        </div>
+  
+        <div class="info" fxFlex="noshrink" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-xs="row"
+             fxLayoutAlign.gt-xs="space-between">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+            <img class="picture" src="{{dctData['image']}} " style="border-radius: 50%">
+  
+            <div fxLayout="column">
+              <div class="from">
+                {{dctData['assignedToName']}}  
+              </div>
+            </div>
+          </div>
+  
+          <div class="extra" fxFlexAlign.xs="end" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
+            <div class="when secondary-text">
+              {{dctData['date'] | date:"dd-MM-yy"}} , {{dctData['date'] | date:"hh:mm a"}}
+            </div>
+            <button class="options icon" [matMenuTriggerFor]="mailOptions" mat-icon-button>
+              <mat-icon>more_vert</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div class="content" fxFlex="grow"  [innerHTML]="dctData['description']">
+        </div>
+        <hr width="100%" align="left">
+        <span style="padding-top: 10px;padding-bottom: 10px;">Attachments:</span> 
+        <div class="content" fxFlex="grow" style="padding-bottom: 0px;">
+          
+          <mat-icon *ngIf="dctData['type']=='pdf'&&dctData['attachmentFile']" (click)="ImageClick(dctData['attachmentFile'])" _ngcontent-ulp-c358="" role="img" class="mat-icon notranslate ng-tns-c358-115 material-icons-outlined mat-icon-no-color" aria-hidden="true">picture_as_pdf</mat-icon>
+  
+          <img *ngIf="dctData['type']=='image'&&dctData['attachmentFile']" src="{{host_path}}{{dctData['attachmentFile']}}" (click)="ImageClick(dctData['attachmentFile'])" style="width: 55px;height: 50px;padding-bottom: 0px;">
+            
+        </div>
+        <mat-label class="leftMargin">{{ dctData['fileName'] }}</mat-label>
+      </mat-card>    
+      </div>
+      
+    <div class="mail-content" fxLayout="column" style="padding: 1% 1% 1% 1%;" fxLayout.xs="row" fxLayout.sm="row" fxLayoutGap="6px" *ngFor="let item of dctData['ticketTransaction']">
+      <mat-card class="mat-elevation-z4 ticketCard" fxFlex="99%">
+      
+        <!-- <hr width="1243px"> -->
+        <!-- <mat-divider></mat-divider> -->
+
+        <div class="info" fxFlex="noshrink" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-xs="row"
+             fxLayoutAlign.gt-xs="space-between">
+          <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+            <img class="picture" src="{{item['image']}}"  style="border-radius: 50%">
+  
+            <div fxLayout="column">
+              <div class="from">
+                {{item['assignedToName']}}  
+              </div>
+            
+            </div>
+          </div>
+  
+          <div class="extra" fxFlexAlign.xs="end" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="16px">
+            <div class="when secondary-text">
+              {{item['date'] | date:"dd-MM-yy"}} , {{item['date'] | date:"hh:mm a"}}
+            </div>
+            <button class="options icon" [matMenuTriggerFor]="mailOptions" mat-icon-button>
+              <mat-icon>more_vert</mat-icon>
+            </button>
+          </div>
+        </div>
+  
+         
+          <div class="content" fxFlex="grow"  [innerHTML]="item['description']">
+        </div>
+        <hr width="100%" align="left">
+        <span style="padding-top: 10px;padding-bottom: 10px;">Attachments:</span> 
+        <div class="content" fxFlex="grow" style="padding-bottom: 0px;">
+          
+        <mat-icon *ngIf="item['type']=='pdf'&&item['attachmentFile']" (click)="ImageClick(item['attachmentFile'])" _ngcontent-ulp-c358="" role="img" class="mat-icon notranslate ng-tns-c358-115 material-icons-outlined mat-icon-no-color" aria-hidden="true">picture_as_pdf</mat-icon>
+
+        <img *ngIf="item['type']=='image'&&item['attachmentFile']" title="Attachment" src="{{host_path}}{{item['attachmentFile']}}" (click)="ImageClick(item['attachmentFile'])"
+        data-toggle="modal" style="width: 55px;height: 50px;padding-bottom: 0px;">
+      </div>
+      <mat-label class="leftMargin">{{ item['fileName'] }}</mat-label>
+      
+    </mat-card>
+  </div>
+      
+
+      <!-- <div class="reply border-top" fxFlex="noshrink" fxLayout="row" fxLayoutAlign="space-between center" (click)="showReply()"
+      *ngIf="!replying">
+   <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="16px">
+   </div> 
+
+   <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+    <button type="button" mat-icon-button (click)="showPopupData()" >
+      <mat-icon>reply</mat-icon>
+    </button>
+     <div class="text">Click to Reply
+     </div>
+   </div>
+ </div> -->
+
+ <!-- <div class="replying border-top" *ngIf="replying">
+   <quill-editor class="editor" [style]="{ height: '100px' }"
+                 placeholder="Reply to Kathy Hudson"></quill-editor>
+
+   <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+     <button mat-button (click)="hideReply()">CANCEL</button>
+     <button mat-fab color="primary" (click)="hideReply(true)">
+       <mat-icon>send</mat-icon>
+     </button>
+   </div>
+ </div> -->
+
+
+
+
+
+      
+    </fury-scrollbar>
+  </div>
+  
+  <mat-menu #mailOptions="matMenu">
+    <button mat-menu-item (click)="showPopupData()">
+      <mat-icon>reply</mat-icon>
+      Reply
+    </button>
+  </mat-menu>
+  

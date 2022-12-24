@@ -1,0 +1,41 @@
+<mat-dialog-content>
+    <div class="person">
+        <div fxLayout="column" fxLayout="row" fxLayoutGap.gt-sm="24px">
+            <div class="mat-table">
+                <fury-expandable-table-structure [tableData]="unBilledConsumptions" [columnsToDisplay]="columns"
+                    [innerDisplayedColumns]="innerColumns" [columnNames]="columnNames" [innerTableName]="innerTableName"
+                    (selectedRows)="onSelectedRows($event)" (viewDataRow)="onViewDataRow($event)"
+                    (printDataRow)="onPrintRows($event)" [hideHeader]="hideHeader" [cssStyledColumn]="cssStyledColumn"
+                    [role]="role">
+                </fury-expandable-table-structure>
+            </div>
+            <div class="fury-flex-form-field" *ngIf="isHide">
+                <button matTooltip="Generate & Save Bill" (click)="onSave()" mat-icon-button class="example-icon"
+                    aria-label="Example icon-button with menu icon">
+                    <mat-icon>launch</mat-icon>
+                </button>
+            </div>
+        </div>
+        <div class="result" fxLayout.gt-sm="row" fxLayout="column" fxLayoutAlign="end end" fxLayoutGap.gt-sm="12px"
+            *ngIf="role!='External'">
+            <ul>
+                <li>
+                    <div class="label-color">
+                        <label>Succeed</label>
+                        <div class="color-box" style="background-color: rgb(152, 197, 171);"></div>
+                        <label>{{succeedCount}}</label>
+                    </div>
+                </li>
+            </ul>
+            <ul>
+                <li>
+                    <div class="label-color">
+                        <label>Failed</label>
+                        <div class="color-box" style="background-color: rgb(206, 120, 152);"></div>
+                        <label>{{failedCount}}</label>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</mat-dialog-content>

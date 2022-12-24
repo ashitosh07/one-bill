@@ -1,0 +1,17 @@
+.ng2-pdf-viewer-container {
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+  
+
+  .custom-modalbox {
+    mat-dialog-container {
+      overflow: initial !important;
+      padding: 42px;
+    }
+  }
+  

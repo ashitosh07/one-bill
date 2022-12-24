@@ -1,0 +1,205 @@
+
+@import "var";
+
+.header-align-right{
+  text-align: left;
+}
+
+.img-style{
+  width: 32px;
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.heading
+{
+    background: #1976d2;
+    font-size: 17px;
+    height: 0px;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.icon-color{
+  color: black;
+}
+
+.position-fixed{
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 5;
+}
+
+
+// .child-1{
+//     background :white;
+//     min-height: 85px;
+//     border-style: solid;
+//     border-width: thin;
+//     border-color: #dddddd;
+//     padding: 30px;
+//     font-weight: 500;
+//     font-size: large;
+//   //   align-items: center;
+// }
+
+// .child-2{
+//     background :white;
+//     min-height: 85px;
+//     border-style: solid;
+//     border-width: thin;
+//     border-color: #dddddd;
+//     padding: 30px;
+   
+// }
+
+// mat-icon:hover {
+//     cursor: pointer;
+// }
+
+// img:hover {
+//   cursor: pointer;
+// }
+
+
+// .custom-modalbox {
+//   mat-dialog-container {
+//     overflow: initial !important;
+//     padding: 42px;
+//   }
+// }
+  
+
+// .header {
+//   height: $inbox-header-height;
+//   min-height: $inbox-header-height;
+//   max-height: $inbox-header-height;
+//   padding-left: $padding;
+//   padding-right: $padding;
+// }
+
+// .mail-list {
+//   height: 100%;
+//   // padding: 27px;
+// }
+
+// .border-bottom{
+//   display: flex;
+// }
+
+// .content {
+
+//   .mail {
+//     height: $inbox-mail-list-item-height;
+//     min-height: $inbox-mail-list-item-height;
+//     max-height: $inbox-mail-list-item-height;
+//     padding-left: $padding;
+//     padding-right: $padding-sm;
+//     position: relative;
+//     transition: $swift-ease-out;
+//     cursor: pointer;
+//     outline: none;
+//     font: var(--font-body-1);
+
+//     @include media-xs {
+//       height: auto;
+//       max-height: none;
+//       padding-top: $spacing/2;
+//       padding-bottom: $spacing/2;
+//     }
+
+//     @include media-sm {
+//       height: auto;
+//       max-height: none;
+//       padding-top: $spacing/2;
+//       padding-bottom: $spacing/2;
+//     }
+
+//     &.background-hover {
+
+//       .from {
+//         font-weight: 400;
+//       }
+
+//       .subject {
+//         font-weight: 400;
+//       }
+
+//       .content {
+//         font-weight: 400;
+//       }
+
+//       .when {
+//         font-weight: 400;
+//       }
+//     }
+
+//     .checkbox {
+
+//     }
+
+//     .picture {
+//       height: 30px;
+//       width: 30px;
+//       border-radius: 50%;
+//     }
+
+//     .content-container {
+//     }
+
+//     .content-wrapper {
+//       white-space: nowrap;
+//       overflow-x: hidden;
+//       text-overflow: ellipsis;
+//     }
+
+//     .from {
+//       margin-left:  5px;
+//       white-space: nowrap;
+//       overflow-x: hidden;
+//       text-overflow: ellipsis;
+//       font-weight: 500;
+//     }
+
+//     .subject {
+//       white-space: nowrap;
+//       overflow-x: hidden;
+//       text-overflow: ellipsis;
+//       font-weight: 500;
+//     }
+
+//     .content1 {
+//       background-color: #1976d2;
+//       white-space: nowrap;
+//       overflow-x: hidden;
+//       text-overflow: ellipsis;
+//       font-weight: 500;
+//     }
+
+//     .content {
+//       white-space: nowrap;
+//       overflow-x: hidden;
+//       text-overflow: ellipsis;
+//       font-weight: 500;
+//     }
+
+//     .when {
+//       white-space: nowrap;
+//       overflow-x: hidden;
+//       text-overflow: ellipsis;
+//       font-weight: 500;
+//     }
+
+//   }
+// }
+
+.buttonStyle {
+  background-color:#2196F3;
+  border-color: #2196F3;
+  color: white;
+}

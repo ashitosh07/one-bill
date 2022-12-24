@@ -1,0 +1,67 @@
+<fury-page-layout mode="card" style="margin-top:20px">
+
+    <div class="loading-indicator" *ngIf="showSpinner">
+        <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
+    </div>
+
+    <fury-page-layout-content fxLayout="column">
+        <mat-toolbar color="primary" class="position-fixed">
+            <img class="img-style" src="assets/img/fav-icon.png">
+
+            <span>Generate Bills</span>
+            <span class="toolbar-spacer"></span>
+            <button matTooltip="Reset" (click)="reset()" mat-icon-button class="example-icon"
+                aria-label="Example icon-button with menu icon">
+                <mat-icon>refresh</mat-icon>
+            </button>
+            <button matTooltip="Save" (click)="onSaveBills($event)" mat-icon-button class="example-icon"
+                aria-label="Example icon-button with menu icon">
+                <mat-icon>save</mat-icon>
+            </button>
+        </mat-toolbar>
+        <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start stretch">
+            <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+                <fury-card-header>
+                </fury-card-header>
+                <fury-card-content fxLayout="column">
+                    <div class="result" fxLayout="column">
+                        <app-create-bill-toolbar [tenants]="tenants" [utilityTypes]="utilityTypes"
+                            [billPeriods]="billPeriods" (filterClicked)="onGenerate($event)">
+                        </app-create-bill-toolbar>
+                    </div>
+                </fury-card-content>
+            </fury-card>
+        </div>
+        <!-- </fury-page-layout-content>
+
+    <fury-page-layout-content [fxLayoutGap]="gap" fxLayout="column"> -->
+        <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start stretch">
+            <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+                <fury-card-content fxLayout="column">
+                    <div class="result" fxLayout="column">
+                        <app-unbilled-consumption [dataSource]="billSettlement" [isHide]="false" [hideHeader]="false"
+                            (printDataRows)="invoiceView($event)">
+                        </app-unbilled-consumption>
+                    </div>
+                </fury-card-content>
+            </fury-card>
+        </div>
+        <!-- </fury-page-layout-content>
+
+
+    <fury-page-layout-content [fxLayoutGap]="gap" fxLayout="column"> -->
+        <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start stretch">
+            <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+                <fury-card-content fxLayout="column">
+                    <div class="result" fxLayout="column">
+                        <app-create-bill-footer-toolbar>
+                        </app-create-bill-footer-toolbar>
+                    </div>
+                </fury-card-content>
+            </fury-card>
+        </div>
+    </fury-page-layout-content>
+</fury-page-layout>

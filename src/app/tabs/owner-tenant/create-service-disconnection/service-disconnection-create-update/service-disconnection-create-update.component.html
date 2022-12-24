@@ -1,0 +1,95 @@
+<div mat-dialog-title>
+    <mat-toolbar role="toolbar" class="task-header">
+      <span>Service Disconnection</span>
+      <span class="fx-spacer"></span>
+      <button mat-icon-button (click)="close()">
+          <mat-icon title="Close" mat-list-icon>close</mat-icon>
+      </button>
+    </mat-toolbar>
+  </div>
+
+<form [formGroup]="form" (ngSubmit)="save()">     
+    <mat-dialog-content class="mat-dlg-content">        
+    <fury-card>     
+        <fury-card-content class="padding-top">  
+
+            <div class="person">
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+
+                    <mat-form-field fxFlex>
+                        <mat-label>Date</mat-label>
+                        <input type="date" formControlName="date" matInput>
+                        <app-show-errors [ctrl]="form.get('date')"></app-show-errors>
+                        <mat-hint>Please select Date</mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex>
+                        <mat-label>Utility Type</mat-label>
+                        <input matInput [matAutocomplete]="utility" formControlName="utilityType">
+                        <mat-autocomplete #utility="matAutocomplete" (optionSelected)="selectUtilityType($event)">
+                            <mat-option *ngFor="let utility of filteredUtilityTypes; index as i" [value]="utility.description">
+                                {{ utility.description }}
+                            </mat-option>
+                        </mat-autocomplete>  
+                        <app-show-errors [ctrl]="form.get('utilityTypeId')"></app-show-errors> 
+                        <mat-hint>Please select a Utility Type</mat-hint>
+                    </mat-form-field>                    
+
+                </div>
+            </div>
+
+            <div class="person" style="padding-top: 15px;">
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+
+                    <mat-form-field fxFlex>
+                        <mat-label>Unit</mat-label>                      
+                        <input matInput [matAutocomplete]="unit" formControlName="unitNumber">
+                        <mat-autocomplete #unit="matAutocomplete" (optionSelected)="selectUnit($event)">
+                            <mat-option *ngFor="let unit of filteredUnits; index as i" [value]="unit.description">{{ unit.description }}
+                            </mat-option>
+                        </mat-autocomplete>  
+                        <app-show-errors [ctrl]="form.get('unitId')"></app-show-errors>
+                        <mat-hint>Please select a Unit</mat-hint>
+                    </mat-form-field>
+                    
+                    <mat-form-field class="titleSelector" fxFlex>
+                        <mat-label>Meter</mat-label>
+                        <input matInput [matAutocomplete]="meter" formControlName="meterName">
+                        <mat-autocomplete #meter="matAutocomplete" (optionSelected)="selectMeter($event)">
+                            <mat-option *ngFor="let meter of filteredMeters; index as i" [value]="meter.description">
+                                {{ meter.description }}
+                            </mat-option>
+                        </mat-autocomplete> 
+                        <app-show-errors [ctrl]="form.get('meterId')"></app-show-errors> 
+                        <mat-hint>Please select a Meter</mat-hint>
+                    </mat-form-field> 
+
+                </div>
+            </div>                  
+
+            <div class="person" style="padding-top: 15px;">
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+
+                    <mat-form-field fxFlex>
+                        <mat-label>Remarks</mat-label>
+                        <textarea type="text" formControlName="remarks" matInput></textarea>
+                        <app-show-errors [ctrl]="form.get('remarks')"></app-show-errors>
+                        <mat-hint>Please enter remarks</mat-hint>
+                    </mat-form-field> 
+                 
+                </div>
+            </div>    
+
+            <div class="person" style="padding-top: 15px;">
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+                    <mat-slide-toggle formControlName="isConnected" >Connected</mat-slide-toggle>
+                </div>
+            </div>        
+
+        </fury-card-content>
+    </fury-card>
+    </mat-dialog-content>
+    <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button [disabled]="!form.valid">UPDATE SERVICE</button>
+      </mat-dialog-actions>
+</form>

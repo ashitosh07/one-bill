@@ -1,0 +1,40 @@
+<fury-page-layout mode="card">
+
+    <mat-toolbar color="primary">
+        <img class="img-style" src="assets/img/fav-icon.png">
+
+        <span>Tenant Bill Payment</span>
+        <span class="toolbar-spacer"></span>
+        <!-- <app-final-bill-settlement-footer-toolbar (saveClicked)="onSaveBillPayment($event)">
+      </app-final-bill-settlement-footer-toolbar> -->
+    </mat-toolbar>
+
+    <fury-page-layout-content [fxLayoutGap]="gap" fxLayout="column" class="padding-top">
+
+        <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start stretch">
+
+            <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+                <fury-card-header>
+                    <fury-card-header-heading>Outstanding Bills</fury-card-header-heading>
+                </fury-card-header>
+
+                <fury-card-content fxLayout="row" fxLayoutGap="5%">
+                    <div fxLayout="column">
+                        <fury-tenant-outstanding-bills [dataSource]="billSettlement"
+                            (rowsSelected)="onSelectedRows($event)" [isHide]="false"></fury-tenant-outstanding-bills>
+                    </div>
+                    <div class="content" fxFlex.xs="100%" fxFlex="50%">
+                        <b>Total Amount</b>
+                        <mat-form-field style="width:220px">
+                            <input disabled type="number" id="totAmtId" name="totAmtNa" [(ngModel)]="totAmt" matInput>
+                        </mat-form-field>
+                        <button class="button-style" mat-raised-button color="primary">Proceed To Payment</button>
+                    </div>
+
+                </fury-card-content>
+            </fury-card>
+        </div>
+    </fury-page-layout-content>
+
+</fury-page-layout>

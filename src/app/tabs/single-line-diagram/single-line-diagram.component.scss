@@ -1,0 +1,23 @@
+.common-buttons{
+    height: 50%;
+    margin-top: 10px;
+} 
+.myInput {
+    height: 50px !important;
+    padding: 10px !important;
+  }
+
+  .toolbar-spacer {
+    flex: 1 1 auto;
+  }
+
+  .img-style{
+    width: 32px;
+  }
+
+  .position-fixed{
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 5;
+  }

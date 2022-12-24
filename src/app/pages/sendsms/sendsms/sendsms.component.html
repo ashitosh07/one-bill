@@ -1,0 +1,70 @@
+
+<mat-card fxLayout="column" fxLayoutGap="30px" style="padding: 27px 27px 27px 27px;">
+
+  <mat-toolbar color="primary" class="position-fixed">
+    <img class="img-style" src="assets/img/fav-icon.png">
+    <span> Send SMS</span>
+    <span class="toolbar-spacer"></span>
+    <button (click)="sendSms()" [disabled]="!txtForm.valid" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon  matTooltip="Send SMS">send</mat-icon>
+  </button>
+  
+  </mat-toolbar>
+
+
+    <div fxLayout="row" fxLayoutGap="2%">
+      <div fxFlex="20">
+      <mat-form-field  fxFlex>
+        <input [formControl]="txtForm.controls['PhoneNo']" required [(ngModel)]="PhoneNo" name="PhoneNo" matInput
+          placeholder="Phone No." id="PhoneNoId">
+        <mat-error *ngIf="txtForm.controls['PhoneNo'].hasError('required')">
+          Enter valid Phone No.
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div fxFlex="18">
+      <mat-form-field fxFlex="95%">
+        <mat-select name="entityTypes" [formControl]="txtForm.controls['entityTypes']" id="entityTypeId"
+          (selectionChange)="onChangeEntityType($event.value)" placeholder="Entity Type">
+          <mat-option value="Client">Clients</mat-option>
+          <mat-option value="Owner">Owners</mat-option>
+          <mat-option value="Tenant">Tenants</mat-option>
+
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div fxFlex="25">
+      <mat-form-field fxFlex>
+        <mat-select [(ngModel)]="selectedEntity" name="entity" placeholder="Entity" multiple
+          [formControl]="txtForm.controls['entityName']">
+          <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">Select All</mat-option>
+          <mat-option *ngFor="let entity of filteredEntities,index as i" [optionSelected]="entity.selected"
+            [value]="entity.entityName" (click)="togglePerOne(allSelected.viewValue)"> {{entity.entityName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div fxFlex="50">
+      <mat-form-field  fxFlex="50%">
+        <mat-select [(ngModel)]="templateType" name="templateType" [formControl]="txtForm.controls['templateType']" 
+          id="templateId" placeholder="Template Type" (selectionChange)="onTemplateTypeChange()">
+          <mat-option>None</mat-option>
+
+          <mat-option *ngFor="let item of lstTemplateType;" [value]="item.description" >{{item.description}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    </div>
+  
+    <div fxLayout="row">
+ 
+        <textarea class="textId"  maxlength="​160" (keyup)="calcCharLength()" #textId rows="10" cols="130"  [(ngModel)]="textData" [formControl]="txtForm.controls['textData']" placeholder="Enter text here...."></textarea>
+    </div>
+
+    <div style="text-align: right;">
+      <label>{{charLeft}} Characters Left </label>
+    </div>
+
+  </mat-card>
+

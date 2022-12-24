@@ -1,0 +1,53 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<mat-card fxLayout="column" fxLayoutGap="20px" style="padding: 27px 27px 27px 27px;">
+
+  <mat-toolbar color="primary">
+  
+    <img class="img-style" src="assets/img/fav-icon.png">
+
+    <span>Create News</span>
+    <span class="toolbar-spacer"></span>
+    <button (click)="cancelData()" [disabled]="txtForm.pristine" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon  matTooltip="RESET">refresh</mat-icon>
+  </button>
+  <button (click)="saveData()" [disabled]="txtForm.invalid" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon matTooltip="SAVE" >save</mat-icon>
+</button>
+  </mat-toolbar>
+  
+    <div fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field style="width: 50%;">
+        <input pattern="[a-zA-Z0-9\s]*$" [formControl]="txtForm.controls['newsTitle']" required [(ngModel)]="newsTitle" name="newsTitle" matInput
+          placeholder="News Title" id="newsId">
+        <mat-error *ngIf="txtForm.controls['newsTitle'].hasError('required')">
+          News Title required
+        </mat-error>
+        <mat-error *ngIf="txtForm.controls['newsTitle'].errors?.pattern">
+          Alphabets, Numbers and spaces only allowed
+        </mat-error>
+      </mat-form-field>
+  
+      <mat-form-field style="width: 50%;">
+        <mat-select [(ngModel)]="type" name="type" [formControl]="txtForm.controls['type']" id="typeId" placeholder="Type">
+          <!-- <mat-option *ngFor="let item of lstType;" [value]="item.id" >{{item.description}}</mat-option> -->
+          <mat-option value="news">News</mat-option>
+          <mat-option value="announcements">Announcements</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  
+    <div fxLayout="row">
+      <quill-editor [@fadeInUp]
+      [formControl]="txtForm.controls['form']"
+      [styles]="{ flex: '1 1 auto'}"
+      class="quill mat-elevation-z16"
+      [(ngModel)]="text"
+      [placeholder]="'Enter Text here....'"
+      fxLayout="column"></quill-editor>
+    </div>
+  
+  
+  
+  
+  </mat-card>

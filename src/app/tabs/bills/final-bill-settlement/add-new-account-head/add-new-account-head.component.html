@@ -1,0 +1,29 @@
+<fury-card-header>
+    <fury-card-header-heading>Add Account Heads</fury-card-header-heading>
+</fury-card-header>
+<mat-dialog-content>
+    <div class="person">
+        <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+            <mat-form-field class="result">
+                <mat-label>Account Head</mat-label>
+                <mat-select id="AccountHeads" name="AccountHeads" (selectionChange)="onChangeAccountHeads($event.value)"
+                    [(value)]="accountHeadId">
+                    <mat-option *ngFor="let option of accountHeadItems" [value]="option.value">
+                        {{ option.label }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="result" color="primary">
+                <mat-label>Amount</mat-label>
+                <input type="text" id="Amount" name="Amount" [(ngModel)]="amount" matInput>
+            </mat-form-field>
+
+            <div class="fury-flex-form-field">
+                <button (click)="onAddNewItem()" color="primary" mat-raised-button>
+                    <span>ADD</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</mat-dialog-content>

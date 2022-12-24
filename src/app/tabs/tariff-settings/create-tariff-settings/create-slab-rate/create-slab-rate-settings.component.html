@@ -1,0 +1,74 @@
+<div class="actions" fxLayout="row" fxLayoutGap="8px">
+    <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="column"
+        fxLayoutAlign.gt-sm="start stretch">
+
+        <!-- <fury-card [fxFlex.gt-sm]="col4" class="basic-forms route-animations-elements"
+            style="box-shadow: 0px 3px 1px 2px whitesmoke;" [@fadeInUp] fxFlex="grow">
+            <fury-card-content fxLayout="column"> -->
+        <form [formGroup]="slab_rate">
+            <div class="person">
+                <div class="content" fxLayout="row" fxLayoutGap="8px">
+
+                    <!-- <mat-form-field fxFlex="auto">
+                            <mat-label>Slab</mat-label>
+                            <mat-select formControlName="slab" (selectionChange)="onChangeSlabs($event.value)"
+                                [(value)]="slabId" required>
+                                <mat-option *ngFor="let option of slabs" [value]="option.value">
+                                    {{ option.label }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-hint>This will be slab.</mat-hint>
+                            <mat-error *ngIf="slab_rate.invalid">Slab is required.</mat-error>
+                        </mat-form-field> -->
+
+                    <mat-form-field fxFlex="auto">
+                        <mat-label>Slab</mat-label>
+                        <input formControlName="slab" [(ngModel)]="slabName" matInput required>
+                        <mat-hint>This will be slab name.</mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="auto">
+                        <mat-label>Minimum</mat-label>
+                        <input type="number" formControlName="minimumConsumption" [(ngModel)]="minimumConsumption"
+                            min="1" matInput required>
+                        <mat-hint>This will be minimum.</mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field fxFlex="auto">
+                        <mat-label>Maximum</mat-label>
+                        <input type="number" formControlName="maximumConsumption" [(ngModel)]="maximumConsumption"
+                            matInput required>
+                        <mat-hint>This will be maximum.</mat-hint>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="person padding-top">
+                <div class="content" fxLayout="row" fxLayoutGap="8px">
+
+                    <mat-form-field fxFlex="auto">
+                        <mat-label>Rate</mat-label>
+                        <input formControlName="rate" [(ngModel)]="rate" matInput required>
+                        <mat-hint>This will be with rate.</mat-hint>
+                    </mat-form-field>
+
+                    <button class="create" (click)="addNewItem()" type="button" mat-mini-fab color="primary">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <!-- </fury-card-content>
+        </fury-card> -->
+
+
+        <!-- <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+            <fury-card-content fxLayout="column"> -->
+        <div class="result padding-top" fxLayout="row">
+            <app-table-structure [visibleDeleteButton]="true" style="width: 100%;" [tableData]="dataSource"
+                [columns]="columns" (deleteRow)="onDeleteRow($event)">
+            </app-table-structure>
+        </div>
+        <!-- </fury-card-content>
+        </fury-card> -->
+    </div>
+</div>

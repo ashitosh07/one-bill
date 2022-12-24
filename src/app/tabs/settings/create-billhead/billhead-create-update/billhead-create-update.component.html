@@ -1,0 +1,291 @@
+<div mat-dialog-title>
+  <mat-toolbar role="toolbar" class="task-header">
+    <span>Bill Line</span>
+    <span class="fx-spacer"></span>
+    <button mat-icon-button (click)="close()">
+      <mat-icon title="Close" mat-list-icon>close</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+  <mat-dialog-content class="mat-dlg-content">
+    <fury-card>
+      <fury-card-content class="topPadding">
+        <div class="person">
+          <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+            <mat-form-field fxFlex>
+              <mat-label>Bill Line Name</mat-label>
+              <input type="text" formControlName="accountHeadName" maxlength="80" matInput>
+              <app-show-errors [ctrl]="form.get('accountHeadName')"></app-show-errors>
+              <mat-hint>Please enter Bill Line Name</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <mat-label>Bill Line Type</mat-label>
+
+              <mat-select (selectionChange)="selectBillHeadType($event)" formControlName="headType">
+                <mat-option [value]="0">----Select----</mat-option>
+                <mat-option *ngFor="let headType of metadataBillHeadTypes" [value]="headType.description">
+                  {{ headType.description }}
+                </mat-option>
+              </mat-select>
+
+              <!-- <input matInput [matAutocomplete]="accountHeadType" formControlName="headType"
+                (selectionChange)="selectBillHeadType($event)">
+              <mat-autocomplete #accountHeadType="matAutocomplete" (optionSelected)="selectBillHeadType($event)">
+                <mat-option *ngFor="let headType of filteredBillHeadTypes; index as i" [value]="headType.description">
+                  {{ headType.description }}
+                </mat-option>
+              </mat-autocomplete> -->
+              <app-show-errors [ctrl]="form.get('accountHeadType')"></app-show-errors>
+              <mat-hint>Please select Bill Line Type</mat-hint>
+            </mat-form-field>
+
+            <!-- <mat-form-field fxFlex *ngIf="headType == 'Variable'">
+              <mat-label>Amount</mat-label>
+              <input type="textbox" formControlName="variableAmount" [ngModel]="variableAmount | number: roundFormat" maxlength="7" matInput furyValidateDecimalPlacesDirective>
+              <app-show-errors [ctrl]="form.get('variableAmount')"></app-show-errors>
+              <mat-hint *ngIf="headType == 'Variable'">Please enter Amount</mat-hint>
+            </mat-form-field> -->
+
+            <mat-form-field *ngIf="isConsumptionCharge" fxFlex>
+              <mat-label>Utility Type</mat-label>
+
+              <mat-select (selectionChange)="selectUtilityType($event)" [(ngModel)]="utilityType"
+                formControlName="utilityType">
+                <mat-option [value]="0">----Select----</mat-option>
+                <mat-option *ngFor="let utilityType of metadataUtilityTypes" [value]="utilityType.description">
+                  {{ utilityType.description }}
+                </mat-option>
+              </mat-select>
+
+              <!-- <input matInput [matAutocomplete]="utilityType" formControlName="utilityType"
+                (keyup)="getFilteredUtilityTypes()" (selectionChange)="selectUtilityType($event)">
+              <mat-autocomplete #utilityType="matAutocomplete" (optionSelected)="selectUtilityType($event)">
+                <mat-option *ngFor="let utilityType of filteredUtilityTypes; index as i" [value]="utilityType.description">
+                  {{ utilityType.description }}
+                </mat-option>
+              </mat-autocomplete> -->
+              <app-show-errors [ctrl]="form.get('utilityTypeId')"></app-show-errors>
+              <mat-hint *ngIf="calculationType == 'Tariff'">Please select Utility Type</mat-hint>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="person topPadding">
+          <!-- class="marginRight" -->
+          <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+            <div fxFlex>
+              <mat-form-field style="width: 80%;">
+                <mat-label>Account Ledger</mat-label>
+
+                <!-- <input type="text" formControlName="accountNumber" matInput maxlength="48" 
+                  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);">  
+                    -->
+                <mat-select (selectionChange)="onChangeAccountNumber($event.value)" formControlName="accountNumber">
+                  <mat-option [value]="0">----Select----</mat-option>
+                  <mat-option *ngFor="let billingLedger of metadataBillingLedger" [value]="billingLedger.id">
+                    {{billingLedger.description}}
+                  </mat-option>
+                </mat-select>
+                <app-show-errors [ctrl]="form.get('accountNumber')"></app-show-errors>
+                <mat-hint>Please select Account Ledger</mat-hint>
+              </mat-form-field>
+              <button class="create" (click)="createBillingLedger()"
+                style="height: 30px;width: 30px;margin-right: 0px;margin-left: 5px;padding-top: -5px;" type="button"
+                mat-mini-fab color="primary">
+                <mat-icon style="height: 10px;width: 10px;padding-top: -5px;margin-top: -25px;margin-left: -13px;">add
+                </mat-icon>
+              </button>
+            </div>
+            <mat-form-field fxFlex>
+              <mat-label>Position</mat-label>
+              <input type="number" formControlName="position" matInput (change)="checkDuplicatePosition()"
+                (keyup)="checkDuplicatePosition()">
+              <mat-hint *ngIf="duplicatePosition==''">Please enter Position</mat-hint>
+              <mat-hint *ngIf="duplicatePosition!=''" class="duplicate">{{ duplicatePosition }}</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlex>
+              <mat-label>Contract Type</mat-label>
+
+              <input matInput [matAutocomplete]="contractType" formControlName="contractType">
+              <mat-autocomplete #contractType="matAutocomplete" (optionSelected)="selectContractType($event)">
+                <mat-option value="All">All</mat-option>
+                <mat-option *ngFor="let contractType of filteredContractTypes; index as i"
+                  [value]="contractType.description">
+                  {{ contractType.description }}
+                </mat-option>
+              </mat-autocomplete>
+              <app-show-errors [ctrl]="form?.get('contractTypeId')"></app-show-errors>
+              <mat-hint>Please select a Contract Type</mat-hint>
+
+            </mat-form-field>
+
+            <div class="formulaLabel" *ngIf="headType == 'Consumption Charge' && utilityType == 'BTU'" fxFlex="20%">
+              <mat-checkbox class="formulaLabel" color="primary" formControlName="MeasuringUnitId"
+                (change)="enableMeasuringUnitCheckChanged($event)">
+                Measurement Unit in TH
+              </mat-checkbox>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="person topPadding" *ngIf="headType != 'Variable' && headType!= '' && headType != 'Unit Charge'">
+        <!-- <div class="person topPadding" *ngIf="headType == 'Variable'">
+          <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+            <mat-form-field fxFlex>
+              <mat-label>Amount</mat-label>
+              <input type="textbox" formControlName="variableAmount" [ngModel]="variableAmount | number: roundFormat" maxlength="7" matInput furyValidateDecimalPlacesDirective>
+              <app-show-errors [ctrl]="form.get('variableAmount')"></app-show-errors>
+              <mat-hint *ngIf="headType == 'Variable'">Please enter Amount</mat-hint>
+            </mat-form-field>
+          </div>
+        </div> -->
+          <mat-label class="subHeading">Bill Line Formula</mat-label>
+          <div class="formulaLabel" *ngIf="headType != 'Consumption Charge' && headType != ''">
+            <mat-checkbox class="formulaLabel" color="primary" formControlName="isEnableFormula"
+              (change)="enableFormulaCheckChanged($event)">
+              * Configure the Formula Based on the Requirement
+            </mat-checkbox>
+          </div>
+        </div>
+
+        <div fxLayout="row" fxLayout.gt-sm="column" class="topPadding" *ngIf="headType == 'Consumption Charge'">
+          <mat-radio-button class="formulaSubLabel" [checked]="isTariff" (click)="getConsumptionCalculation('Tariff')">
+            Calculation Based on Tariff</mat-radio-button>
+          <mat-form-field fxFlex class="topPadding">
+            <mat-label>Tariff</mat-label>
+            <input matInput [matAutocomplete]="tariff" formControlName="tariff" [(ngModel)]="tariffName">
+            <mat-autocomplete #tariff="matAutocomplete" (optionSelected)="selectTariff($event)">
+              <mat-option *ngFor="let tariff of filteredTariffs; index as i" [value]="tariff.tariffName">
+                {{ tariff.tariffName }}
+              </mat-option>
+            </mat-autocomplete>
+            <app-show-errors [ctrl]="form.get('tariffId')"></app-show-errors>
+            <!-- <mat-hint *ngIf="calculationType == 'Tariff'">Please select Tariff</mat-hint> -->
+            <mat-hint *ngIf="calculationType == 'Tariff'">Please select Tariff</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayout.gt-sm="column" *ngIf="headType == 'Consumption Charge'">
+          <mat-radio-button class="formulaSubLabel" [checked]="isFormula"
+            (click)="getConsumptionCalculation('Formula')">Calculation Based on Formula</mat-radio-button>
+        </div>
+
+        <div class="person topPadding" *ngIf="headType!= '' && headType != 'Unit Charge'">
+          <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+            <mat-form-field fxFlex *ngIf="headType != 'Variable' && headType != ''">
+              <mat-label>Formula Applied On</mat-label>
+              <input matInput [matAutocomplete]="formulaFieldName" [(ngModel)]="formulaApplied"
+                formControlName="formulaFieldName" (keyup)="getFilteredFormula()">
+              <mat-autocomplete #formulaFieldName="matAutocomplete" (optionSelected)="selectBillFormula($event)">
+                <mat-option *ngFor="let billFormula of filteredBillFormulas; index as i"
+                  [value]="billFormula.description">
+                  {{ billFormula.description }}
+                </mat-option>
+              </mat-autocomplete>
+              <app-show-errors [ctrl]="form.get('formulaField')"></app-show-errors>
+              <mat-hint *ngIf="calculationType != 'Tariff'">Please select Formula</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field fxFlex *ngIf="headType != 'Variable' && headType!= ''">
+              <mat-label>Operation</mat-label>
+              <input matInput [matAutocomplete]="operatorName" formControlName="operatorName">
+              <mat-autocomplete #operatorName="matAutocomplete" (optionSelected)="selectOperator($event)">
+                <mat-option *ngFor="let operator of filteredOperators; index as i" [value]="operator.description">
+                  {{ operator.description }}
+                </mat-option>
+              </mat-autocomplete>
+              <app-show-errors [ctrl]="form.get('operator')"></app-show-errors>
+              <mat-hint *ngIf="calculationType != 'Tariff'">Please select Operation</mat-hint>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <mat-label>Amount / Value</mat-label>
+              <input type="textbox" formControlName="fixedAmount" [ngModel]="fixedAmount | number: roundFormat"
+                maxlength="7" matInput furyValidateDecimalPlacesDirective>
+              <app-show-errors [ctrl]="form.get('fixedAmount')"></app-show-errors>
+              <mat-hint *ngIf="calculationType != 'Tariff'">Please enter Amount</mat-hint>
+              <!--<mat-hint *ngIf="calculationType != 'Tariff'">
+                 <span *ngIf="form.get('utilityType').value ==='BTU'">Please enter TR_HR Rate</span> -->
+
+              <!-- <small *ngIf="!validateFixedAmount()">Fixed Amount should be greater than zero.</small> oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);if(this.value <= 0) this.value = ''" -->
+            </mat-form-field>
+
+          </div>
+        </div>
+        <div class="person topPadding"
+          *ngIf="headType == 'Late Fee' || formulaApplied == 'Custom Days' || formulaApplied == 'Bill Due Days' || formulaApplied == 'Penalty Date'">
+          <mat-label class="subHeading">Grace Period</mat-label>
+          <div fxLayout="column" fxLayout.gt-sm="row" class="topPadding">
+            <div class="gracePeriodLabelLeft">Applicable after:</div>
+            <mat-form-field fxFlex="13%">
+              <input type="number" formControlName="noOfDays" maxlength="2" min="0" matInput
+                oninput="this.value = 
+              !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null;javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);if(this.value < 0) this.value = ''">
+              <!-- <app-show-errors [ctrl]="form.get('noOfDays')"></app-show-errors> -->
+              <!-- <small *ngIf="!validateFixedAmount()">Fixed Amount should be greater than zero.</small> -->
+            </mat-form-field>
+            <div class="gracePeriodLabelRight" *ngIf="headType == 'Late Fee' && accountHead == 'Late Payment Fees'">Days
+              from Bill Date</div>
+            <div class="gracePeriodLabelRight" *ngIf="headType != 'Late Fee' || accountHead != 'Late Payment Fees'">Days
+              from Bill Due Date </div>
+          </div>
+        </div>
+        <div class="person topPadding">
+          <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px" class="marginRight topPadding"
+            style="padding-bottom: 10px;">
+            <mat-checkbox class="isProportional" color="primary" formControlName="isProportional">
+              Prorata</mat-checkbox>
+          </div>
+        </div>
+        <div class="person topPadding">
+          <mat-label class="subHeading">Taxes and Discounts</mat-label>
+          <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px" class="marginRight topPadding"
+            style="padding-bottom: 10px;">
+            <mat-checkbox class="isVAT" color="primary" formControlName="isVAT" (change)="toggleVAT(VATExist)">Apply Tax
+            </mat-checkbox>
+            <mat-checkbox class="isVAT" color="primary" formControlName="isDiscount" (change)="toggleDiscount($event)">
+              Apply Discount</mat-checkbox>
+            <!-- <mat-form-field fxFlex *ngIf="this.form.controls.isDiscount.value">
+              <mat-label>Discount on Bill line</mat-label>
+              <mat-select formControlName="discountOnBillLine">
+                <mat-option [value]="0">----Select----</mat-option>
+                <mat-option *ngFor="let billLine of metedataBillLines" [value]="billLine.id">
+                  {{ billLine.accountHeadName }}
+                </mat-option>
+              </mat-select>
+              <app-show-errors [ctrl]="form.get('discountOnBillLine')"></app-show-errors>
+              <mat-hint *ngIf="isDiscount">Please select Bill line</mat-hint>
+            </mat-form-field> -->
+            <mat-form-field fxFlex *ngIf="this.form?.controls?.isDiscount.value">
+              <mat-label>Discount type</mat-label>
+              <mat-select formControlName="discountType">
+                <mat-option *ngFor="let discountType of metadataDiscountTypes" [value]="discountType.label">
+                  {{ discountType.label }}
+                </mat-option>
+              </mat-select>
+              <app-show-errors [ctrl]="form.get('discountType')"></app-show-errors>
+              <mat-hint *ngIf="isDiscount">Please Discount type</mat-hint>
+            </mat-form-field>
+            <mat-form-field fxFlex *ngIf="this.form?.controls?.isDiscount.value">
+              <mat-label>Amount / Value</mat-label>
+              <input type="textbox" formControlName="discountAmount"
+                [ngModel]="discountAmount | number: roundFormat | noComma" matInput furyValidateDecimalPlacesDirective>
+            </mat-form-field>
+          </div>
+          <mat-hint class="billSettingMapping" *ngIf="isBillSettingClientMapped == false">Tax Settings not mapped in
+            Bill Settings.</mat-hint>
+        </div>
+      </fury-card-content>
+    </fury-card>
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button (click)="closeDialog()" mat-button>CANCEL</button>
+    <button *ngIf="isCreateMode()" mat-button
+      [disabled]="!form.valid || selectedAccountNumber == 0 || duplicatePosition != ''">CREATE BILL LINE</button>
+    <button *ngIf="isUpdateMode()" mat-button
+      [disabled]="!form.valid || selectedAccountNumber == 0 || duplicatePosition != ''">UPDATE BILL LINE</button>
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,112 @@
+<fury-page-layout mode="card" style="margin-top:20px">
+
+    <div class="loading-indicator" *ngIf="showSpinner">
+        <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
+    </div>
+
+    <fury-page-layout-content fxLayout="column">
+        <mat-toolbar color="primary" class="position-fixed">
+            <img class="img-style" src="assets/img/fav-icon.png">
+
+            <span>Final Bill Settlement</span>
+            <span class="toolbar-spacer"></span>
+            <app-final-bill-settlement-footer-toolbar [isPrintDisable]="isPrintDisable" [isDisabled]="!isData"
+                (printClicked)="onPrintBillPayment($event)" (saveClicked)="onSaveBillPayment($event)">
+            </app-final-bill-settlement-footer-toolbar>
+        </mat-toolbar>
+
+        <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start stretch">
+
+            <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+                <fury-card-content fxLayout="column">
+                    <div class="result padding-top" fxLayout="column">
+                        <app-final-bill-settlement-toolbar [tenants]="tenants" [billPeriods]="billPeriods"
+                          [settlementDate] ="settlementDate" [selectedTenant]="tenantId" [options]="options" [isHide]="false" [isVisible]="false"
+                            (searchClicked)="onGetBillSettlementDetails($event)">
+                        </app-final-bill-settlement-toolbar>
+                    </div>
+                </fury-card-content>
+            </fury-card>
+        </div>
+        <!-- </fury-page-layout-content>
+
+    <fury-page-layout-content [fxLayoutGap]="gap" fxLayout="column"> -->
+
+        <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start stretch">
+
+            <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+                <fury-card-header class="header">
+                    <fury-card-header-heading>Unbilled consumption</fury-card-header-heading>
+                </fury-card-header>
+                <fury-card-content fxLayout="column">
+                    <div class="result" fxLayout="column">
+                        <app-unbilled-consumption [dataSource]="billSettlement"
+                         (printDataRows)="invoiceView($event)"   (saveClicked)="onSaveUnbilledConsumption($event)"></app-unbilled-consumption>
+                    </div>
+                </fury-card-content>
+            </fury-card>
+        </div>
+        <!-- </fury-page-layout-content>
+
+    <fury-page-layout-content [fxLayoutGap]="gap" fxLayout="column"> -->
+
+        <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start stretch">
+
+            <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+                <fury-card-header class="header">
+                    <fury-card-header-heading>Outstanding bills</fury-card-header-heading>
+                </fury-card-header>
+                <fury-card-content fxLayout="column">
+                    <div class="result" fxLayout="column">
+                        <app-outstanding-bills [dataSource]="billSettlement" (rowsSelected)="onSelectedRows($event)">
+                        </app-outstanding-bills>
+                    </div>
+                </fury-card-content>
+            </fury-card>
+        </div>
+        <!-- </fury-page-layout-content>
+
+
+
+    <fury-page-layout-content [fxLayoutGap]="gap" fxLayout="column"> -->
+
+        <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start stretch">
+
+            <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+                <fury-card-content fxLayout="column">
+                    <div class="result" fxLayout="column">
+                        <app-payment-details [banks]="banks" [paymentModes]="paymentModes">
+                        </app-payment-details>
+                    </div>
+                </fury-card-content>
+            </fury-card>
+            <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+                <fury-card-content fxLayout="column">
+                    <div class="result" fxLayout="column">
+                        <app-bill-amount-details [dataSource]="billSettlement" [selectedRows]="selectedRows"
+                            [isDisable]="true">
+                        </app-bill-amount-details>
+                    </div>
+                </fury-card-content>
+            </fury-card>
+        </div>
+    </fury-page-layout-content>
+
+    <!-- <fury-page-layout-content [fxLayoutGap]="gap" fxLayout="column">
+        <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start stretch">
+            <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+                <fury-card-content fxLayout="column">
+                    <div class="result" fxLayout="column">
+                        <app-final-bill-settlement-footer-toolbar (saveClicked)="onSaveBillPayment($event)">
+                        </app-final-bill-settlement-footer-toolbar>
+                    </div>
+                </fury-card-content>
+            </fury-card>
+        </div>
+    </fury-page-layout-content> -->
+</fury-page-layout>

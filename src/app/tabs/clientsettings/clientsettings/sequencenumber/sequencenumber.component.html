@@ -1,0 +1,101 @@
+
+
+<div class="content" [formGroup]="sequenceSettings" fxLayout="column" fxLayoutGap="8px">
+    
+    <div fxLayout="row" fxLayoutGap="8px">
+
+        <mat-form-field fxFlex="50%">
+            <mat-label>Sequence Key</mat-label>
+            <mat-select formControlName="sequenceKey" (selectionChange)="onSequenceKey($event)"
+                [(ngModel)]="keyId">
+                <mat-option *ngFor="let option of lstSequenceKey" [value]="option.id">
+                    {{ option.description }}
+                </mat-option>
+            </mat-select>
+            <mat-hint>This will be Sequence Key.</mat-hint>
+            <mat-error *ngIf="sequenceSettings.invalid">Sequence Key is required.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="50%">
+            <mat-label>Last Sequence</mat-label>
+            <input formControlName="lastSequence" [(ngModel)]="lastSequence" type="number" matInput >
+            <mat-hint>This will be sequence number</mat-hint>
+        </mat-form-field>
+    
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="8px">
+
+        <mat-form-field fxFlex="50%">
+            <mat-label>Sequence Format</mat-label>
+            <input formControlName="sequenceFormat" [(ngModel)]="sequenceFormat" matInput >
+            <!-- (change)="checkDuplicatePrefix()" (keyup)="checkDuplicatePrefix()" -->
+            <mat-hint *ngIf="duplicatePrefix==''">This will be Sequence Format</mat-hint>
+            <!-- <mat-hint *ngIf="duplicatePrefix!=''" class="duplicate">{{ duplicatePrefix }}</mat-hint> -->
+        </mat-form-field>
+
+        <mat-form-field fxFlex="50%">
+            <mat-label>Zero Pad To Digits</mat-label>
+            <input formControlName="zeroPadToDigits" [(ngModel)]="zeroPadToDigits" type="number" matInput>
+            <mat-hint>This will be Zero Pad To Digits</mat-hint>
+        </mat-form-field>
+
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="8px">
+
+        <mat-form-field fxFlex="50%">
+            <mat-label>Increment By</mat-label>
+            <input formControlName="incrementBy" [(ngModel)]="incrementBy" type="number" matInput >
+            <mat-hint>This will Increment By</mat-hint>
+        </mat-form-field>
+        <!-- duplicatePrefix != '' || -->
+        <button mat-button color="primary" fxFlex="50%"
+        [disabled]="sequenceKey === '' || 
+        lastSequence === undefined || lastSequence === null || duplicatePrefix != '' ||  sequenceFormat === undefined || sequenceFormat === '' || zeroPadToDigits === undefined || zeroPadToDigits === null || incrementBy === undefined || incrementBy === null"
+        (click)="saveSequence()">ADD SETTINGS</button>
+    </div>
+
+  
+
+    <table class="example-container" [dataSource]="sequenceDataSource" mat-table matSort [ngStyle]="{display:blnShow}">
+
+        <ng-container matColumnDef="delete">
+          <th>Delete</th>
+          <td *matCellDef="let row" class="actions-cell" mat-cell>
+            <mat-icon>more_horiz</mat-icon>
+          </td>
+        </ng-container>
+
+        <ng-container *ngFor="let column of sequenceColumns">
+          <ng-container *ngIf="column.isModelProperty" [matColumnDef]="column.property">
+            <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.name }}</th>
+            <td *matCellDef="let row" mat-cell>
+              {{ row[column.property] }}
+            </td>
+          </ng-container>
+        </ng-container>
+        
+
+        <ng-container matColumnDef="actions">
+          <th *matHeaderCellDef class="actions-cell" mat-header-cell>Delete</th>
+          <td *matCellDef="let row" class="actions-cell" mat-cell (click)="deleteSequence(row)">
+            <mat-icon class="deleteIcon">delete</mat-icon>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="modify">
+          <th *matHeaderCellDef class="actions-cell" mat-header-cell>Modify</th>
+          <td *matCellDef="let row" class="actions-cell" mat-cell (click)="modifySequence(row)">
+            <mat-icon class="modifyIcon">edit</mat-icon>
+          </td>
+        </ng-container>
+
+        <tr *matHeaderRowDef="sequenceVisibleColumns" mat-header-row></tr>
+        <tr *matRowDef="let row; columns: sequenceVisibleColumns;" class="clickable route-animations-elements" mat-row>
+        </tr>
+        
+      </table>
+
+
+</div>

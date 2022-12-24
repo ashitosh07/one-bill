@@ -1,0 +1,90 @@
+<div mat-dialog-title>
+    <mat-toolbar role="toolbar" class="task-header">
+      <span>Define Tax Setting</span>
+      <span class="fx-spacer"></span>
+      <button mat-icon-button (click)="close()">
+        <mat-icon title="Close" mat-list-icon>close</mat-icon>
+      </button>
+    </mat-toolbar>
+</div>
+  
+<form [formGroup]="form" (ngSubmit)="save()">
+    <mat-dialog-content class="mat-dlg-content">
+        <fury-card>
+            <fury-card-content class="topPadding">
+                <div class="person">
+                    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+                        <mat-form-field fxFlex>
+                            <mat-label>Tax Name</mat-label>
+                            <input type="text" formControlName="taxName" maxlength="80" matInput>
+                            <app-show-errors [ctrl]="form.get('taxName')"></app-show-errors>
+                            <mat-hint *ngIf="mode != 'update'">Please enter Tax Name</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="person padding-top">
+                    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+                        <mat-form-field fxFlex="50%">
+                            <mat-label>Computation Type</mat-label>            
+                            <mat-select (selectionChange)="selectComputationType($event)" formControlName="computationType">
+                                <mat-option [value]="0">----Select----</mat-option>
+                                <mat-option *ngFor="let computationType of lstComputationType" [value]="computationType.id">
+                                    {{ computationType.description }}
+                                </mat-option>
+                            </mat-select>
+                            <app-show-errors [ctrl]="form.get('computationType')"></app-show-errors>
+                            <mat-hint *ngIf="mode != 'update'">Please select Computation Type</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field *ngIf="computationType != 'Group Tax'" fxFlex="50%">
+                            <mat-label>Amount</mat-label>
+                            <input type="textbox" formControlName="value" [ngModel]="taxAmount | number: roundFormat | noComma" matInput furyValidateDecimalPlacesDirective>
+                            <app-show-errors [ctrl]="form.get('value')"></app-show-errors>
+                            <mat-hint>Please enter Amount</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field *ngIf="computationType == 'Group Tax'" fxFlex="50%">
+                            <mat-label>Select Tax Setting</mat-label>
+                            <mat-select multiple formControlName="taxMapGroups" [(ngModel)]="selectedTaxSettings">
+                                <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">Select All</mat-option>
+                                <mat-option *ngFor="let option of taxSettings" [value]="option.id" [optionSelected]="option.selected" 
+                                    (click)="togglePerOne(allSelected.viewValue)">{{ option.description }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-hint>Please select Tax Setting.</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>    
+                <div class="person padding-top">
+                    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+                        <mat-form-field fxFlex="100%">
+                            <mat-label>Tax Display Name</mat-label>            
+                            <input type="text" formControlName="taxDisplayName" maxlength="80" matInput>
+                            <app-show-errors [ctrl]="form.get('taxDisplayName')"></app-show-errors>
+                            <mat-hint>Please select Tax Display Name</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field fxFlex="50%" style="width: 200px;" *ngIf="false">
+                            <mat-label>Effective From</mat-label>
+
+                            <input (click)="formDatepickerRef1.open()" id="effectiveFrom" name="effectiveFrom" (focus)="formDatepickerRef1.open()" matInput
+                                [matDatepicker]="formDatepickerRef1" [(ngModel)]="effectiveFrom" formControlName="effectiveFrom">
+                            <mat-datepicker-toggle [for]="formDatepickerRef1" matSuffix></mat-datepicker-toggle>
+                            <mat-datepicker #formDatepickerRef1></mat-datepicker>
+                            <app-show-errors [ctrl]="form.get('effectiveFrom')"></app-show-errors>
+                            <mat-hint>Please enter Effective From</mat-hint>
+                        </mat-form-field>
+                    </div>
+                </div>    
+                <div class="person padding-top" *ngIf="false">
+                    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px" class="marginRight">
+                      <mat-checkbox class="showAgainstBillLine" color="primary" formControlName="showAgainstBillLine" (change)="hideOrShowAgainstBillLine(showAgainstBillLine)">Display against Bill Line
+                      </mat-checkbox>
+                    </div>
+                </div>
+            </fury-card-content>
+        </fury-card>
+    </mat-dialog-content>
+    <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+        <button (click)="closeDialog()" mat-button>CANCEL</button>
+        <button *ngIf="isCreateMode()" mat-button [disabled]="!form.valid">CREATE TAX SETTING</button>
+        <button *ngIf="isUpdateMode()" mat-button [disabled]="!form.valid">UPDATE TAX SETTING</button>
+    </mat-dialog-actions>
+</form>

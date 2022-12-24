@@ -1,0 +1,19 @@
+.toolbar-spacer {
+    flex: 1 1 auto;
+  }
+
+.button
+{
+    line-height: 50px;
+}
+
+.img-style{
+  width: 32px;
+}
+
+.position-fixed{
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 5;
+}

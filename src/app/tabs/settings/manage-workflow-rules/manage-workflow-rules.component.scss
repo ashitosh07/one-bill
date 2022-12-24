@@ -1,0 +1,25 @@
+.card-spacer{
+    height: 11px;
+}
+
+.dropdown{
+    flex-direction: column;
+    width: 300px;
+    padding-top: 1%;
+}
+
+
+.toolbar-spacer {
+    flex: 1 1 auto;
+  }
+  
+  .img-style{
+    width: 32px;
+  }
+
+  .position-fixed{
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 5;
+  }

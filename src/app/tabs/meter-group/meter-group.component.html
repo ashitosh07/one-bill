@@ -1,0 +1,71 @@
+<div fxLayout="column" fxLayoutGap="2%" style="padding: 27px;">
+
+  <mat-toolbar color="primary" fxLayout="row" fxLayout.xs="column" class="position-fixed">
+    <img class="img-style" src="assets/img/fav-icon.png" [fxHide.xs]="true">
+    <span fxLayout="row" fxLayout.xs="column">Meter Group </span>
+    <span class="toolbar-spacer"></span>
+    <div class="fury-flex-form-field" >
+      <button matTooltip="Save" mat-icon-button class="material-icons" (click)="onSave()">
+          <mat-icon>save</mat-icon>
+      </button>
+  </div>
+  </mat-toolbar>
+
+  <mat-card>
+    <div fxLayout="column" fxLayoutGap="2%">
+      <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="2%">
+        
+        <mat-form-field fxFlex>
+          <mat-label>Client</mat-label>
+          <mat-select [(ngModel)]="clientId" name="clientId" id="clientId" placeholder="Client" (selectionChange)="onChangeClient($event)">
+            <mat-option *ngFor="let client of clients;" [value]="client.id" >{{client.description}}</mat-option>
+          </mat-select>
+          <mat-hint>Please select Client.</mat-hint> 
+        </mat-form-field>
+
+        <mat-form-field fxFlex>
+          <mat-select [(ngModel)]="meterTypeName" name="meterType" id="meterTypeId" placeholder="Meter Type"
+            (ngModelChange)="onMeterTypeChange()">
+            <mat-option *ngFor="let item of lstMeterType;" [value]="item.description">{{item.description}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex>
+          <mat-select [(ngModel)]="meterGroupId" name="meterGroup" id="meterGroupId" placeholder="Meter Group"
+            (ngModelChange)="onMeterGroupChange()">
+            <mat-option *ngFor="let item of lstMeterGroup;" [value]="item.id">{{item.description}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" fxLayoutGap="5%">
+        <div class="container">
+          <ul>
+            Meters
+            <li *ngFor="let item of lstMeters" [class.item-selected]="item.selected" (click)="toggleSelection(item, 1)">
+              {{item.label}}</li>
+          </ul>
+          <div class="buttons-container">
+            <button class="material-icons" (click)="moveSelected('right')" mat-icon-button>
+              <mat-icon>arrow_right</mat-icon>
+            </button>
+            <button class="material-icons" (click)="moveAll('right')" mat-icon-button>
+              <mat-icon>fast_forward</mat-icon>
+            </button>
+            <button class="material-icons" (click)="moveSelected('left')" mat-icon-button>
+              <mat-icon>arrow_left</mat-icon>
+            </button>
+            <button class="material-icons" (click)="moveAll('left')" mat-icon-button>
+              <mat-icon>fast_rewind</mat-icon>
+            </button>
+          </div>
+          <ul>
+            Selected Meters
+            <li *ngFor="let item of selectedlstMeters" [class.item-selected]="item.selected"
+              (click)="toggleSelection(item, 2)">
+              {{item.label}}</li>
+          </ul>
+        </div>
+      </div>
+    </div>    
+  </mat-card>
+</div>

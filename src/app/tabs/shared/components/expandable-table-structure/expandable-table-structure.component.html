@@ -1,0 +1,109 @@
+<fury-list [hideHeader]="hideHeader" [hideFilter]="hideFilter" class="list" fxFlex="grow" fxLayout="column"
+  (filterChange)="onFilterChange($event)">
+  <div class="actions">
+    <button class="create left margin" matTooltip="Shuffle" (click)="shuffleColumns()" type="button" mat-mini-fab
+      color="primary">
+      <mat-icon>shuffle</mat-icon>
+    </button>
+  </div>
+  <table mat-table [dataSource]="dataSource" multiTemplateDataRows class="mat-elevation-z8" matSort>
+
+    <ng-container matColumnDef="{{column}}" *ngFor="let column of columnsToDisplay">
+      <ng-container *ngIf="column === 'select'; else notSelect">
+        <th mat-header-cell *matHeaderCellDef>
+          <mat-checkbox color="primary" (change)="$event ? masterToggle() : null"
+            [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()"></mat-checkbox>
+        </th>
+        <td mat-cell *matCellDef="let row">
+          <mat-checkbox color="primary" (click)="$event.stopPropagation()" (change)="$event ? isCheckChange(row) : null"
+            [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </td>
+      </ng-container>
+      <ng-template #notSelect>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{column!='action'?checkColumnNames(column):''}}</th>
+        <td mat-cell *matCellDef="let element" [ngStyle]="checkColumnAlign(column)"
+          [ngClass]="{'rejected-row': role!='External' && cssStyledColumn && element[cssStyledColumn] =='Rejected', 'approved-row':  role!='External' && cssStyledColumn && element[cssStyledColumn] =='Approved', 'penalty-row': role!='External' && cssStyledColumn && element[cssStyledColumn] =='Penalty','fine-row':  role!='External' && cssStyledColumn && element[cssStyledColumn] =='Fine',
+          'unpaid-row':  role!='External' && cssStyledColumn && element[cssStyledColumn] =='Unpaid','full-row':  role!='External' && cssStyledColumn && element[cssStyledColumn] =='Full','partial-row':  role!='External' && cssStyledColumn && element[cssStyledColumn] =='Partial', 'succeed-row':  role!='External' && cssStyledColumn && element[cssStyledColumn] =='Succeed' ,'failed-row':  role!='External' && cssStyledColumn && element[cssStyledColumn] =='Failed'}">
+          {{element[column]}}
+          <button type="button" *ngIf="column=='button'" (click)="viewData(element)" mat-icon-button>
+            <mat-icon>remove_red_eye</mat-icon>
+          </button>
+          <button type="button" *ngIf="column=='print'" (click)="printRows(element)" mat-icon-button>
+            <mat-icon>print</mat-icon>
+          </button>
+          <button type="button" *ngIf="column=='action'" mat-icon-button [matMenuTriggerFor]="actionsMenu"
+            (click)="$event.stopPropagation()">
+            <mat-icon>more_horiz</mat-icon>
+          </button>
+          <mat-menu #actionsMenu="matMenu" yPosition="below" xPosition="before">
+            <!-- commented the disable of paid bills -->
+            <!-- <button *ngIf="checkButtonVisiblity('modify')" (click)="updateRows(element)"
+              [disabled]="element && disableColumn && element[disableColumn]>0" mat-menu-item>
+              <span>{{buttonName}}</span>
+            </button> -->
+            <button *ngIf="checkButtonVisiblity('modify')" (click)="updateRows(element)" mat-menu-item>
+              <span>{{buttonName}}</span>
+            </button>
+            <button *ngIf="checkButtonVisiblity('cancel')" (click)="deleteRows(element)"
+              [disabled]="!(element && buttonDisableColumn && element[buttonDisableColumn] > 0)" mat-menu-item>
+              <span>Cancel</span>
+            </button>
+            <button *ngIf="checkButtonVisiblity('print')" (click)="printRows(element)" mat-menu-item>
+              <span>Print</span>
+            </button>
+            <button *ngIf="checkButtonVisiblity('reject')" (click)="rejectRows(element)" mat-menu-item>
+              <span>Reject</span>
+            </button>
+            <button *ngIf="checkButtonVisiblity('fail')" (click)="failRows(element)" mat-menu-item>
+              <span>Fail</span>
+            </button>
+            <button *ngIf="checkButtonVisiblity('remarks')" (click)="remarksRows(element)" mat-menu-item>
+              <span>Remarks</span>
+            </button>
+            <button *ngIf="checkButtonVisiblity('advanceAdjust')" (click)="advanceAdjustRows(element)" mat-menu-item>
+              <span>Adjust with Advance</span>
+            </button>
+          </mat-menu>
+        </td>
+      </ng-template>
+    </ng-container>
+
+    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+    <ng-container matColumnDef="expandedDetail">
+      <td mat-cell *matCellDef="let element" [attr.colspan]="columnsToDisplay.length">
+        <div class="example-element-detail" *ngIf="element[innerTableName]?.length"
+          [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <div class="inner-table mat-elevation-z8" *ngIf="expandedElement">
+            <!-- <mat-form-field>
+              <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+            </mat-form-field> -->
+            <table #innerTables mat-table [dataSource]="element[innerTableName]" matSort>
+              <ng-container matColumnDef="{{innerColumn}}" *ngFor="let innerColumn of innerDisplayedColumns">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header>{{checkColumnNames(innerColumn)}}</th>
+                <td mat-cell *matCellDef="let element" [ngStyle]="checkColumnAlign(innerColumn)">
+                  {{element[innerColumn]}}
+                  <button type="button" *ngIf="innerColumn=='button' && visibleViewButton(element)"
+                    (click)="viewData(element)" mat-icon-button>
+                    <mat-icon>remove_red_eye</mat-icon>
+                  </button>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="innerDisplayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: innerDisplayedColumns;"></tr>
+            </table>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToDisplay"></tr>
+    <tr mat-row *matRowDef="let element; columns: columnsToDisplay;"
+      [class.example-element-row]="element[innerTableName]?.length"
+      [class.example-expanded-row]="expandedElement === element" (click)="toggleRow(element)">
+    </tr>
+    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+  </table>
+  <mat-paginator class="paginator" [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+</fury-list>

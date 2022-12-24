@@ -1,0 +1,427 @@
+<fury-page-layout mode="card">
+    <fury-page-layout-content fxLayout="column" class="content">
+        
+        <!-- <div class="loading-indicator" *ngIf="showSpinner">
+            <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
+        </div> -->
+
+        <div>
+            <!-- <img class="img-style" src="assets/img/fav-icon.png" /> -->
+            <span class="toolBar">Dashboard</span>
+            <span class="example-spacer"></span>
+            <mat-button-toggle-group name="fontStyle" class="buttons" aria-label="Font Style" [value]="selectedValue"
+                (change)="onValChange($event)" style="font-size: small;float:right" >                
+                <mat-button-toggle id={{q}} *ngFor='let q of frequency; let i = index' [checked]="i === 0" style="padding: 0px;" value={{q}}>{{q}}</mat-button-toggle>
+                <!-- <mat-button-toggle id="btnWeekly" value="Weekly">Weekly</mat-button-toggle>
+                <mat-button-toggle id="btnMonthly" value="Monthly">Monthly</mat-button-toggle>
+                <mat-button-toggle id="btnYearly" value="Yearly">Yearly</mat-button-toggle> -->
+            </mat-button-toggle-group>
+        </div>
+        
+        <!-- <fury-card-header>
+            <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [value]="selectedValue"
+                (change)="onValChange($event)" style="float: right;">
+                <mat-button-toggle value="Daily">Daily</mat-button-toggle>
+                <mat-button-toggle value="Weekly">Weekly</mat-button-toggle>
+                <mat-button-toggle value="Monthly">Monthly</mat-button-toggle>
+                <mat-button-toggle value="Yearly">Yearly</mat-button-toggle>
+            </mat-button-toggle-group>
+        </fury-card-header> -->
+
+        <!-- <h6 class="customMatToolbar" >
+            <span>Utility Consumptions</span>
+        </h6> -->
+
+        <!-- <div class="content" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px"
+            style="padding: 1% 1% 1% 1%"> -->
+            <!-- BTU -->
+            <!-- <mat-card class="mat-elevation-z4" fxflex="25%">
+
+                <div class="customRowFlexContainer">
+                    <div class="customUtilityType">
+                        <span><img src="assets/img/mini_mini_heating.png"></span>
+                    </div>
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHighHeader">{{consumptionLabel}}</span>
+                        <span class="customCardHighHeaderValue">{{btuConsumption}}</span>
+                    </div>
+                </div>
+
+                <div class="customRowFlexContainer">
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHeader">{{previousConsumptionLabel}}</span>
+                        <span class="customCardHeaderValue">{{btuYesterdayConsumption}} </span>
+                    </div>
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHeader">{{forecastConsumptionLabel}}</span>
+                        <span class="customCardHeaderValue">{{btuForecastConsumption}} </span>
+                    </div>
+                </div>
+            </mat-card> -->
+
+            <!-- Electricity -->
+            <!-- <mat-card class="mat-elevation-z4" fxflex="25%">
+
+                <div class="customRowFlexContainer">
+                    <div class="customUtilityType">
+                        <span><img src="assets/img/mini_mini_electricity.png"></span>
+                    </div>
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHighHeader">{{consumptionLabel}}</span>
+                        <span class="customCardHighHeaderValue">{{electricityConsumption}}</span>
+                    </div>
+                </div>
+
+                <div class="customRowFlexContainer">
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHeader">{{previousConsumptionLabel}}</span>
+                        <span class="customCardHeaderValue">{{electricityYesterdayConsumption}} </span>
+                    </div>
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHeader">{{forecastConsumptionLabel}}</span>
+                        <span class="customCardHeaderValue">{{electricityForecastConsumption}} </span>
+                    </div>
+                </div>
+            </mat-card> -->
+            <!-- Water -->
+            <!-- <mat-card class="mat-elevation-z4" fxflex="25%">
+
+                <div class="customRowFlexContainer">
+                    <div class="customUtilityType">
+                        <span><img src="assets/img/mini_mini_water-drop.png"></span>
+                    </div>
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHighHeader">{{consumptionLabel}}</span>
+                        <span class="customCardHighHeaderValue">{{waterConsumption}}</span>
+                    </div>
+                </div>
+
+                <div class="customRowFlexContainer">
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHeader">{{previousConsumptionLabel}}</span>
+                        <span class="customCardHeaderValue">{{waterYesterdayConsumption}} </span>
+                    </div>
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHeader">{{forecastConsumptionLabel}}</span>
+                        <span class="customCardHeaderValue">{{waterForecastConsumption}} </span>
+                    </div>
+                </div>
+            </mat-card> -->
+
+            <!-- Gas -->
+            <!-- <mat-card class="mat-elevation-z4" fxflex="25%">
+
+                <div class="customRowFlexContainer">
+                    <div class="customUtilityType">
+                        <span><img src="assets/img/mini_gas.png"></span>
+                    </div>
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHighHeader">{{consumptionLabel}}</span>
+                        <span class="customCardHighHeaderValue">{{gasConsumption}}</span>
+                    </div>
+                </div>
+
+                <div class="customRowFlexContainer">
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHeader">{{previousConsumptionLabel}}</span>
+                        <span class="customCardHeaderValue">{{gasYesterdayConsumption}} </span>
+                    </div>
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHeader">{{forecastConsumptionLabel}}</span>
+                        <span class="customCardHeaderValue">{{gasForecastConsumption}} </span>
+                    </div>
+                </div>
+            </mat-card> -->
+
+        <!-- </div> -->
+
+        <!-- <h6 class="customMatToolbar" style="margin-top: 20px;">
+            <span>Utility Charges</span>
+        </h6> -->
+        <!-- Second row of utility cards -->
+
+        <div class="content" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px"
+            style="padding: 0% 0% 1% 0%">
+
+            <mat-card class="mat-elevation-z4" fxFlex>  
+                <div fxFlex="60%">
+                    <span class="topPadding"></span>
+                    <span class="tileHeading">{{costLabel}}</span> 
+                    <p class="energyCost">{{this.currency}} {{this.currentEnergyCost}} 
+                    </p>                        
+                    <span class="gain" *ngIf="isCurrentCostGain == true">        
+                    {{ currentCostGain }}%   
+                    </span>
+                    <span class="loss" *ngIf="isCurrentCostGain == false">        
+                        {{ currentCostGain }}%   
+                    </span> 
+                    <span>
+                        <mat-icon class="gain" matTooltip="{{ toolTip }}" *ngIf="isCurrentCostGain == true">arrow_upward</mat-icon>
+                        <mat-icon class="loss" matTooltip="{{ toolTip }}" *ngIf="isCurrentCostGain == false">arrow_downward</mat-icon>        
+                    </span> 
+                    <span style="font-size: small;">
+                        {{costLabelComparison}}
+                    </span>
+                </div>
+                <div fxFlex="40%">
+                    <img src={{currentChartFileName}} width="100%" height="40%" style="padding-top: 70px;">                    
+                </div>
+            </mat-card>
+            <mat-card class="mat-elevation-z4" fxFlex>  
+                <div fxFlex="60%">
+                    <span class="topPadding"></span>
+                    <span class="tileHeading">{{previousCostLabel}}</span> 
+                    <span class="topPadding"></span> 
+                    <p class="energyCost">{{this.currency}} {{this.previousEnergyCost}} 
+                    </p>                        
+                    <span class="gain" *ngIf="isPreviousCostGain == true">        
+                        {{ previousCostGain }}%   
+                    </span>
+                    <span class="loss" *ngIf="isPreviousCostGain == false">        
+                        {{ previousCostGain }}%   
+                    </span> 
+                    <span>
+                        <mat-icon class="gain" matTooltip="{{ toolTip }}" *ngIf="isPreviousCostGain == true">arrow_upward</mat-icon>
+                        <mat-icon class="loss" matTooltip="{{ toolTip }}" *ngIf="isPreviousCostGain == false">arrow_downward</mat-icon>        
+                    </span> 
+                    <span style="font-size: small;">
+                        {{previousCostLabelComparison}}          
+                    </span>
+                </div>
+                <div fxFlex="40%">
+                    <img src={{previousChartFileName}} width="100%" height="40%" style="padding-top: 70px;">                    
+                </div>
+            </mat-card>
+            <mat-card class="mat-elevation-z4" fxFlex>  
+                <div fxFlex="60%">
+                    <span class="topPadding"></span>
+                    <span class="tileHeading">{{forecastCostLabel}}</span> 
+                    <span class="topPadding"></span> 
+                    <p class="energyCost">{{this.currency}} {{this.forecastEnergyCost}} 
+                    </p>                        
+                    <span class="gain" *ngIf="isForecastCostGain == true">        
+                    {{ forecastCostGain }}%   
+                    </span>
+                    <span class="loss" *ngIf="isForecastCostGain == false">        
+                        {{ forecastCostGain }}%   
+                    </span>  
+                    <span>
+                        <!-- matTooltip="{{ toolTip }}" -->
+                        <mat-icon class="gain" style="padding-top: 10px;" *ngIf="isForecastCostGain == true">arrow_upward</mat-icon>
+                        <mat-icon class="loss" style="padding-top: 10px;" *ngIf="isForecastCostGain == false">arrow_downward</mat-icon>        
+                    </span> 
+                    <span style="font-size: small;">
+                        {{forecastCostLabelComparison}}         
+                    </span>
+                </div>
+                <div fxFlex="40%">
+                    <img src={{forecastChartFileName}} width="100%" height="40%" style="padding-top: 70px;">                    
+                </div>
+            </mat-card>
+
+            <!-- <mat-card class="mat-elevation-z4" fxflex="25%">
+
+                <div class="customRowFlexContainer">
+                    <div class="customUtilityType">
+                        <span><img src="assets/img/mini_mini_heating.png"></span>
+                    </div>
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHighHeader">{{costLabel}}</span>
+                        <span class="customCardHighHeaderValue">{{btuCost}}</span>
+                    </div>
+                </div>
+                
+                <div class="customRowFlexContainer">
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHeader">{{previousCostLabel}}</span>
+                        <span class="customCardHeaderValue">{{btuYesterdayCost}} </span>
+                    </div>
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHeader">{{forecastCostLabel}}</span>
+                        <span class="customCardHeaderValue">{{btuForecastCost}} </span>
+                    </div>
+                </div>
+            </mat-card> -->
+            <!-- <mat-card class="mat-elevation-z4" fxflex="25%">
+
+                <div class="customRowFlexContainer">
+                    <div class="customUtilityType">
+                        <span><img src="assets/img/mini_mini_electricity.png"></span>
+                    </div>
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHighHeader">{{costLabel}}</span>
+                        <span class="customCardHighHeaderValue">{{electricityCost}}</span>
+                    </div>
+                </div>
+                
+                <div class="customRowFlexContainer">
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHeader">{{previousCostLabel}}</span>
+                        <span class="customCardHeaderValue">{{electricityYesterdayCost}} </span>
+                    </div>
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHeader">{{forecastCostLabel}}</span>
+                        <span class="customCardHeaderValue">{{electricityForecastCost}} </span>
+                    </div>
+                </div>
+            </mat-card> -->
+            <!-- <mat-card class="mat-elevation-z4" fxflex="25%">
+
+                <div class="customRowFlexContainer">
+                    <div class="customUtilityType">
+                        <span><img src="assets/img/mini_mini_water-drop.png"></span>
+                    </div>
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHighHeader">{{costLabel}}</span>
+                        <span class="customCardHighHeaderValue">{{waterCost}}</span>
+                    </div>
+                </div>
+                
+                <div class="customRowFlexContainer">
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHeader">{{previousCostLabel}}</span>
+                        <span class="customCardHeaderValue">{{waterYesterdayCost}} </span>
+                    </div>
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHeader">{{forecastCostLabel}}</span>
+                        <span class="customCardHeaderValue">{{waterForecastCost}} </span>
+                    </div>
+                </div>
+            </mat-card> -->
+            <!-- <mat-card class="mat-elevation-z4" fxflex="25%">
+
+                <div class="customRowFlexContainer">
+                    <div class="customUtilityType">
+                        <span><img src="assets/img/mini_gas.png"></span>
+                    </div>
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHighHeader">{{costLabel}}</span>
+                        <span class="customCardHighHeaderValue">{{gasCost}}</span>
+                    </div>
+                </div>
+                
+                <div class="customRowFlexContainer">
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHeader">{{previousCostLabel}}</span>
+                        <span class="customCardHeaderValue">{{gasYesterdayCost}} </span>
+                    </div>
+                    <div class="customColumnFlexContainer">
+                        <span class="customCardHeader">{{forecastCostLabel}}</span>
+                        <span class="customCardHeaderValue">{{gasForecastCost}} </span>
+                    </div>
+                </div>
+            </mat-card>
+			 -->
+        </div>
+
+        <div class="content" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" 
+            style="padding: 0% 0% 0.25% 0.20%">
+            <mat-card class="mat-elevation-z4" fxFlex>
+                <div id="gdcontainer2"></div>
+            </mat-card>
+        </div>
+
+        <!-- <mat-toolbar color="primary" style="margin-top: 20px;">
+            <img class="img-style" src="assets/img/fav-icon.png" />
+            <span>Online/Offline Meters</span>
+            <span class="example-spacer"></span>
+        </mat-toolbar> -->
+
+        <!-- Third row of utility cards -->
+        <!-- <h6 class="customMatToolbar" >
+            <span>Utility Stats</span>
+        </h6> -->
+        <div class="content" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="1%"
+            style="padding: 0% 0.25% 1% 0.25%;width:100%">
+
+            <!-- <div fxFlex="50%">
+                <mat-card class="mat-elevation-z4" fxflex style="margin-bottom: 35px;">
+                    <div class="customRowFlexContainer">
+                        <span class="customCardHeader">Electricity</span>
+
+                        <span class="customCardHeaderValue">{{electricityMeterCount}}</span>
+                        <span class="spacer"></span>
+                    </div>
+                </mat-card>
+
+                <mat-card class="mat-elevation-z4" fxflex style="margin-bottom: 35px;">
+                    <div class="customRowFlexContainer">
+                        <span class="customCardHeader" style="margin-right: 35px;">BTU</span>
+                        <span class="customCardHeaderValue" fxflex=50%>{{btuMeterCount}}</span>
+                        <span class="spacer"></span>
+                    </div>
+                </mat-card>
+
+                <mat-card class="mat-elevation-z4" fxflex style="margin-bottom: 35px;">
+                    <div class="customRowFlexContainer">
+                        <span class="customCardHeader" style="margin-right: 25px;">Water</span>
+
+                        <span class="customCardHeaderValue">{{waterMeterCount}}</span>
+                        <span class="spacer"></span>
+                    </div>
+                </mat-card>
+
+                <mat-card class="mat-elevation-z4" fxflex style="margin-bottom: 10px;">
+                    <div class="customRowFlexContainer">
+                        <span class="customCardHeader" style="margin-right: 35px;">Gas</span>
+                        <span class="customCardHeaderValue">{{gasMeterCount}}</span>
+                        <span class="spacer"></span>
+                    </div>
+                </mat-card>
+
+            </div> -->
+            
+            <mat-card class="mat-elevation-z4" fxFlex="33%">
+                <div id="gdcontainer3"></div>
+            </mat-card>
+            <mat-card class="mat-elevation-z4" fxFlex="33%">
+                <p style="font-size: large;margin-top: 5px;font-weight: bolder;">Group-wise Energy Consumption</p> 
+                
+                <div style="width: 100%;height: 340px;float: left;overflow: auto;overflow-x:visible;">
+                    
+                    <table class="table-sparkline" [dataSource]="dataSource" mat-table matSort style="width: 100%;">   
+
+                        <ng-container *ngFor="let column of displayedColumns"> 
+                          <ng-container *ngIf="column.isModelProperty" [matColumnDef]="column.property">
+                          <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.name }}</th>
+                                <td *matCellDef="let row" mat-cell>
+                                  {{ row[column.property] }}
+                                </td>
+                          </ng-container>      
+                        </ng-container>
+                        <ng-container matColumnDef="currentConsumption">
+                            <th *matHeaderCellDef mat-header-cell class="header-align-right">Consumption</th>
+                            <td *matCellDef="let row" mat-cell class="header-align-right">
+                              {{row.currentConsumption}}
+                            </td>
+                        </ng-container>
+
+                        <ng-container matColumnDef="consumptionDifference ">
+                            <th *matHeaderCellDef mat-header-cell class="header-align-right">Difference</th>
+                            <td *matCellDef="let row" mat-cell class="header-align-right">
+                              {{row.consumptionDifference }}%
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="status">
+                            <th *matHeaderCellDef mat-header-cell class="header-align-right"></th>
+                            <td *matCellDef="let row" mat-cell class="header-align-right">
+                              <mat-icon class="gain" *ngIf="row.status == true">arrow_upward</mat-icon>
+                              <mat-icon class="loss" *ngIf="row.status == false">arrow_downward</mat-icon>        
+                            </td>
+                        </ng-container>
+                        
+                        <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+                        <tr *matRowDef="let row; columns: visibleColumns;"
+                            class="clickable route-animations-elements"
+                            mat-row></tr>
+                    
+                      </table>
+
+                </div>
+            </mat-card>
+            <mat-card class="mat-elevation-z4" fxFlex="33%">
+                <div id="gdcontainer5"></div>
+            </mat-card>
+        </div>
+    </fury-page-layout-content>
+</fury-page-layout>

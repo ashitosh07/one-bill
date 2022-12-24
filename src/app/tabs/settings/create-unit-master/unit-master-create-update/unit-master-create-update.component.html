@@ -1,0 +1,245 @@
+<div mat-dialog-title>
+    <mat-toolbar role="toolbar" class="task-header">
+      <span>Unit</span>
+      <span class="fx-spacer"></span>
+      <button mat-icon-button (click)="close()">
+          <mat-icon title="Close" mat-list-icon>close</mat-icon>
+      </button>
+    </mat-toolbar>
+  </div>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+    <mat-dialog-content class="mat-dlg-content"> 
+        <fury-card>     
+
+         <mat-tab-group>
+          <mat-tab label="General">
+
+            <fury-card-content class="padding-top"> 
+
+                 <div class="person">
+                    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px" class="padding-top">
+
+                        <mat-form-field fxFlex>
+                            <mat-label>Unit Number</mat-label>
+                            <input type="text" formControlName="aliasName" matInput>
+                            <app-show-errors [ctrl]="form.get('aliasName')"></app-show-errors> 
+                            <mat-hint *ngIf="mode == 'create'">Please enter Unit Number</mat-hint>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlex>
+                            <mat-label>Unit Type</mat-label>              
+                            <input matInput [matAutocomplete]="unitType" formControlName="unitType">
+                            <mat-autocomplete #unitType="matAutocomplete" (optionSelected)="selectUnitType($event)">
+                                <mat-option *ngFor="let unitType of filteredUnitTypes; index as i" [value]="unitType.description">
+                                    {{ unitType.description }}
+                                </mat-option>
+                            </mat-autocomplete>  
+                            <app-show-errors [ctrl]="form.get('unitTypeId')"></app-show-errors> 
+                            <mat-hint>Please select a Unit Type</mat-hint>                            
+                        </mat-form-field>
+
+                        <!-- <mat-form-field fxFlex>
+                            <mat-label>Project</mat-label>
+                            <input matInput [matAutocomplete]="project" formControlName="projectName">
+                            <mat-autocomplete #project="matAutocomplete" (optionSelected)="selectProject($event)">
+                                <mat-option *ngFor="let project of filteredProjects; index as i" [value]="project.description">
+                                    {{ project.description }}
+                                </mat-option>
+                            </mat-autocomplete>  
+                            <app-show-errors [ctrl]="form.get('projectId')"></app-show-errors> 
+                            <mat-hint>Please select a Project</mat-hint>
+
+                        </mat-form-field> -->
+                        
+                        <!-- <mat-form-field fxFlex>
+                            <mat-label>Block</mat-label>              
+                            <input matInput [matAutocomplete]="blockName" formControlName="blockName">
+                            <mat-autocomplete #blockName="matAutocomplete" (optionSelected)="selectBlock($event)">
+                                <mat-option *ngFor="let block of filteredBlocks; index as i" [value]="block.description">
+                                    {{ block.description }}
+                                </mat-option>
+                            </mat-autocomplete>  
+                            <app-show-errors [ctrl]="form.get('blockId')"></app-show-errors> 
+                            <mat-hint>Please select a Block</mat-hint>                            
+                        </mat-form-field> -->
+
+                     </div>
+                </div>
+
+               <!--<div class="person">
+                    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+
+                         <mat-form-field fxFlex>
+                            <mat-label>Building</mat-label>              
+                            <input matInput [matAutocomplete]="buildingName" formControlName="buildingName">
+                            <mat-autocomplete #buildingName="matAutocomplete" (optionSelected)="selectBuilding($event)">
+                                <mat-option *ngFor="let building of filteredBuildings; index as i" [value]="building.description">
+                                    {{ building.description }}
+                                </mat-option>
+                            </mat-autocomplete>  
+                            <app-show-errors [ctrl]="form.get('buildingId')"></app-show-errors> 
+                            <mat-hint>Please select a Building</mat-hint>                            
+                        </mat-form-field> 
+
+                        <mat-form-field fxFlex>
+                            <mat-label>Floor</mat-label>              
+                            <input matInput [matAutocomplete]="floorNumber" formControlName="floorNumber">
+                            <mat-autocomplete #floorNumber="matAutocomplete" (optionSelected)="selectFloor($event)">
+                                <mat-option *ngFor="let floor of filteredFloors; index as i" [value]="floor.description">
+                                    {{ floor.description }}
+                                </mat-option>
+                            </mat-autocomplete>  
+                            <app-show-errors [ctrl]="form.get('floorId')"></app-show-errors> 
+                            <mat-hint>Please select a Floor</mat-hint>                            
+                        </mat-form-field> 
+
+                        
+
+                     </div>
+                </div>    -->
+
+                <div class="person">
+                    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px" class="padding-top">
+
+                        <mat-form-field fxFlex>
+                            <mat-label>Area (SqFt)</mat-label>
+                            <input type="number" formControlName="areaSqFt" matInput>
+                            <app-show-errors [ctrl]="form.get('areaSqFt')"></app-show-errors> 
+                            <mat-hint>Please enter Area in Square Feet</mat-hint>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlex>
+                            <mat-label>Capacity (Ton)</mat-label>
+                            <input type="number" formControlName="capacityTon" matInput>
+                            <app-show-errors [ctrl]="form.get('capacityTon')"></app-show-errors> 
+                            <mat-hint>Please enter Capacity in Ton</mat-hint>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlex *ngIf="false">
+                            <mat-label>Account Number</mat-label>
+                            <input type="text" formControlName="accountNumber" matInput>
+                        </mat-form-field>
+
+                    </div>
+                </div>                
+          
+            </fury-card-content> 
+
+            </mat-tab>
+
+            <mat-tab label="Utilities">
+
+                <fury-card-content class="padding-top">
+                    <div [formGroup]="form.controls.unitUtilityList">
+                       <div class="person">
+                        <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px" class="padding-top">
+
+                          <mat-form-field class="titleSelector" fxFlex>
+                            <mat-label>Utility Type</mat-label>
+                            <input matInput [matAutocomplete]="utility" formControlName="utilityType">
+                            <mat-autocomplete #utility="matAutocomplete" (optionSelected)="selectUtilityType($event)">
+                                <mat-option *ngFor="let utility of filteredUtilityTypes; index as i" [value]="utility.description">
+                                    {{ utility.description }}
+                                </mat-option>
+                            </mat-autocomplete>  
+                            <app-show-errors [ctrl]="form.controls.unitUtilityList.get('utilityTypeId')"></app-show-errors> 
+                            <mat-hint>Please select a Utility Type</mat-hint>
+
+                          </mat-form-field>
+
+                          <mat-form-field class="titleSelector" fxFlex>
+                            <mat-label>Meter</mat-label>
+                            <input matInput [matAutocomplete]="meter" formControlName="meterType">
+                            <mat-autocomplete #meter="matAutocomplete" (optionSelected)="selectMeterType($event)">
+                                <mat-option *ngFor="let meter of filteredMeterTypes; index as i" [value]="meter.description">
+                                    {{ meter.description }}
+                                </mat-option>
+                            </mat-autocomplete> 
+                            <app-show-errors [ctrl]="form.controls.unitUtilityList.get('meterId')"></app-show-errors> 
+                            <mat-hint>Please select a Meter Type</mat-hint>
+                         
+                          </mat-form-field>             
+                          
+                          <mat-form-field class="titleSelector" fxFlex *ngIf="false">
+                            <mat-label>Meter Reading</mat-label>
+                            <input type="number" formControlName="meterReading" matInput>
+                            <app-show-errors [ctrl]="form.controls.unitUtilityList.get('meterReading')"></app-show-errors> 
+                            <mat-hint>Please enter Meter Reading</mat-hint>                             
+                            </mat-form-field>
+
+                            <button mat-button [disabled]="form?.controls.unitUtilityList.get('utilityTypeId').value === '' || 
+                                                            form?.controls.unitUtilityList.get('utilityTypeId').value === null ||
+                                                            form?.controls.unitUtilityList.get('meterId').value === '' ||
+                                                            form?.controls.unitUtilityList.get('meterId').value === null" 
+                                                (click)="saveUtility()">CREATE UTILITY</button>
+
+                         </div>
+                      </div>
+
+                     <div class="person" *ngIf="false">
+                        <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px" class="padding-top">
+                            
+                            <mat-form-field class="titleSelector" fxFlex> 
+                                <mat-label>Security Deposit</mat-label>
+                                <input type="number" formControlName="securityDeposit" matInput>
+                            </mat-form-field>
+
+                            <button mat-button [disabled]="form?.controls.unitUtilityList.get('utilityTypeId').value === '' || 
+                                                            form?.controls.unitUtilityList.get('utilityTypeId').value === null ||
+                                                            form?.controls.unitUtilityList.get('meterId').value === '' ||
+                                                            form?.controls.unitUtilityList.get('meterId').value === null ||
+                                                            form?.controls.unitUtilityList.get('meterReading').value === '' ||
+                                                            form?.controls.unitUtilityList.get('meterReading').value === null" 
+                                                (click)="saveUtility()">CREATE UTILITY</button>                            
+
+                        </div>
+                      </div>
+                      <span *ngIf="" formControlName="duplicateUtility">Utility already exists.</span>
+                      <table [dataSource]="dataSource" mat-table matSort class="padding-top" align="center">
+
+                        <ng-container *ngFor="let column of displayedColumns"> 
+                            <ng-container *ngIf="column.isModelProperty" [matColumnDef]="column.property">
+                            <th *matHeaderCellDef mat-header-cell mat-sort-header style="padding-left: 20px;"> {{ column.name }}</th>
+                                  <td *matCellDef="let row" mat-cell style="padding-left: 20px;">
+                                    {{ row[column.property] }}
+                                  </td>
+                            </ng-container>      
+                          </ng-container>
+                      
+                           <ng-container matColumnDef="actions">
+                            <th *matHeaderCellDef class="actions-cell" mat-header-cell mat-sort-header></th>
+                            <td *matCellDef="let row" class="actions-cell" mat-cell>
+                              <button type="button" [disabled]="mode == 'update'" mat-icon-button [matMenuTriggerFor]="actionsMenu" (click)="$event.stopPropagation()">
+                                <mat-icon>more_horiz</mat-icon>
+                              </button>
+                      
+                              <mat-menu #actionsMenu="matMenu" yPosition="below" xPosition="before">
+                                <button [disabled]="mode == 'update'" (click)="deleteUtility(row)" mat-menu-item>
+                                  <span>Delete</span>
+                                </button>
+                              </mat-menu>
+                            </td>
+                          </ng-container>
+                          
+                          <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+                          <tr *matRowDef="let row; columns: visibleColumns;"
+                              class="clickable route-animations-elements"
+                              mat-row></tr>
+
+                      </table>      
+                      </div>
+                    </fury-card-content>
+
+            </mat-tab>
+        </mat-tab-group>
+                
+        </fury-card>
+    </mat-dialog-content>
+    <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button (click)="closeDialog()">CANCEL</button>    
+        <button *ngIf="isCreateMode()" mat-button [disabled]="!form.valid || !form.controls.unitUtilityList.valid">CREATE UNIT</button>
+        <button *ngIf="isUpdateMode()" mat-button [disabled]="!form.valid || !form.controls.unitUtilityList.valid">UPDATE UNIT</button>
+    </mat-dialog-actions>  
+</form>
+    

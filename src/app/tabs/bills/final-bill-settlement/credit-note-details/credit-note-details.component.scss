@@ -1,0 +1,25 @@
+.button
+{
+    line-height: 50px;
+}
+
+.toolbar-spacer {
+    flex: 1 1 auto;
+  }
+
+  .img-style{
+    width: 32px;
+  }
+
+  .removePadding {
+    padding: 0px;
+  }
+
+  .topPadding {
+    padding-top: 25px;
+  }
+
+  .divScroll {
+    height: 310px;
+    overflow-y:auto;
+  }

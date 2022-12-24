@@ -1,0 +1,72 @@
+<fury-page-layout mode="card" style="margin-top: 27px;">
+  <fury-page-layout-content fxLayout="column" class="content">
+    <mat-toolbar color="primary" class="position-fixed">
+      <img class="img-style" src="assets/img/fav-icon.png" />
+
+      <span>Invoice Aging Report</span>
+      <span class="example-spacer"></span>
+      <fury-invoice-aging-report-footer-toolbar *ngIf="ownerId == 0" (printClicked)="onPrintPdf()">
+      </fury-invoice-aging-report-footer-toolbar>
+      <button matTooltip="Export" (click)="onExport()" mat-icon-button class="example-icon"
+                aria-label="Example icon-button with menu icon">
+                <mat-icon>import_export</mat-icon>
+            </button>
+    </mat-toolbar>
+    <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign.gt-sm="start stretch">
+      <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+        <!-- <fury-card-header>
+           <fury-card-header-heading>Bill History</fury-card-header-heading> 
+        </fury-card-header> -->
+        
+          <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="16px" class="padding-top" style="padding-left: 25px;">
+
+            <!-- <mat-form-field class="left-margin" color="primary">
+                <mat-label>Bill Period</mat-label>
+                <mat-select id="BillPeriod" name="BillPeriod"
+                    (selectionChange)="onChangeBillPeriod($event.value)" [(value)]="billPeriodId">
+                    <mat-option *ngFor="let option of billPeriods" [value]="option.value">{{ option.label }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field> -->
+
+            <!-- <mat-form-field class="result" color="primary">
+              <mat-label>From Date</mat-label>
+              <input (click)="formDatepickerRef1.open()" id="fromDate" name="fromDate" [(ngModel)]="fromDate"
+                  (focus)="formDatepickerRef1.open()" [matDatepicker]="formDatepickerRef1" matInput readonly>
+              <mat-datepicker-toggle [for]="formDatepickerRef1" matSuffix></mat-datepicker-toggle>
+              <mat-datepicker #formDatepickerRef1></mat-datepicker>
+            </mat-form-field> -->
+
+            <mat-form-field class="result" color="primary">
+                <mat-label>As of Date</mat-label>
+                <input (click)="formDatepickerRef2.open()" id="toDate" name="toDate" [(ngModel)]="toDate" [max]="today"
+                    (focus)="formDatepickerRef2.open()" [matDatepicker]="formDatepickerRef2" matInput readonly>
+                <mat-datepicker-toggle [for]="formDatepickerRef2" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #formDatepickerRef2></mat-datepicker>
+                <!-- <mat-hint>Please select As of Date</mat-hint> -->
+            </mat-form-field>
+
+            <div class="fury-flex-form-field seach-icon">
+                <mat-icon (click)="getInvoiceAgingReport()">search</mat-icon>
+            </div>
+          </div>
+        
+        <fury-card-content fxLayout="column">
+          <div class="padding-top" fxLayout="column">
+            <fury-expandable-table-structure [tableData]="invoiceAgingReport" [columnsToDisplay]="columns"
+              [columnNames]="columnNames">
+            </fury-expandable-table-structure>
+          </div>
+          <div class="result padding-top" fxLayout.gt-sm="row" fxLayout="column" fxLayoutAlign="center start"
+            fxLayoutGap.gt-sm="12px">
+            <mat-form-field class="result" color="primary">
+              <mat-label>Total</mat-label>
+              <input type="text" id="billAmount" name="billAmount" style="text-align: right" [(ngModel)]="billAmount"
+                matInput />
+            </mat-form-field>
+          </div>
+        </fury-card-content>
+      </fury-card>
+    </div>
+  </fury-page-layout-content>
+</fury-page-layout>

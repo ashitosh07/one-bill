@@ -1,0 +1,15 @@
+<div class="background-pattern page" fxLayout="column" fxLayoutAlign="center center">
+  <div [@fadeInUp] class="card border-radius elevation">
+    <div class="header padding" fxLayout="column" fxLayoutAlign="center center">
+      <div>
+        <img src="assets/img/smartBill.png" width="290px" height="90px">
+      </div>
+    </div>
+    <div class="padding" fxLayout="column" fxLayoutGap="16px">
+      <div fxFlex="auto" fxLayout="column">
+        <mat-label>E-Mail confirmation</mat-label>
+        <mat-label *ngIf="confirmed">Thank you for confirming your E-mail</mat-label>
+      </div>
+    </div>
+  </div>
+</div>

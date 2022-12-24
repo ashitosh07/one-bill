@@ -1,0 +1,19 @@
+<div class="content" [formGroup]="invoiceTerms" fxLayout="column" fxLayoutGap="8px">
+    
+    <div fxLayout="column" fxLayoutGap="8px">
+
+        <mat-form-field fxFlex="auto">
+            <mat-label>Name</mat-label>
+            <input formControlName="name" [(ngModel)]="name" matInput>
+            <mat-hint>Please enter Name</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field fxFlex>
+            <mat-label>Terms & Conditions</mat-label>
+            <textarea type="text" style="height: 138px" [(ngModel)]="termsAndCondition" formControlName="termsAndCondition" matInput></textarea>
+            <mat-hint>Please enter Terms & Conditions</mat-hint>
+          </mat-form-field>
+
+    </div>
+</div>
+

@@ -1,0 +1,80 @@
+<fury-page-layout mode="card">
+
+    <div class="loading-indicator" *ngIf="showSpinner">
+        <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
+    </div>
+
+    <fury-page-layout-content fxLayout="column" class="content">
+        <mat-toolbar color="primary" class="position-fixed">
+            <img class="img-style" src="assets/img/fav-icon.png">
+
+            <span>Account Statement</span>
+            <span class="example-spacer"></span>
+
+            <fury-account-statement-footer-toolbar [userActions]="userActions" (printClicked)="onPrintPdf($event)"
+                [disable]="disable" (exportClicked)="onExport()">
+            </fury-account-statement-footer-toolbar>
+
+        </mat-toolbar>
+
+        <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start stretch">
+
+            <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+                <fury-card-header>
+
+                    <!-- <fury-card-header-heading>Bill History</fury-card-header-heading> -->
+                </fury-card-header>
+                <fury-card-content fxLayout="column">
+                    <div class="result" fxLayout="column">
+                        <app-account-statement-toolbar [tenants]="tenants" [billPeriods]="billPeriods" [isHide]="false"
+                            [billTypes]="billTypes" (searchClicked)="onGetAccountStatement($event)" (tenantChanged)="showMovedOutTenants($event)">
+                        </app-account-statement-toolbar>
+                    </div>
+
+                    <div class="padding" fxLayout="column" *ngIf="isMultipleTenant == true">
+                        Click the Print button to view the Account Statement.
+                    </div>
+
+                    <div class="padding" fxLayout="column" *ngIf="isMultipleTenant == false">
+                        <fury-expandable-table-structure [tableData]="billMasterDetails" [columnsToDisplay]="columns"
+                            [innerDisplayedColumns]="innerColumns" [columnNames]="columnNames"
+                            (selectedRows)="onSelectedRows($event)" [hideHeader]="false"
+                            [cssStyledColumn]="cssStyledColumn" [visibleButtons]="visibleButtons" [role]="role"
+                            [buttonName]="buttonName" [disableColumn]="disableColumn">
+                        </fury-expandable-table-structure>
+                    </div>
+                    <div class="result" fxLayout.gt-sm="row" fxLayout="column" fxLayoutAlign="end end"
+                        fxLayoutGap.gt-sm="12px" *ngIf="false">
+                        <!-- role!='External' && isMultipleTenant == false -->
+                        <mat-form-field class="result" color="primary">
+                            <mat-label>Bill Amount</mat-label>
+                            <input type="text" id="billAmount" name="billAmount" style="text-align: right;"
+                                [(ngModel)]="billAmount" matInput>
+                        </mat-form-field>
+
+                        <mat-form-field class="result" color="primary">
+                            <mat-label>Credit Note Amount</mat-label>
+                            <input type="text" id="creditNoteAmount" name="creditNoteAmount" style="text-align: right;"
+                                [(ngModel)]="creditNoteAmount" matInput>
+                        </mat-form-field>
+
+                        <mat-form-field class="result" color="primary">
+                            <mat-label>Paid Amount</mat-label>
+                            <input type="text" id="receivedAmount" name="receivedAmount" style="text-align: right;"
+                                [(ngModel)]="receivedAmount" matInput>
+                        </mat-form-field>
+
+                        <mat-form-field class="result" color="primary">
+                            <mat-label>Balance Due</mat-label>
+                            <input type="text" id="previousDueAmount" name="previousDueAmount"
+                                style="text-align: right;" [(ngModel)]="previousDueAmount" matInput>
+                        </mat-form-field>
+                    </div>
+                </fury-card-content>
+
+            </fury-card>
+        </div>
+    </fury-page-layout-content>
+
+</fury-page-layout>

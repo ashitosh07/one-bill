@@ -1,0 +1,223 @@
+<fury-ticketlist *ngIf="ticketsLength>0"></fury-ticketlist>
+
+<div fxLayout="column" fxLayoutGap="2%" style="padding: 27px;">
+
+  <span class="toolBar" fxLayout="row" fxLayout.xs="column"><span>{{ownerName}}'s</span><span class="toolBar"> &nbsp; Dashboard</span> </span>
+  <!-- <mat-toolbar color="primary" fxLayout="row" fxLayout.xs="column">
+    <img class="img-style" src="assets/img/fav-icon.png" [fxHide.xs]="true">
+
+    <span fxLayout="row" fxLayout.xs="column"><span>{{ownerName}}'s</span><span> &nbsp; Dashboard</span> </span>
+  </mat-toolbar> -->
+
+
+  <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px">
+    <!-- <mat-card fxFlex="50%" fxLayoutGap="1%" fxLayout="column" class="card-data">
+      <div class="header-row"><b>Last Bill and Consumption</b></div>
+      <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" class="div-height">
+        <div class="content" fxFlex.xs="100%" fxFlex="50%">
+          <b>Last Bill</b>
+          <h2 style="color: #0d6bd2;" *ngIf="blnShow"><b> AED {{LastBill}}</b></h2>
+          <b *ngIf="blnShow">On {{LastBillDate}}</b>
+          <mat-card class="nodata" *ngIf="!blnShow">
+            <p>
+              <b>
+                No Data Found
+              </b>
+            </p>
+          </mat-card>
+        </div>
+        <div class="content" fxFlex.xs="100%" fxFlex="50%">
+          <b>Consumption</b>
+          <h2 style="color:  #0d6bd2;" *ngIf="blnShow"><b>{{LastConsumption}} KWH</b></h2>
+          <b *ngIf="blnShow">On {{ConsumptionDate}}</b>
+
+          <mat-card class="nodata" *ngIf="!blnShow">
+            <p>
+              <b>
+                No Data Found
+              </b>
+            </p>
+          </mat-card>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-card fxFlex="50%" fxLayoutGap="1%" fxLayout="column" class="card-data">
+      <div class="header-row"><b>Last Payment Details</b></div>
+      <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="20px" class="div-height">
+        <div class="content" fxFlex.xs="100%" fxFlex="50%">
+          <b>Amount paid</b>
+          <h2 style="color:  #0d6bd2;" *ngIf="blnShow"><b>AED {{LastPaid}}</b></h2>
+          <b *ngIf="blnShow">On {{LastPaidDate}}</b>
+          <mat-card class="nodata" *ngIf="!blnShow">
+            <p>
+              <b>
+                No Data Found
+              </b>
+            </p>
+          </mat-card>
+        </div>
+
+        <div class="content" fxFlex.xs="100%" fxFlex="50%">
+          <b>Total Due</b>
+          <h2 style="color:  #0d6bd2;" *ngIf="blnShow"><b>AED {{TotalDue}}</b></h2>
+           <button class="button-style" mat-raised-button color="primary" *ngIf="blnShow"
+            (click)="paymentNavigation()">Pay Now</button> 
+          <mat-card class="nodata" *ngIf="!blnShow">
+            <p>
+              <b>
+                No Data Found
+              </b>
+            </p>
+          </mat-card>
+        </div>
+      </div>
+    </mat-card> -->
+
+    <mat-card class="mat-elevation-z4 LastBillTile" fxFlex>     
+      <span style="padding-top:20px;"></span>
+      <span class="fontSize">Last Bill</span>  
+      <span style="padding-top:20px;"></span>    
+      <!-- <p *ngIf="blnShow" class="lastBill">AED {{LastBill}} </p> -->
+      <p class="lastBill">{{currencySymbol}}{{LastBill}} </p>
+      <p *ngIf="blnShow && LastBillDate != undefined && LastBillDate != ''" class="rightAlign">On {{LastBillDate}} </p>
+
+      <!-- <mat-card class="nodata" *ngIf="!blnShow">
+        <p>
+          <b>
+            No Data Found
+          </b>
+        </p>
+      </mat-card> -->
+      </mat-card>
+      <mat-card class="mat-elevation-z4 Consumption" fxFlex>  
+          <span style="padding-top:20px;"></span>
+          <span class="fontSize">Average Bill</span>  
+          <span style="padding-top:20px;"></span>    
+          <!-- <p *ngIf="blnShow" class="lastBill">AED {{LastConsumption}} </p> -->
+          <p class="lastBill">{{currencySymbol}}{{LastConsumption}} </p>
+          <p *ngIf="blnShow && ConsumptionDate != undefined && ConsumptionDate != ''" class="rightAlign">On {{ConsumptionDate}} </p>
+          
+          <!-- <mat-card class="nodata" *ngIf="!blnShow">
+            <p>
+              <b>
+                No Data Found
+              </b>
+            </p>
+          </mat-card> -->
+      </mat-card>
+
+      <mat-card class="mat-elevation-z4 LastPaid" fxFlex>  
+        <span style="padding-top:20px;"></span>
+        <span class="fontSize">Last Paid Amount</span>  
+        <span style="padding-top:20px;"></span>    
+        <!-- <p *ngIf="blnShow" class="lastBill">AED {{LastPaid}} </p> -->
+        <p class="lastBill">{{currencySymbol}}{{LastPaid}} </p>
+        <p *ngIf="blnShow && LastPaidDate != undefined && LastPaidDate != ''" class="rightAlign">On {{LastPaidDate}} </p>
+
+        <!-- <mat-card class="nodata" *ngIf="!blnShow">
+          <p>
+            <b>
+              No Data Found
+            </b>
+          </p>
+        </mat-card> -->
+      </mat-card>
+
+      <mat-card class="mat-elevation-z4 dues" fxFlex>       
+        <span style="padding-top:20px;"></span>
+        <span class="fontSize">Total Due</span>  
+        <span style="padding-top:20px;"></span>    
+        <p class="lastBill">{{currencySymbol}}{{TotalDue}} </p>
+        <p *ngIf="blnShow && LastPaidDate != undefined && LastPaidDate != ''" style="padding-bottom:20px;"></p>    
+
+        <!-- <p *ngIf="blnShow && TotalDue < 0" class="lastBill">AED {{TotalDue}} </p> -->
+
+        <!-- <mat-card class="nodata" *ngIf="!blnShow">
+          <p>
+            <b>
+              No Data Found
+            </b>
+          </p>
+        </mat-card> -->
+      </mat-card>
+
+  </div>
+
+  <!-- <mat-toolbar color="primary" fxLayout="row" fxLayout.xs="column" class="alignCenter">
+    <div mat-dialog-title class="top10Padding">Units and Utilities</div>
+  </mat-toolbar> -->
+
+  <h6 class="customMatToolbar" >
+    <div mat-dialog-title>Units and Utilities</div>
+  </h6>
+
+  <mat-card fxLayout="row" fxLayout.xs="column" fxLayoutGap="2%">
+    <mat-form-field fxFlex="30%;">
+      <mat-select [(ngModel)]="unitNo" name="unitNo" id="unitNoId" placeholder="Unit Number"
+        (ngModelChange)="onUtilityChange()">
+        <mat-option *ngFor="let item of lstunitNo;" [value]="item.id">{{item.description}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="30%;">
+      <mat-select [(ngModel)]="deviceId" name="utilityType" id="utilityTypeId" placeholder="Utility Type"
+        (ngModelChange)="onDropdownChange()">
+        <mat-option *ngFor="let item of lstutilityType;" [value]="item.id">{{item.utilityType}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!-- <mat-form-field fxFlex="30%;">
+      <mat-select [(ngModel)]="typeId" name="type" id="typeId" placeholder="Utility Type"
+        (ngModelChange)="onTypeChange()">
+        <mat-option *ngFor="let item of lstType;" [value]="item.value">{{item.label}}</mat-option>
+      </mat-select>
+    </mat-form-field> -->
+
+  </mat-card>
+
+  <div style="float: right;">
+    <mat-button-toggle-group name="fontStyle" class="buttons" aria-label="Font Style" [value]="type"
+                (change)="onValChange($event)" style="font-size: small;float:right" >                
+      <mat-button-toggle id={{q}} *ngFor='let q of lstType; let i = index' [checked]="i === 0" style="padding: 0px;" value={{q}}>{{q}}</mat-button-toggle>               
+    </mat-button-toggle-group>
+  </div>
+
+  <div class="content" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="6px" style="margin-left: 20px;width: 98%;">
+    <div style="width: 100%;overflow: scroll;">
+      <mat-card class="mat-elevation-z4" style="height: 435px;display: inline-flex;flex-flow: row wrap;">
+        <!-- style="color: #0d6bd2;" -->
+        <h3 ><b>{{title}}</b></h3>
+        <!-- <h3 style="color: #0d6bd2;"><b>Last 12 Months Consumption Chart [KWH]</b></h3> -->
+        <div  id="barChartId"></div>
+        <!-- <mat-card class="noDataChart1" *ngIf="!blnShowChart">
+          <p>
+            <b>
+              No Data Found
+            </b>
+          </p>
+        </mat-card> -->
+      </mat-card>
+    </div>
+    <div style="width: 100%;overflow: scroll;">
+      <mat-card class="mat-elevation-z4" style="height: 435px;display: inline-flex;flex-flow: row wrap;">
+        <!-- style="color: #0d6bd2;" -->
+        <h3 ><b>{{dailyTitle}}</b></h3>
+        <div class="revbuttons">
+          <button id={{type}} *ngFor='let type of dailyChart' (click)='showDailyData($event)'>
+          {{ type}}
+          </button>       
+        </div>
+        <div  id="barChartId2"></div>
+        <!-- <mat-card class="noDataChart2" *ngIf="!blnShowChart">
+          <p>
+            <b>
+              No Data Found
+            </b>
+          </p>
+        </mat-card> -->
+      </mat-card> 
+    </div>
+  </div> 
+
+</div>

@@ -1,0 +1,178 @@
+@import "var";
+@import "~quill/dist/quill.snow.css";
+@import "~quill/dist/quill.snow.css";
+
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.icon-color{
+  color: white;
+}
+
+.img-style{
+  width: 32px;
+}
+
+.editor {
+  height: 100%;
+  width: 100%;
+}
+
+.quill {
+  border-bottom-left-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
+  overflow: hidden;
+  min-height: 70px;
+  width: 100%;
+}
+@import "var";
+
+:host {
+  background: url('/assets/img/backgrounds/form-wizard.jpg');
+  background-size: cover;
+  display: block;
+}
+
+.title {
+  color: white;
+}
+
+.card {
+  margin: 0px;
+  max-width: 100%;
+  border-radius: $border-radius;
+  overflow: hidden;
+
+  @include mat-elevation(10);
+
+  .heading {
+    font: var(--font-title);
+  }
+
+  .subheading {
+    font: var(--font-subheading-1);
+  }
+
+  .content {
+    margin: $spacing/2 0;
+
+    .checkbox {
+      margin-top: $spacing/2;
+    }
+  }
+
+  .actions {
+    margin-top: $spacing;
+    padding: $spacing $spacing/3 0;
+  }
+}
+
+.copyright {
+  position: absolute;
+  bottom: $spacing;
+  right: $spacing;
+  color: white;
+}
+
+.heading
+{
+  background: #1976d2;
+    font-size: 17px;
+    height: 0px;
+}
+
+.mat-elevation-z16 {
+  box-shadow: none
+}
+
+.ql-container {
+  min-height: 215px;
+}
+
+.content {
+  margin: $spacing/2 0;
+
+}
+
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 375px) {
+  hr{
+    width:255px;
+  }
+}
+
+@media only screen and (max-width: 425px) {
+  hr{
+    width:361px;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  hr{
+    width: 705px;
+  } 
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 1024px) {
+  hr{
+    width: 1021px;
+  } 
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1440px) {
+  hr{
+    width: 1095px;
+  }
+}
+
+@media only screen and (min-width: 2560px) {
+  hr{
+    width: 2210px;
+  }
+
+  .quill{
+    width: 2215px;
+  }
+}
+
+.position-fixed{
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.errorMessage {
+  color: red;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.profileButton {
+  align-self: center;
+  padding: 0px;
+  width: 55px; 
+  height: 50px;
+  vertical-align: middle;
+}
+
+.buttonStyle
+{
+  background: #e6e1e1;
+    //background: #1976d2; //rgb(63, 81, 181);
+    //color: white;  
+    padding-right: 10px;
+}
+
+.buttonStyleDisabled
+{
+    background: #e6e1e1; //#1976d2; //rgb(63, 81, 181);
+    color: #a7a3a3;  
+    padding-right: 10px;
+    cursor: default;
+}

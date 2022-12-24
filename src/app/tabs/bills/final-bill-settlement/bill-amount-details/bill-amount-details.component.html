@@ -1,0 +1,92 @@
+<mat-dialog-content>
+    <div class="person">
+        <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="8px">
+            <mat-form-field style="width:100%" color="primary">
+                <mat-label>Opening Due Amount</mat-label>
+                <!-- [(ngModel)]="billAmount" -->
+                <input type="text" id="OutstandingBillAmount" name="OutstandingBillAmount" [ngModel]="billAmount | number: roundFormat | noComma" 
+                    readonly matInput style="text-align: right;">
+            </mat-form-field>
+        </div>
+        <!-- <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="2px" *ngIf="!isHide">
+            <div class="fury-flex-form-field">
+                <app-table-structure [tableData]="accountHeadData" [columns]="columns"></app-table-structure>
+            </div>
+            <div class="fury-flex-form-field">
+                <button class="create" (click)="addNewItem()" type="button" mat-mini-fab color="primary">
+                    <mat-icon><span>+</span></mat-icon>
+                </button>
+            </div>
+        </div>
+
+        <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="8px" *ngIf="!isHide">
+            <p></p>
+        </div> -->
+
+        <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="8px">
+            <mat-form-field style="width:100%" color="primary">
+                <mat-label>Total</mat-label>
+                <input id="Total" name="Total" [ngModel]="total | number: roundFormat | noComma" matInput style="text-align: right;" readonly />
+            </mat-form-field>
+        </div>
+
+        <!-- <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="8px">
+            <mat-form-field class="result" color="primary">
+                <mat-label>VAT</mat-label>
+                <input id="vatAmount" name="vatAmount" [(ngModel)]="vatAmount" matInput />
+            </mat-form-field>
+        </div> -->
+
+        <!-- <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="8px">
+            <mat-form-field class="result" color="primary">
+                <mat-label>Round Off</mat-label>
+                <input id="RoundOff" name="RoundOff" [(ngModel)]="roundOff" matInput
+                    (input)="onRoundOffAmountChange($event.target.value)" />
+            </mat-form-field>
+        </div> -->
+
+        <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="8px">
+            <mat-form-field style="width:100%" color="primary">
+                <mat-label>Previous Advance</mat-label>
+                <input id="PreviousAdvance" name="PreviousAdvance" [ngModel]="previousAdvanceAmount | number: roundFormat | noComma"
+                    style="text-align: right;" matInput readonly />
+            </mat-form-field>
+            <!-- <mat-checkbox [(ngModel)]="isAdjustWithAdvance" (change)="onChangeAdjustWithAdvance($event)">
+                <label>Adjust with Advance</label>
+            </mat-checkbox> -->
+        </div>
+
+
+        <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="8px">
+            <mat-form-field style="width:100%" color="primary">
+                <mat-label>To Pay</mat-label>
+                <!-- [ngModel]="toPay | number: roundFormat | noComma" -->
+                <input id="ToPay" name="ToPay" [(ngModel)]="toPay" style="text-align: right;" matInput autofocus
+                    [disabled]="isDisable" (input)="onToPayAmountChange($event.target.value)" furyValidateDecimalPlacesDirective/>
+            </mat-form-field>
+        </div>
+
+        <!-- <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="8px">
+            <mat-hint class="small" *ngIf="previousAdvanceAmount > 0 && toPay>0  && previousAdvanceAmount >= toPay">
+                {{toPay}} will be adjusted from the advance amount while save</mat-hint>
+        </div> -->
+
+        <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="8px">
+            <mat-form-field style="width:100%" color="primary">
+                <mat-label>Advance Adjusted</mat-label>
+                <input id="advanceAdjusted" name="advanceAdjusted" [ngModel]="advanceAdjusted | number: roundFormat | noComma"
+                    style="text-align: right;" matInput readonly
+                    (input)="onAdvanceAdjustedChange($event.target.value)" />
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="8px" *ngIf="isHide">
+            <mat-form-field style="width:100%" color="primary">
+                <mat-label>{{labelName}}</mat-label>
+                <input id="ExcessAmount" name="ExcessAmount" [ngModel]="excessAmount | number: roundFormat | noComma" style="text-align: right;"
+                    matInput furyValidateDecimalPlacesDirective/>
+            </mat-form-field>
+        </div>
+
+    </div>
+</mat-dialog-content>

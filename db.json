@@ -1,0 +1,281 @@
+{
+  "invoiceData": [
+    {
+      "dataType": "Total Invoices",
+      "dataCount": "100000"
+    },
+    {
+      "dataType": "Total Received",
+      "dataCount": "2500"
+    },
+    {
+      "dataType": "Total Outstanding",
+      "dataCount": "500"
+    }
+  ],
+  "meterData": [
+    {
+      "dataType": "Total Meters",
+      "dataCount": "1500"
+    },
+    {
+      "dataType": "Online Meters",
+      "dataCount": "1200"
+    },
+    {
+      "dataType": "Offline Meters",
+      "dataCount": "300"
+    }
+  ],
+  "unitData": [
+    {
+      "dataType": "Total Units",
+      "dataCount": "100000"
+    },
+    {
+      "dataType": "Connected Units",
+      "dataCount": "2500"
+    },
+    {
+      "dataType": "Disconnected Units",
+      "dataCount": "500"
+    }
+  ],
+  "revenueCurrentMonth": [
+    {
+      "dataType": "Total Outstanding",
+      "dataCount": "100000"
+    },
+    {
+      "dataType": "Last Received",
+      "dataCount": "2500"
+    }
+  ],
+  "revenueData": [
+    {
+      "release_year": "2000",
+      "budget": "1000",
+      "revenue": "20234"
+    },
+    {
+      "release_year": "2001",
+      "budget": "5000",
+      "revenue": "19564"
+    },
+    {
+      "release_year": "2002",
+      "budget": "6200",
+      "revenue": "21765"
+    },
+    {
+      "release_year": "2003",
+      "budget": "3000",
+      "revenue": "18034"
+    },
+    {
+      "release_year": "2004",
+      "budget": "7200",
+      "revenue": "23456"
+    },
+    {
+      "release_year": "2005",
+      "budget": "11234",
+      "revenue": "27845"
+    }
+  ],
+  "ticketList": {
+    "news": [
+      {
+        "newsId": 1,
+        "newsTitle": "Exercitation duis aliqua nulla aliqua consequat nisi qui Lorem in duis. You can also use ng-if instead of ng-show  instead of ng-show nisi qui Lorem in duis.Exercitation duis",
+        "content": "Exercitation duis aliqua nulla aliqua consequat nisi qui Lorem in duis. You can also use ng-if instead of ng-show",
+        "createdDate": "12/09/2020"
+      },
+      {
+        "newsId": 2,
+        "newsTitle": " You can also use ng-if instead of ng-show nisi qui Lorem in duis.Exercitation duis aliqua nulla aliqua consequat nisi qui Lorem in duis.",
+        "content": "You can also use ng-if instead of ng-show nisi qui Lorem in duis.Exercitation duis aliqua nulla aliqua consequat nisi qui Lorem in duis. You can also use ng-if instead of ng-show",
+        "createdDate": "3/11/2020"
+      },
+      {
+        "newsId": 3,
+        "newsTitle": " ng-show nisi qui Lorem in duis.Exercitation Exercitation duis aliqua nulla aliqua consequat nisi qui Lorem in duis.",
+        "content": "You can also use ng-if instead of ng-show nisi qui Lorem in duis.Exercitation duis aliqua nulla aliqua consequat nisi qui Lorem in duis. You can also use ng-if instead of ng-show",
+        "createdDate": "20/02/2020"
+      },
+      
+     { "newsId": 4,
+      "newsTitle": " ng-show nisi qui Lorem in duis.Exercitation Exercitation duis aliqua nulla aliqua consequat nisi qui Lorem in duis.",
+      "content": "You can also use ng-if instead of ng-show nisi qui Lorem in duis.Exercitation duis aliqua nulla aliqua consequat nisi qui Lorem in duis. You can also use ng-if instead of ng-show",
+      "createdDate": "20/02/2020"
+    }
+    ],
+    "announcements": [
+      {
+        "announceId": 1,
+        "announceTitle": "Title1",
+        "announceDate": "12/09/2020"
+      },
+      {
+        "announceId": 2,
+        "announceTitle": "Title2",
+        "announceDate": "3/11/2020"
+      },
+      {
+        "announceId": 3,
+        "announceTitle": "Title3",
+        "announceDate": "20/02/2020"
+      }
+    ],
+    "tickets": [
+      {
+        "ticketId": 1,
+        "ticketTitle": "Title1 fgfg gfhfghg fgghfg fgghghgf",
+        "ticketCreated": "12/09/2020",
+        "updatedDate": "12/09/2020",
+        "assignedTo": "Value1",
+        "status": "Follow-up"
+      },
+      {
+        "ticketId": 2,
+        "ticketTitle": "Title2",
+        "ticketCreated": "3/11/2020",
+        "updatedDate": "05/11/2020",
+        "assignedTo": "Value2",
+        "status": "Follow-up"
+      },
+      {
+        "ticketId": 3,
+        "ticketTitle": "Title3",
+        "ticketCreated": "20/02/2020",
+        "updatedDate": "20/05/2020",
+        "assignedTo": "Value3",
+        "status": "Follow-up"
+      }
+    ],
+    "id": 2
+  },
+  "ticketView": {
+    "ticketId": 1,
+    "ticketTitle": "Title1",
+    "createdDate": "12/09/2020",
+    "updatedDate": "12/09/2020",
+    "assignedTo": "Value1",
+    "status": "Follow-up"
+  },
+  
+"getTickets":[
+  {
+      "id": 1,
+      "ticketNumber": "TN1000",
+      "title": "Test Title1",
+      "sentTo": 130,
+      "sentToName": "Support",
+      "description": "Test Message1 Exercitation duis aliqua nulla aliqua consequat nisi qui Lorem in duis.",
+      "date": "2020-11-24T00:00:00",
+      "assignedTo": 132,
+      "assignedToName": "Technical",
+      "ticketStatus": 147,
+      "ticketStatusName": "Open",
+      "attachment": "",
+      "ticketTransaction": []
+  },
+  {
+      "id": 2,
+      "ticketNumber": "TN1001",
+      "title": "Test Title2",
+      "sentTo": 131,
+      "sentToName": "Admin",
+      "description": "Test Message2 consequat nisi qui Lorem in the display property to either inline-block or block in order for the width property to take",
+      "date": "2020-11-24T00:00:00",
+      "assignedTo": 133,
+      "assignedToName": "User",
+      "ticketStatus": 147,
+      "ticketStatusName": "Open",
+      "attachment": "",
+      "ticketTransaction": []
+  },
+  {
+      "id": 3,
+      "ticketNumber": null,
+      "title": "Test Title3",
+      "sentTo": 131,
+      "sentToName": "Admin",
+      "description": "Test Message3 a block first, then float left to stop pushing the next block in to a new line aliqua consequat nisi qui Lorem in duis .",
+      "date": "2020-11-24T00:00:00",
+      "assignedTo": 133,
+      "assignedToName": "User",
+      "ticketStatus": 147,
+      "ticketStatusName": "Open",
+      "attachment": "",
+      "ticketTransaction": []
+  }
+],
+
+"dashboardData" : 
+[
+
+      {
+          "AverageDailyUsage" :  {
+          "LastMonth":"20kWH",
+          "CurrentMonth":"1.5kWH"
+          }
+      },
+      {
+          "AccountStatus" :{
+          "LastBillAmount":"Dhr.1000",
+          "OutstandingAmount":"Dhr.1200"
+          }
+      },
+
+  {
+    "barChartData":
+          [
+            { "month":"Jan",
+              "unitConsumption":54
+            },
+            {
+              "month":"Feb",
+              "unitConsumption":15
+            },
+            {
+              "month":"March",
+              "unitConsumption":18
+            },
+            { "month":"April",
+            "unitConsumption":24
+            },
+            {
+              "month":"May",
+              "unitConsumption":85
+            },
+            {
+              "month":"June",
+              "unitConsumption":18
+            },
+            { "month":"July",
+            "unitConsumption":10
+            },
+            {
+              "month":"Aug",
+              "unitConsumption":23
+            },
+            {
+              "month":"Sep",
+              "unitConsumption":66
+            },
+            { "month":"Oct",
+            "unitConsumption":91
+            },
+            {
+              "month":"Nov",
+              "unitConsumption":37
+            },
+            {
+              "month":"Dec",
+              "unitConsumption":70
+            }
+          ]
+        }
+  ]
+}

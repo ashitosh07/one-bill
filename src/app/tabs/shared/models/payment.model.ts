@@ -1,0 +1,45 @@
+import { PaymentTransaction } from './payment-transaction.model';
+import { BillMaster } from './bill-master.model';
+
+export class Payment {
+    id?: number;
+    receiptId?: string;
+    paymentNumber?: string;
+    paymentDate?: string;
+    billId?: number;
+    paymentAmount?: number;
+    billType?: number;
+    modeofPayment?: number;
+    paymentMode?: string;
+    paymentReference?: string;
+    remarks?: string;
+    paymentDateLocal?: string;
+    referenceDate?: Date;
+    tenantName?: string;
+    referenceDateLocal?: string;
+    meterNumber?: string;
+    officeNumber?: string;
+    paymentAmountLocal?: string;
+    trn?: string;
+    customerTRN?: string;
+    advanceAmount?: number;
+    outStandingAmount?: number;
+    advanceAmountLocal?: string;
+    clientId?: number;
+    ownerId?: number;
+    email?: string;
+    mobile?: string;
+    accountNumber?: string;
+    paymentTransactions?: PaymentTransaction[];
+    billMasters?: BillMaster[];
+    cancelReason?: string;
+    status?: string;
+    bankId?: number;
+    isSynced?: boolean;
+    userId?: string;
+    contractNotExist?: boolean;
+    refundAmount?: number;
+    isLatestBill?:boolean;
+    currency?: string;
+    IsDeleted?: boolean;
+}

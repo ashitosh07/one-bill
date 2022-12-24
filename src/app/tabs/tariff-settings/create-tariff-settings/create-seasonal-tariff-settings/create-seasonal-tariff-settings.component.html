@@ -1,0 +1,52 @@
+<div class="content" [formGroup]="season_tariff" fxLayout="column" fxLayoutGap="8px">
+    <mat-form-field fxFlex="auto">
+        <mat-label>Tariff Name</mat-label>
+        <input formControlName="tariff_name" [(ngModel)]="tariffName" matInput required>
+        <mat-hint>This will be unique tariff name.</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field fxFlex="auto">
+        <mat-label>Utility Type</mat-label>
+        <mat-select formControlName="utility_type" (selectionChange)="onChangeUtilityType($event.value)"
+            [(value)]="utilityTypeId" required>
+            <mat-option *ngFor="let option of listUtilityTypes" [value]="option.value">
+                {{ option.label }}
+            </mat-option>
+        </mat-select>
+        <mat-hint>This will be utility type.</mat-hint>
+        <mat-error *ngIf="season_tariff.invalid">Utility type is required.</mat-error>
+    </mat-form-field>
+
+    <!-- <mat-form-field fxFlex="auto">
+        <mat-label>Parameters</mat-label>
+        <mat-select formControlName="parameter_type" (selectionChange)="onChangeParameter($event.value)"
+            [(value)]="parameterId" required>
+            <mat-option *ngFor="let option of listParameters" [value]="option.value">
+                {{ option.label }}
+            </mat-option>
+        </mat-select>
+        <mat-hint>This will be parameter.</mat-hint>
+        <mat-error *ngIf="season_tariff.invalid">Parameter is required.</mat-error>
+    </mat-form-field> -->
+
+    <!-- <mat-form-field fxFlex="auto">
+        <mat-label>WEF Date</mat-label> -->
+        <!-- <input type="date" formControlName="wef_date" [(ngModel)]="wefDate" matInput required> -->
+        <!-- <input (click)="formDatepickerRef.open()" id="settlementDate" name="wefDate" formControlName="wef_date"
+            [(ngModel)]="wefDate" (focus)="formDatepickerRef.open()" [matDatepicker]="formDatepickerRef" matInput
+            readonly>
+        <mat-datepicker-toggle [for]="formDatepickerRef" matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #formDatepickerRef></mat-datepicker>
+        <mat-hint>This will be with effective date.</mat-hint>
+    </mat-form-field> -->
+
+    <mat-form-field fxFlex="auto">
+        <mat-label>Clients</mat-label>
+        <mat-select [(ngModel)]="selectedClients" multiple formControlName="client_select">
+            <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">Select All</mat-option>
+            <mat-option *ngFor="let client of clients" [optionSelected]="client.selected" [value]="client.id"
+                (click)="tosslePerOne(allSelected.viewValue)"> {{client.clientName}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>

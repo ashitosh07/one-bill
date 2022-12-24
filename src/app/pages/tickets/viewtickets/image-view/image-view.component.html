@@ -1,0 +1,13 @@
+
+<!-- <mat-card fxLayout="column" fxLayoutGap="20px" style="padding: 27px 27px 27px 27px;"> -->
+
+    <img *ngIf="type=='image'" src="{{popupVar}}" style="width:100%;">
+
+    <pdf-viewer *ngIf="type=='pdf'" [src]="popupVar" [original-size]="true"></pdf-viewer>                      
+
+  <div>
+    <button style="float: right;" color="primary" mat-raised-button (click)="downloadPdf()">download</button>
+  </div>
+
+<!-- </mat-card> -->
+         

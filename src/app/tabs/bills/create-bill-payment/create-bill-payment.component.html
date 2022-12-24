@@ -1,0 +1,87 @@
+<fury-page-layout mode="card" style="margin-top: 20px;">
+
+
+    <fury-page-layout-content fxLayout="column">
+        <mat-toolbar color="primary" class="position-fixed">
+            <img class="img-style" src="assets/img/fav-icon.png">
+            <span>Bill Payment</span>
+            <span class="toolbar-spacer"></span>
+            <app-final-bill-settlement-footer-toolbar
+                [isDisabled]=" (!isValid || !isData || !isValidPayment) && (!isValid || !isValidPayment)"
+                [isPrintDisable]="isPrintDisable" (saveClicked)="onSaveBillPayment($event)"
+                (printClicked)="onPrintBillPayment($event)">
+            </app-final-bill-settlement-footer-toolbar>
+        </mat-toolbar>
+
+        <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start stretch">
+
+            <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+                <fury-card-content fxLayout="column">
+                    <div class="result padding-top" fxLayout="column">
+                        <app-final-bill-settlement-toolbar [tenants]="tenants" [options]="options" [isHide]="true"
+                            [isVisible]="false" (saveClicked)="onSaveBillPayment($event)"
+                            (searchClicked)="onGetBillDetails($event)">
+                        </app-final-bill-settlement-toolbar>
+                    </div>
+                </fury-card-content>
+            </fury-card>
+        </div>
+        <!-- </fury-page-layout-content>
+
+    <fury-page-layout-content [fxLayoutGap]="gap" fxLayout="column" class="padding-top"> -->
+
+        <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start stretch" class="padding-top">
+
+            <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+                <fury-card-header>
+                    <fury-card-header-heading>Outstanding Bills</fury-card-header-heading>
+                </fury-card-header>
+
+                <fury-card-content fxLayout="column">
+                    <div class="result" fxLayout="column">
+                        <app-outstanding-bills [isAutoSelect]="isAutoSelect" [dataSource]="billSettlement"
+                            [disableCheckBox]="disableCheckBox" (rowsSelected)="onSelectedRows($event)"
+                            [isHide]="false">
+                        </app-outstanding-bills>
+                    </div>
+                </fury-card-content>
+                <fury-card-header>
+                    <fury-card-header-heading>Payment Details</fury-card-header-heading>
+                </fury-card-header>
+                <fury-card-content fxLayout="column">
+                    <div class="result" fxLayout="column">
+                        <app-payment-details [banks]="banks" [paymentModes]="paymentModes" [isShowValidation]="isData"
+                            (validate)="onValidation($event)">
+                        </app-payment-details>
+                    </div>
+                </fury-card-content>
+            </fury-card>
+            <fury-card [fxFlex.gt-sm]="col3" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+                <fury-card-header>
+                    <fury-card-header-heading>Bill Amount Details</fury-card-header-heading>
+                </fury-card-header>
+                <fury-card-content fxLayout="column">
+                    <div class="result" fxLayout="column">
+                        <app-bill-amount-details [dataSource]="billSettlement" [selectedRows]="selectedRows"
+                            (isValidPayment)="onValidatePayment($event)" [isHide]="true">
+                        </app-bill-amount-details>
+                    </div>
+                </fury-card-content>
+            </fury-card>
+        </div>
+        <!-- </fury-page-layout-content>
+
+
+
+    <fury-page-layout-content [fxLayoutGap]="gap" fxLayout="column" class="padding-top"> -->
+
+        <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start stretch" class="padding-top">
+
+
+        </div>
+    </fury-page-layout-content>
+
+</fury-page-layout>

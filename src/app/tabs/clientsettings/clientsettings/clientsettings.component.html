@@ -1,0 +1,178 @@
+<fury-page-layout mode="card" style="margin-top:20px">
+
+
+
+    <fury-page-layout-content>
+        <mat-toolbar color="primary">
+            <img class="img-style" src="assets/img/fav-icon.png">
+
+            <span>Client Config</span>
+            <span class="toolbar-spacer"></span>
+            <button matTooltip="Copy" class="create" (click)="copyClientSettings()" type="button" mat-mini-fab
+                color="primary">
+                <mat-icon>file_copy</mat-icon>
+            </button>
+        </mat-toolbar>
+
+        <fury-page>
+
+            <div fxLayout="column" fxLayoutAlign="start center">
+
+                <div class="card">
+                    <mat-horizontal-stepper #stepper="matHorizontalStepper" [linear]="false">
+
+                        <mat-step [stepControl]="generalFormGroup" completed="false">
+                            <form [formGroup]="generalFormGroup">
+
+                                <!-- <form [formGroup]="generalFormGroup"> -->
+                                <ng-template matStepLabel>GENERAL </ng-template>
+
+                                <div class="heading"></div>
+                                <div class="subheading"></div>
+
+                                <fury-general>
+                                </fury-general>
+
+                                <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                                    <button color="primary" mat-raised-button matStepperNext>NEXT
+                                    </button>
+                                </div>
+                            </form>
+                        </mat-step>
+
+                        <mat-step [stepControl]="sequenceFormGroup" completed="false">
+                            <form [formGroup]="sequenceFormGroup">
+                                <ng-template matStepLabel>SEQUENCE NUMBER </ng-template>
+
+                                <div class="heading"></div>
+                                <div class="subheading"></div>
+
+                                <fury-sequencenumber>
+                                </fury-sequencenumber>
+
+                                <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                                    <!-- <button (click)="stepper.reset()" [disabled]="sequenceFormGroup.pristine"
+                                color="primary" mat-button type="button">RESET
+                            </button> -->
+                                    <button color="primary" mat-button matStepperPrevious
+                                        type="button">PREVIOUS</button>
+                                    <button color="primary" mat-raised-button matStepperNext>NEXT
+                                    </button>
+                                </div>
+                            </form>
+                        </mat-step>
+
+                        <mat-step [stepControl]="emailFormGroup" completed="false">
+                            <form [formGroup]="emailFormGroup">
+                                <ng-template matStepLabel>EMAIL </ng-template>
+
+                                <div class="heading"></div>
+                                <div class="subheading"></div>
+
+                                <fury-emailsettings>
+                                </fury-emailsettings>
+
+                                <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                                    <button color="primary" mat-button matStepperPrevious
+                                        type="button">PREVIOUS</button>
+                                    <button color="primary" mat-raised-button matStepperNext>NEXT
+                                    </button>
+                                </div>
+                            </form>
+                        </mat-step>
+
+                        <mat-step [stepControl]="clientSettingsFormGroup" completed="false">
+                            <form [formGroup]="clientSettingsFormGroup">
+                                <ng-template matStepLabel>MESSAGE</ng-template>
+
+                                <div class="heading"></div>
+                                <div class="subheading"></div>
+
+                                <fury-client-settings-message>
+                                </fury-client-settings-message>
+
+                                <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                                    <button color="primary" mat-button matStepperPrevious
+                                        type="button">PREVIOUS</button>
+                                    <button color="primary" mat-raised-button matStepperNext>NEXT
+                                    </button>
+                                </div>
+                            </form>
+                        </mat-step>
+
+                        <mat-step [stepControl]="clientSettingsInvoiceTermsFormGroup" completed="false">
+                            <form [formGroup]="clientSettingsInvoiceTermsFormGroup">
+                                <ng-template matStepLabel>INVOICE TERMS</ng-template>
+
+                                <div class="heading"></div>
+                                <div class="subheading"></div>
+
+                                <fury-client-invoice-terms>
+                                </fury-client-invoice-terms>
+
+                                <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                                    <button color="primary" mat-button matStepperPrevious
+                                        type="button">PREVIOUS</button>
+                                    <button color="primary" mat-raised-button matStepperNext>NEXT
+                                    </button>
+                                    
+                                    <!-- || sequencenumberComponent.lstSequence.length==0 -->
+                                    <!-- || !emailsettingsComponent.smtpServer || !this.emailsettingsComponent.smtpPort || !emailsettingsComponent.smtpUsername || !emailsettingsComponent.smtpPassword || !emailsettingsComponent.popServer || !this.emailsettingsComponent.popPort -->
+                                    <!-- || !clientSettingsLocalisationComponent.dateFormatId || !clientSettingsLocalisationComponent.roundOff || !clientSettingsLocalisationComponent.currency || clientSettingsLedgerRelationComponent.lstLedger.length==0 -->
+                                </div>
+                            </form>
+                        </mat-step>
+
+                         <mat-step [stepControl]="clientSettingsLocalisationFormGroup">
+                            <form [formGroup]="clientSettingsLocalisationFormGroup">
+                                <ng-template matStepLabel>LOCALISATION</ng-template>
+
+                                <div style="color: red;font-size: smaller;padding-bottom: 20px;">* Localisation Settings once configured cannot be changed.</div>
+                                <div class="heading"></div>
+                                <div class="subheading"></div>
+                                
+
+                                <fury-client-settings-localisation (isDisable)="isSlabSettingsAdded($event)">
+                                </fury-client-settings-localisation>
+                                
+
+                                <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                                    <button color="primary" mat-button matStepperPrevious
+                                        type="button">PREVIOUS</button>
+                                    <button color="primary" mat-raised-button (click)="saveDatas()"
+                                        [disabled]="generalComponent.clientId == 0 || !generalComponent.workingHrs || !generalComponent.supportMail 
+                                        || !generalComponent.website || !generalComponent.billSettingsId || !this.clientSettingsLocalisationComponent.isFormvalid">SAVE
+                                    </button>
+                                    <!-- || this.clientSettingsLocalisationComponent.localisationSettings.controls.currency.disabled -->
+                                </div>
+                            </form>
+                        </mat-step>
+<!--
+                        <mat-step [stepControl]="clientSettingsLedgerFormGroup">
+                            <form [formGroup]="clientSettingsLedgerFormGroup">
+                                <ng-template matStepLabel>MAP LEDGER</ng-template>
+
+                                <div class="heading"></div>
+                                <div class="subheading"></div>
+
+                                <fury-client-settings-ledger-relation (isDisable)="isPeakSettingsAdded($event)">
+                                </fury-client-settings-ledger-relation>
+
+                                <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                                    <button color="primary" mat-button matStepperPrevious
+                                        type="button">PREVIOUS</button>
+                                    <button color="primary" mat-raised-button (click)="saveDatas()"
+                                        [disabled]="!generalComponent.clientId && !generalComponent.workingHrs && !generalComponent.supportMail && !generalComponent.website && !generalComponent.billSettingsId && sequencenumberComponent.lstSequence.length==0 && !emailsettingsComponent.smtpServer && !this.emailsettingsComponent.smtpPort && !emailsettingsComponent.smtpUsername && !emailsettingsComponent.smtpPassword && !emailsettingsComponent.popServer && !this.emailsettingsComponent.popPort && clientSettingsMessageComponent.lstMessage.length==0 && !clientSettingsLocalisationComponent.dateFormatId && !clientSettingsLocalisationComponent.roundOff && !clientSettingsLocalisationComponent.currency && clientSettingsLedgerRelationComponent.lstLedger.length==0 ">SAVE
+                                    </button>
+                                </div>
+                            </form>
+                        </mat-step> -->
+
+                    </mat-horizontal-stepper>
+                </div>
+            </div>
+        </fury-page>
+
+    </fury-page-layout-content>
+
+</fury-page-layout>

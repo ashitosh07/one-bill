@@ -1,0 +1,62 @@
+<h4 mat-dialog-title>
+    <mat-toolbar role="toolbar" class="task-header">
+        <span>{{title}}</span>
+        <span class="fx-spacer"></span>
+        <button mat-icon-button (click)="close()">
+            <mat-icon mat-list-icon>close</mat-icon>
+        </button>
+    </mat-toolbar>
+</h4>
+<mat-dialog-content>
+    <div class="person padding-top">
+        <form [formGroup]="form">
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px">
+
+                <mat-form-field class="result columnWidth" color="primary" fxFlex>
+                    <mat-label>Amount</mat-label>
+                    <input type="textbox" id="amount" name="amount" formControlName="amount" furyValidateDecimalPlacesDirective
+                        [readonly]="title!=='Refund'" (keyup)="calculateRefundableAmount($event.target.value)"
+                        [ngModel]="amount | number: roundFormat | noComma" matInput>
+                    <mat-hint class="errorMessage">{{ errorMessage }}</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field class="result columnWidth" color="primary" fxFlex>
+                    <mat-label>{{title}} Date</mat-label>
+                    <input (click)="formDatepickerRef.open()" [ngModelOptions]="{standalone: true}" id="refundDate"
+                        [max]="maxDate" name="refundDate" [(ngModel)]="refundDate" (focus)="formDatepickerRef.open()"
+                        [matDatepicker]="formDatepickerRef" matInput readonly>
+                    <mat-datepicker-toggle [for]="formDatepickerRef" matSuffix></mat-datepicker-toggle>
+                    <mat-datepicker #formDatepickerRef></mat-datepicker>
+                </mat-form-field>
+            </div>
+
+            <div fxLayout="column padding-top" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="10px">
+                <mat-form-field class="result columnWidth" color="primary" fxFlex>
+                    <mat-label>Payment Mode</mat-label>
+                    <mat-select id="PaymentMode" name="PaymentMode"
+                        (selectionChange)="onChangePaymentMode($event.value)" [(value)]="paymentModeId">
+                        <mat-option *ngFor="let option of paymentModes" [value]="option.value">{{ option.label }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="result columnWidth" color="primary" fxFlex>
+                    <mat-label>Remarks</mat-label>
+                    <input type="text" id="remarks" name="remarks" [ngModelOptions]="{standalone: true}"
+                        [(ngModel)]="remarks" matInput>
+                </mat-form-field>
+
+            </div>
+            <!-- class="fury-flex-form-field" -->
+            <div class="rightAlign">
+                <button mat-button (click)='close()'>CANCEL</button>
+                <button mat-button (click)="onSave()"
+                    [disabled]="errorMessage != '' || amount <= 0 || refundDate == undefined || paymentModeId == 0 || remarks == ''">SAVE</button>
+                <!-- <button (click)="onSave()" mat-icon-button class="example-icon"
+                    aria-label="Example icon-button with menu icon">
+                    <mat-icon>save</mat-icon>
+                </button> -->
+            </div>
+        </form>
+    </div>
+</mat-dialog-content>

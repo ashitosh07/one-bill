@@ -1,0 +1,66 @@
+<fury-page-layout mode="card">
+    <fury-page-layout-content fxLayout="column" class="content">
+
+        <!-- <div class="loading-indicator" *ngIf="showSpinner">
+            <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
+        </div> -->
+
+        <div>
+            <span class="toolBar">Group-wise Energy Cost</span>
+            <span class="example-spacer"></span>
+
+            <mat-button-toggle-group name="fontStyle" class="buttons" aria-label="Font Style" [value]="selectedValue"
+                (change)="onValChange($event)" style="font-size: small;float:right" >                
+                <mat-button-toggle id={{q}} mat-raised-button *ngFor='let q of frequency; let i = index' [checked]="i === 0" style="padding: 0px;" value={{q}}>{{q}}</mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+        <!-- <div class="example-button-row">
+            <button mat-raised-button id={{q}} *ngFor='let q of buttons; let i = index' [checked]="i === 0" value={{q}}>{{q}}</button>
+        </div> -->
+
+        <div>
+            <mat-button-toggle-group name="fontStyle" aria-label="Font Style" [value]="reportType"
+                (change)="onButtonChange($event)" style="font-size: small;border: 0px;" >                
+                <mat-button-toggle id={{q}} *ngFor='let q of buttons; let i = index' [checked]="i === 0" style="padding: 0px;margin-right: 8px;" value={{q}}>{{q}}</mat-button-toggle>
+            </mat-button-toggle-group>
+        </div>
+        
+        <div class="content" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="30px"
+            style="padding: 0% 0% 1% 0%" fxFlex="100%">
+
+            <div fxLayout="column" fxFlex="30%">  
+                <div class="tileHeading" style="clear: both;padding-top: 50px;">Group By</div> 
+                
+                    <mat-form-field style="padding-top: 5px;" fxFlex>                
+                        <mat-select [(ngModel)]="meterGroup" multiple placeholder="Select a Meter Group" class="multiSelectCustom" 
+                            [formControl]="form.controls['meterGroup']">
+                            <input class="myInput" #myInput matInput focused="'true'" type="text" (keyup)="search($event.target.value)"
+                                autocomplete="off" placeholder="search">
+                            <mat-divider></mat-divider>
+                            <mat-option #allMeterGroupsSelected (click)="toggleMeterGroupsAllSelection()" [value]="0">Select All</mat-option>
+                            <mat-option *ngFor="let item of lstMeterGroup" [value]="item.id" (click)="toggleMeterGroupPerOne(allMeterGroupsSelected.viewValue)"> {{item.description}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+            </div>
+
+            <mat-card class="mat-elevation-z4" fxFlex="22%" style="height: 175px;text-align: center;">  
+                <div fxFlex style="padding-top:30px;">
+                    <span class="topPadding"></span>
+                    <span class="tileHeading">Total Energy Cost</span> 
+                    <p class="energyCost">{{this.currency}} {{this.currentEnergyCost}} 
+                    </p>     
+                </div>
+            </mat-card>
+            
+            <div id="egecontainer2" style="height: 200px;background-color: transparent;width: 400px;"></div>
+
+        </div>
+        <div class="content" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" 
+            style="padding: 0% 0% 0.25% 0.20%">
+            <mat-card class="mat-elevation-z4" fxFlex="100%">
+                <div id="egecontainer1"></div>
+            </mat-card>
+        </div>
+    </fury-page-layout-content>
+</fury-page-layout>

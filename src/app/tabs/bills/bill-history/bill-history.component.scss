@@ -1,0 +1,49 @@
+.padding{
+    padding:0 0 24px 0;
+}
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.content{
+      margin-top: 2%;
+}
+
+.img-style{
+    width: 32px;
+}
+
+ul {
+    margin: 20px;
+}
+
+.label-color {
+    position: relative;
+}
+.label-color label {
+    padding-left: 20px;
+}
+.label-color .color-box {
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    background-color: #ccc;
+    position: absolute;
+    left: 5px;
+    top: 5px;
+}
+
+.position-fixed {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+    z-index: 5;
+  }
+
+  .header-align-right {
+    text-align: right;
+  }
+
+  .header-align-left {
+    text-align: left;
+  }

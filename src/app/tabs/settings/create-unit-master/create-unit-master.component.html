@@ -1,0 +1,75 @@
+<fury-page-layout mode="card"> 
+    <fury-page-layout-header>
+      <fury-breadcrumbs [@fadeInRight] [crumbs]="[]" current="View Units"></fury-breadcrumbs>
+    </fury-page-layout-header>
+  
+    <fury-page-layout-content [@fadeInUp]>
+      <fury-list name="View Units" [columns]="displayedColumns" (filterChange)="onFilterChange($event)">
+        
+        <div class="actions">
+          <mat-form-field class="result padding-top">
+            <mat-label>Filter Units</mat-label>
+            <mat-select (selectionChange)="selectFilter($event)" [(ngModel)]="occupancy"
+              [ngModelOptions]="{ standalone: true }">
+              <mat-option *ngFor="let occupancy of occupancies; index as i" [value]="occupancy">
+                {{occupancy}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <!-- <mat-checkbox class="right margin" [checked]="vacantUnit" color="primary" matTooltip="Vacant Units" 
+              (change)="toggleVacantUnits(vacantUnit)">Vacant Units</mat-checkbox>            
+          <mat-checkbox class="right margin" [checked]="occupiedByTenant" color="primary" matTooltip="Occupied By Tenants" 
+              (change)="toggleTenantOccupiedUnits(occupiedByTenant)">Occupied By Tenants</mat-checkbox>
+          <mat-checkbox class="right margin" [checked]="occupiedByOwner" color="primary" matTooltip="Occupied By Owners" 
+              (change)="toggleOwnerOccupiedUnits(occupiedByOwner)">Occupied By Owners</mat-checkbox>
+          <mat-checkbox class="right margin" [checked]="occupiedUnit" color="primary" matTooltip="Occupied By Tenant/Owners" 
+              (change)="toggleOccupiedUnits(occupiedUnit)">Occupied By Tenant/Owners</mat-checkbox> -->
+        </div>
+
+        <!-- <div class="actions">
+          <button class="create" (click)="createUnit()" type="button" mat-mini-fab color="primary">
+            <mat-icon>add</mat-icon>
+          </button>
+        </div> -->
+
+        <table [dataSource]="dataSource" mat-table matSort>
+
+            <ng-container *ngFor="let column of displayedColumns"> 
+              <ng-container *ngIf="column.isModelProperty" [matColumnDef]="column.property">
+              <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.name }}</th>
+                    <td *matCellDef="let row" mat-cell>
+                      {{ row[column.property] }}
+                    </td>
+              </ng-container>      
+            </ng-container>
+        
+            <ng-container matColumnDef="actions">
+              <th *matHeaderCellDef class="actions-cell" mat-header-cell mat-sort-header></th>
+              <td *matCellDef="let row" class="actions-cell" mat-cell>
+                <button type="button" mat-icon-button [matMenuTriggerFor]="actionsMenu" (click)="$event.stopPropagation()">
+                  <mat-icon>more_horiz</mat-icon>
+                </button>
+        
+                <mat-menu #actionsMenu="matMenu" yPosition="below" xPosition="before">
+                  <button (click)="updateUnit(row)" mat-menu-item>
+                    <span>Modify</span>
+                  </button>
+                  <!-- <button (click)="deleteUnit(row)" mat-menu-item>
+                    <span>Delete</span>
+                  </button> -->
+                </mat-menu>
+              </td>
+            </ng-container> 
+            
+            <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+            <tr (click)="updateUnit(row)"
+                *matRowDef="let row; columns: visibleColumns;"
+                class="clickable route-animations-elements"
+                mat-row></tr>
+        
+          </table>
+        
+          <mat-paginator class="paginator" [pageSize]="pageSize"></mat-paginator>  
+
+      </fury-list>  
+    </fury-page-layout-content>
+</fury-page-layout>      

@@ -1,0 +1,54 @@
+.buttonStyle
+{
+    background: #1976d2; //rgb(63, 81, 181);
+    color: white;  
+    padding-right: 10px;
+}
+
+.headingStyle
+{
+    text-align: center;
+    //size: 110px; 
+    color: red;
+    background-color: silver;
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+}
+
+.heading
+{
+    font-size: large;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+@mixin md-icon-size($size: 24px) {
+    font-size: $size;
+    height: $size;
+    width: $size;
+    line-height: $size;
+    justify-content: center;
+  }
+  
+  mat-icon {
+    @include md-icon-size(56px);
+  }
+
+.contentStyle
+{
+    //font-size: large;
+    padding-top: 40px;
+    padding-bottom: 30px;
+    padding-right: 30px;
+}
+
+.rightAlign
+{
+    text-align: right;
+}
+
+.bottomPadding
+{
+    padding-bottom: 20px;
+}

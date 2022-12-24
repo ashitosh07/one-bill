@@ -1,0 +1,62 @@
+<div class="content" [formGroup]="generalSettings" fxLayout="column" fxLayoutGap="8px">
+    
+    <div fxLayout="row" fxLayoutGap="8px">
+
+        <mat-form-field fxFlex="auto">
+            <mat-label>Client</mat-label>
+            <mat-select formControlName="clientId" 
+                [(ngModel)]="clientId" required>
+                <mat-option *ngFor="let option of lstClients" [value]="option.clientId">
+                    {{ option.clientName }}
+                </mat-option>
+            </mat-select>
+            <!-- (selectionChange)="onChangeClientId($event.value)" -->
+            <!-- <mat-hint>This will be client.</mat-hint> -->
+            <mat-error *ngIf="generalSettings.invalid">Client is required.</mat-error>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="auto" fxFlex="50%">
+            <mat-label>Working Hours</mat-label>
+            <input formControlName="workingHrs" [(ngModel)]="workingHrs" matInput required>
+            <mat-hint>This will be working hours with time like Mon-Fri 9:30-5:30, Sat. 9:30-3:00, Sun. Closed</mat-hint>
+        </mat-form-field>
+    
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="8px">
+
+        <mat-form-field fxFlex="auto" fxFlex="50%">
+            <mat-label>Support Mail</mat-label>
+            <input formControlName="supportMail" [(ngModel)]="supportMail" matInput required pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+            <mat-hint>This will be like example@gmail.com</mat-hint>
+        </mat-form-field>
+    
+        <mat-form-field fxFlex="auto" fxFlex="50%">
+            <mat-label>Bill Settings</mat-label>
+            <mat-select formControlName="billSettingsId"
+                [(ngModel)]="billSettingsId" required>
+                <mat-option *ngFor="let option of lstBillSettings" [value]="option.id">
+                    {{ option.description }}
+                </mat-option>
+            </mat-select>
+            <mat-hint>This will be Bill Settings Id.</mat-hint>
+            <mat-error *ngIf="generalSettings.invalid">Bill Settings is required.</mat-error>
+        </mat-form-field>
+        
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="8px">
+
+        <mat-form-field fxFlex="50%">
+            <mat-label>Website</mat-label>
+            <input formControlName="website" [(ngModel)]="website" matInput required
+            pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?">
+            <mat-hint>This will be like http://www.example.com</mat-hint>
+        </mat-form-field>
+        <div class="billedByClient">
+            <mat-checkbox color="primary" [(ngModel)]="isBilledbyClient" formControlName="isBilledbyClient">Billed by Client</mat-checkbox>  
+        </div>
+        
+    </div>
+
+</div>

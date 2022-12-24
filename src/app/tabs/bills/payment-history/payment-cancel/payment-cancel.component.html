@@ -1,0 +1,24 @@
+
+<!-- <fury-card-header>
+    <fury-card-header-heading>Cancel Bill</fury-card-header-heading>
+</fury-card-header> -->
+<div mat-dialog-title>Cancel Payment</div>
+<form [formGroup]="form" (ngSubmit)="save()">
+<mat-dialog-content>
+    <fury-card>
+    <div class="person" >
+        <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px" > 
+            <mat-form-field fxFlex>
+              <mat-label>Remarks</mat-label>
+              <input type="text" formControlName="cancelReason"   matInput>
+              <app-show-errors [ctrl]="form.get('cancelReason')"></app-show-errors>
+            </mat-form-field>
+        </div>
+    </div>
+</fury-card>
+</mat-dialog-content>
+<mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+    <button  mat-button >CANCEL PAYMENT</button>
+   
+  </mat-dialog-actions>
+</form>

@@ -1,0 +1,121 @@
+<div>
+  <h2 fxHide fxShow.gt-sm>Dashboard</h2>
+</div>
+
+<form [formGroup]="form">
+<div class="result" fxLayout="column" fxLayoutGap="8px">
+  <div class="form-row" col-md-8>
+    <mat-card class="col-md-8">
+      <mat-form-field fxFlex="none" class="col-md-2">
+        <mat-label>Country</mat-label>
+        <mat-select (selectionChange)="selectCountry($event)" [(ngModel)]="countryId" [ngModelOptions]="{ standalone: true }">
+          <mat-option value="0">--Select All--</mat-option>
+          <mat-option *ngFor="let country of filterCountry; index as i" [value]="country.id">
+            {{country.description}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </mat-card>
+  </div>
+
+  <div class="form-row" col-md-8>
+    <mat-card class="col-md-8">
+      <div fxFlex>        
+        <mat-form-field fxFlex="none" class="col-md-2">
+          <mat-label>Location</mat-label>
+          <mat-select (selectionChange)="selectLocation($event)" [(ngModel)]="locationId" [ngModelOptions]="{ standalone: true }">
+            <mat-option value="0">--Select All--</mat-option>
+            <mat-option *ngFor="let location of filterLocation; index as i" [value]="location.id">
+              {{location.description}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </mat-card>
+  </div>
+
+  <div class="form-row" col-md-8>
+    <mat-card class="col-md-8">
+      <div fxFlex>        
+        <mat-form-field fxFlex="none" class="col-md-2">
+        <mat-label>Area</mat-label>
+        <mat-select (selectionChange)="selectArea($event)" [(ngModel)]="areaId" [ngModelOptions]="{ standalone: true }">
+          <mat-option value="0">--Select All--</mat-option>
+          <mat-option *ngFor="let area of filterArea; index as i" [value]="area.id">{{area.description}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    </mat-card>
+  </div>
+  
+  <div class="form-row" col-md-8>
+    <mat-card class="col-md-8">
+      <mat-form-field fxFlex="none">
+        <mat-label>Clients</mat-label>
+        <mat-select [(ngModel)]="selectedClients" multiple formControlName="clients">                                
+            <mat-option #allSelected (click)="toggleAllSelection()" [value]="0">Select All</mat-option>
+            <mat-option *ngFor="let client of filterClients" [value]="client.id" (click)="togglePerOne(allSelected.viewValue)"> {{client.description}}
+            </mat-option>                                
+        </mat-select>
+      </mat-form-field>
+    </mat-card>
+  </div>
+
+  <!-- <div class="form-row" col-md-8>
+    <mat-card class="col-md-8">
+      <mat-form-field fxFlex="81%">
+        <mat-label>From Date</mat-label>
+        <input (click)="formDatepickerRef1.open()" id="fromDate" name="fromDate" (focus)="formDatepickerRef1.open()"
+          [matDatepicker]="formDatepickerRef1" matInput readonly [(ngModel)]="fromDate" [ngModelOptions]="{ standalone: true }">
+        <mat-datepicker-toggle [for]="formDatepickerRef1" matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #formDatepickerRef1></mat-datepicker>
+      </mat-form-field>
+    </mat-card>
+  </div>
+
+  <div class="form-row" col-md-8>
+    <mat-card class="col-md-8">
+      <mat-form-field fxFlex="81%">
+        <mat-label>To Date</mat-label>
+        <input (click)="formDatepickerRef2.open()" id="toDate" name="toDate" (focus)="formDatepickerRef2.open()"
+          [matDatepicker]="formDatepickerRef2" matInput readonly [(ngModel)]="toDate" [ngModelOptions]="{ standalone: true }">
+        <mat-datepicker-toggle [for]="formDatepickerRef2" matSuffix></mat-datepicker-toggle>
+        <mat-datepicker #formDatepickerRef2></mat-datepicker>
+      </mat-form-field>
+    </mat-card>
+  </div> -->
+
+  <!-- <div class="form-row" col-md-8>
+    <mat-card class="col-md-8">
+      <mat-form-field fxFlex="none" class="col-md-2">
+        <mat-label>Floor</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let floor of filterDropDownFloor; index as i" value="floor.id">{{floor.description}}</mat-option>
+         
+        </mat-select>
+      </mat-form-field>
+
+    </mat-card>
+  </div>
+
+  <div class="form-row" col-md-8>
+    <mat-card class="col-md-8">
+      <mat-form-field fxFlex="none" class="col-md-2">
+        <mat-label>Units</mat-label>
+        <mat-select>
+          <mat-option *ngFor="let unit of filterDropDownUnit; index as i" value="unit.id">{{unit.description}}</mat-option>
+          
+        </mat-select>
+      </mat-form-field>
+
+    </mat-card>
+  </div> -->
+
+
+  
+</div>
+</form>
+<div fxLayout="row" style="text-align: center;padding-left: 60px;">
+  <button mat-button color=primary (click)="reset()">Reset</button>
+  <button mat-button color=primary (click)="showDashBoard()" [disabled]="!isFormValid">Filter</button>
+</div>

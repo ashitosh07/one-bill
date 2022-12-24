@@ -1,0 +1,35 @@
+
+<mat-card fxLayout="column" fxLayoutGap="20px" style="padding: 27px 27px 27px 27px;">
+
+  <mat-toolbar color="primary" class="position-fixed">
+    <img class="img-style" src="assets/img/fav-icon.png">
+     <span>Call Log Entry</span>
+     <span class="toolbar-spacer"></span>
+     <button  (click)="cancelData()" [disabled]="txtForm.pristine" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+       <mat-icon class="icon-color" matTooltip="Reset">refresh</mat-icon>
+   </button>
+   <button (click)="saveData()" [disabled]="txtForm.invalid" mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+     <mat-icon  class="icon-color" matTooltip="Save">save</mat-icon>
+ </button>
+   </mat-toolbar>
+
+    <div fxLayout="row" fxLayoutGap="20px">
+      <div fxFlex>
+        <mat-form-field style="width: 40%;">
+          <mat-select [(ngModel)]="callType" name="callType" [formControl]="txtForm.controls['callType']" id="callTypeId" placeholder="Call Type">
+            <mat-option>None</mat-option>
+
+            <mat-option *ngFor="let callType of lstCallType;" [value]="callType.id" >{{callType.description}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button class="create" (click)="createCallType()" style="height: 30px;width: 30px;margin-right: 0px; margin-left: 5px;padding-top: -20px;" type="button" mat-mini-fab color="primary">
+          <mat-icon style="height: 10px;width: 10px;padding-top: -5px;margin-top: -25px;margin-left: -13px;">add</mat-icon>
+        </button>
+      </div>
+    </div>
+  
+    <div fxLayout="row">
+ 
+        <textarea class="textId" #textId rows="10" cols="130"  [(ngModel)]="textData" [formControl]="txtForm.controls['textData']" placeholder="Enter text here...."></textarea>
+    </div>
+  </mat-card>

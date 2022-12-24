@@ -1,0 +1,40 @@
+<fury-page-layout mode="card" style="margin-top:20px">
+
+    <fury-page-layout-content fxLayout="column">
+        <mat-toolbar color="primary" class="position-fixed">
+            <img class="img-style" src="assets/img/fav-icon.png">
+
+            <span>Workflow Rules</span>
+            <span class="toolbar-spacer"></span>
+            <button matTooltip="Save" (click)="submit()" mat-icon-button class="example-icon"
+                aria-label="Example icon-button with menu icon">
+                <mat-icon>save</mat-icon>
+            </button>
+        </mat-toolbar>
+        <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start stretch">
+            <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+                <fury-card-header>
+                </fury-card-header>
+                <fury-card-content fxLayout="column">
+                    <div class="result" fxLayout="column">
+                        <form [formGroup]="form">
+                            <div formArrayName="workflowRules">
+                                <div *ngIf="workflowRuleFormArray">
+                                    <div *ngFor="let workflowRule of workflowRuleFormArray.controls;let i = index">
+                                        <div fxFlex>
+                                            {{workflowRules[i].description}}
+                                        </div>
+                                        <mat-slide-toggle fxFlex [formControlName]="i"
+                                            (change)="toggleValueChange(workflowRules[i],$event)">
+                                        </mat-slide-toggle>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </fury-card-content>
+            </fury-card>
+        </div>
+    </fury-page-layout-content>
+</fury-page-layout>

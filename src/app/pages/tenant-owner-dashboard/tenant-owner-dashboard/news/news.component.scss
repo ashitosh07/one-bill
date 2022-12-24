@@ -1,0 +1,61 @@
+
+  .child-2{
+    background :white;
+    // min-height: 50px;
+    border-style: solid;
+    border-width: thin;
+    border-color: #dddddd;
+    align-items: center;
+    width: 99.9%;
+}
+
+
+.textstyles{
+  text-decoration:none;
+  margin-left: 10px;
+  
+}
+
+
+span{
+  font-weight: 500;
+  font-family: "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+}
+
+#divId:hover {
+  background-color: #e0eef1;
+  // cursor: pointer;
+}
+
+
+.scrollit {
+  //overflow:scroll;
+  //height:163px;
+  padding: 0px;
+  margin: 0px;
+}
+
+  
+.heading
+{
+    background: #1976d2;
+    font-size: 17px;
+    height: 0px;
+}
+
+.div-news{
+ padding: 0% 0% 0% 0%;
+}
+
+.customMatToolbar {
+  // max-height: 40px !important;
+  font-weight: 35px;
+  font-size: larger;
+  //margin-left : 20px;
+  margin-bottom: 0px;
+  //color: #40407a !important;
+}
+
+// h6 > div {
+//   color: #40407a !important;
+// }

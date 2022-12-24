@@ -1,0 +1,206 @@
+<div fxLayout="column" fxLayoutGap="2%">
+<div class="background-pattern page padding-top" fxLayout="row" fxLayout.xs="row" fxLayoutAlign="center center">
+  <div [@fadeInUp] class="card border-radius elevation" style="width: 800px;overflow: scroll;">
+    <div class="header padding-top" fxLayout="row" fxLayout.xs="row" fxLayoutAlign="center center">
+      <div>
+        <img src={{logoFileName}} width="290px" height="90px">
+      </div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <div class="padding-top" fxLayout="row" fxLayout.xs="row">
+       <!-- style="width: 800px;"> -->
+        <div fxFlex fxLayout="column">
+          <div mat-dialog-title style="text-align: center;padding-bottom: 30px;">User Registration</div>
+          <div class="person" style="padding-bottom: 20px;">
+            <div fxFlex fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap="30px" class="margin-left">
+              <fieldset id="ResidentialCommercial">
+                <legend>Residential/Commercial</legend>
+                <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                  formControlName="residentialCommercialOption" [(ngModel)]="selectedResidentialCommercialOption"
+                  required tabindex="1">
+                  <mat-radio-button class="example-radio-button marginRadioButton"
+                    *ngFor="let option of residentialCommercialOptions" [value]="option" (change)="residentialCommercialChange($event)">
+                    <div fxLayout="column" style="padding-right: 30px;">
+                      {{option.label}}
+                    </div>
+                  </mat-radio-button>
+                </mat-radio-group>
+              </fieldset>
+              <fieldset id="TenantOwner">
+                <legend>Tenant/Owner</legend>
+                <mat-radio-group aria-labelledby="example-radio-group-label" class="example-radio-group"
+                  formControlName="tenantOwnerOption" [(ngModel)]="selectedTenantOwnerOption" required tabindex="2">
+                  <mat-radio-button class="example-radio-button marginRadioButton"
+                    *ngFor="let option of tenantOwnerOptions" [value]="option" (change)="ownerTenantChange($event)">
+                    <div fxLayout="column" style="padding-right: 30px;">
+                      {{option.label}}
+                    </div>
+                  </mat-radio-button>
+                </mat-radio-group>
+              </fieldset>
+            </div>
+          </div>
+          <div class="person" *ngIf="selectedResidentialCommercialOption == commercialItem">
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px" class="margin-left">
+              <mat-form-field fxFlex class="margin-left">
+                <mat-label>Company Name</mat-label>
+                <input type="text" formControlName="companyName" matInput tabindex="3">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="person">
+            <div fxFlex="100%" fxLayout="column" fxLayoutGap="2%" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px" class="margin-left">
+              <mat-form-field fxFlex="33%">
+                <!-- [ngClass]="{'padding-top': selectedResidentialCommercialOption !== commercialItem}"> -->
+                <mat-label *ngIf="selectedResidentialCommercialOption != commercialItem">First Name</mat-label>
+                <mat-label *ngIf="selectedResidentialCommercialOption == commercialItem">Contact Person First Name
+                </mat-label>
+                <input type="text" formControlName="firstName" matInput required tabindex="4">
+                <!-- (keydown.enter)="onKeyUp($event)" -->
+              </mat-form-field>
+              <mat-form-field fxFlex="33%">
+                <!-- [ngClass]="{'padding-top': selectedResidentialCommercialOption !== commercialItem}"> -->
+                <mat-label *ngIf="selectedResidentialCommercialOption != commercialItem">Last Name</mat-label>
+                <mat-label *ngIf="selectedResidentialCommercialOption == commercialItem">Contact Person Last Name
+                </mat-label>
+                <input type="text" formControlName="lastName" matInput required tabindex="5">
+              </mat-form-field>
+              <mat-form-field fxFlex="33%">
+                <!-- [ngClass]="{'padding-top': selectedResidentialCommercialOption !== commercialItem}"> -->
+                <mat-label *ngIf="selectedResidentialCommercialOption != commercialItem">Email</mat-label>
+                <mat-label *ngIf="selectedResidentialCommercialOption == commercialItem">Contact Person E-Mail
+                </mat-label>
+                <input type="email" formControlName="email" matInput required tabindex="6">
+                <app-show-errors [ctrl]="form?.get('email')"></app-show-errors>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="person">
+            <div fxLayout="column" fxLayoutGap="2%" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px" class="margin-left">
+              <mat-form-field fxFlex>
+                <mat-label *ngIf="selectedResidentialCommercialOption != commercialItem">Phone Number</mat-label>
+                <mat-label *ngIf="selectedResidentialCommercialOption == commercialItem">Contact Person Phone Number
+                </mat-label>
+                <input type="number" formControlName="phoneNo" matInput required maxlength="10" tabindex="7">
+              </mat-form-field>
+              <mat-form-field fxFlex *ngIf="selectedResidentialCommercialOption == commercialItem">
+                <mat-label>TRN</mat-label>
+                <input type="number" formControlName="trn" tabindex="8" matInput maxlength="15"
+                  (change)="checkTRNDuplication()" (keyup)="checkTRNDuplication()"
+                  oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);if(this.value <= 0) this.value = ''">
+                <mat-hint class="duplicate">{{ duplicateTRN }}</mat-hint>
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <mat-label>Tower</mat-label>
+                <input type="text" matInput tabindex="9" formControlName="client" (change)="checkTower()" required>
+                <!-- <input matInput [matAutocomplete]="client" formControlName="client" required>
+            <mat-autocomplete #client="matAutocomplete" (optionSelected)="selectClient($event)">
+                <mat-option *ngFor="let client of filteredClients; index as i" [value]="client.clientName">
+                    {{ client.clientName }}</mat-option>                    
+            </mat-autocomplete> -->
+                <app-show-errors [ctrl]="form?.get('clientId')"></app-show-errors>
+                <mat-hint class="hintSize">{{clientValidationMsg}}</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="person">
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px" class="margin-left">
+              <mat-form-field fxFlex>
+                <mat-label>Address</mat-label>
+                <input type="text" formControlName="address" matInput tabindex="10">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="person">
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px" class="margin-left">
+              <!-- *ngIf="isCommercialOwner" -->
+              <mat-form-field fxFlex *ngIf="false">
+                <mat-label>Units</mat-label>
+                <mat-select (selectionChange)="onChangeUnits($event.value)" multiple formControlName="units" tabindex="11">
+                  <mat-option *ngFor="let unit of metadataUnits" [value]="unit.id"> {{unit.description}}
+                  </mat-option>
+                </mat-select>
+                <!-- <app-show-errors [ctrl]="form?.get('unitId')"></app-show-errors> -->
+              </mat-form-field>
+
+            </div>
+          </div>
+          <div class="person">
+            <div fxLayout="column" fxLayoutGap="2%" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px" class="margin-left">
+              <mat-form-field fxFlex>
+                <mat-label>Document Type</mat-label>
+                <input matInput [matAutocomplete]="documentTypes" tabindex="12" formControlName="documentType" required
+                  (input)="filterDocument($event.target.value)">
+                <mat-autocomplete #documentTypes="matAutocomplete" (optionSelected)="selectDocumentType($event)">
+                  <mat-option *ngFor="let document of filteredDocumentTypes; index as i" [value]="document.description">
+                    {{ document.description }}</mat-option>
+                </mat-autocomplete>
+                <app-show-errors [ctrl]="form?.get('documentTypeId')"></app-show-errors>
+                <mat-hint class="hintSize" *ngIf="!isDocumentsValid || isDuplicate">{{validationMessage}}</mat-hint>
+                <!-- <mat-hint *ngIf="!isDocumentsValid  && userRole == 'Owner'">Please upload Passport and Title Deed / Lease Agreement copy</mat-hint>
+            <mat-hint *ngIf="!isDocumentsValid && isCommercialOwner && userRole == 'Commercial'">Please upload Passport, Trade License and Title Deed / Lease Agreement copy</mat-hint>
+            <mat-hint *ngIf="!isDocumentsValid && !isCommercialOwner && userRole == 'Commercial'">Please upload Passport and Trade License Copy</mat-hint> -->
+
+                <!-- <small *ngIf="!isDocumentsValid">Please upload required documents.</small> 
+            <small *ngIf="isDuplicate">Duplication of documents</small> accept="application/pdf"-->
+              </mat-form-field>
+              <div class="person">
+                <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="center center" class="padding-top">
+                  <div class="document">
+                    <input #fileInput class="selectDocument" type="file" (change)="selectDocument($event)" tabindex="13">
+                    <span tabindex="14"
+                      [ngClass]="form?.get('documentType').value === '' || !selectedDocument ?'uploadButtonDisabled':'uploadButton'"
+                      (click)="uploadDocument()" (keyup.enter)="uploadDocument()" mat-raised-button color="primary"
+                      style="margin-left: 10px;">UPLOAD</span>
+                  </div>
+                </div>
+                <mat-hint class="errorMessage" *ngIf="isDocumentUploadSuccess == false">{{ errorMessage }}</mat-hint>
+              </div>
+            </div>
+
+            <table [dataSource]="dataSource" mat-table matSort class="padding-top" align="center">
+
+              <ng-container *ngFor="let column of displayedColumns">
+                <ng-container *ngIf="column.isModelProperty" [matColumnDef]="column.property">
+                  <th *matHeaderCellDef mat-header-cell mat-sort-header class="leftPadding"> {{ column.name }}</th>
+                  <td *matCellDef="let row" mat-cell class="leftPadding">
+                    {{ row[column.property] }}
+                  </td>
+                </ng-container>
+              </ng-container>
+
+              <ng-container matColumnDef="actions">
+                <th *matHeaderCellDef class="actions-cell" mat-header-cell></th>
+                <td *matCellDef="let row" class="actions-cell" mat-cell (click)="deleteDocument(row)">
+                  <mat-icon style="margin-left: 20px;" class="deleteIcon">delete</mat-icon>
+                </td>
+              </ng-container>
+
+              <tr *matHeaderRowDef="visibleColumns" mat-header-row></tr>
+              <tr *matRowDef="let row; columns: visibleColumns;" class="clickable route-animations-elements" mat-row>
+              </tr>
+            </table>
+
+          </div>
+
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center center" class="padding-top">
+        <mat-checkbox class="caption" tabindex="13" formControlName="termsAccepted"
+          (change)="toggleTermsNConditions(isTermsAccepted)">I accept the <a
+            href="/assets/pdf-documents/Terms%20&%20Conditions.pdf" tabindex="14" target="_blank">Terms and
+            Conditions.</a></mat-checkbox>
+      </div>
+      <div style="text-align: center;">
+        <button mat-raised-button color="primary" tabindex="15" style="margin-top: 20px;"
+          [disabled]="!form?.valid || !isDocumentsValid || !isTermsAccepted || this.duplicateTRN != ''">REGISTER</button>
+      </div>
+      <p class="secondary-text text-center">
+        Already have an account?<br />
+        <a [routerLink]="['/login']" tabindex="16">Sign in here</a>
+      </p>
+    </form>
+  </div>
+</div>
+</div>

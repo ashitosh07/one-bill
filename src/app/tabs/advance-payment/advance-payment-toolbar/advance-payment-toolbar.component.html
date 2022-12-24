@@ -1,0 +1,42 @@
+<mat-dialog-content>
+  <div class="person padding-bottom">
+    <form>
+      <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="8px">
+        <mat-form-field class="result" color="primary">
+          <mat-label>From Date</mat-label>
+          <input (click)="formDatepickerRef1.open()" id="fromDate" name="fromDate" [(ngModel)]="fromDate"
+            (focus)="formDatepickerRef1.open()" [matDatepicker]="formDatepickerRef1" matInput readonly />
+          <mat-datepicker-toggle [for]="formDatepickerRef1" matSuffix></mat-datepicker-toggle>
+          <mat-datepicker #formDatepickerRef1></mat-datepicker>
+        </mat-form-field>
+
+        <mat-form-field class="result" color="primary">
+          <mat-label>To Date</mat-label>
+          <input (click)="formDatepickerRef2.open()" id="toDate" name="toDate" [(ngModel)]="toDate"
+            (focus)="formDatepickerRef2.open()" [matDatepicker]="formDatepickerRef2" matInput readonly />
+          <mat-datepicker-toggle [for]="formDatepickerRef2" matSuffix></mat-datepicker-toggle>
+          <mat-datepicker #formDatepickerRef2></mat-datepicker>
+        </mat-form-field>
+
+
+        <mat-form-field class="result" color="primary" *ngIf="ownerId == 0">
+          <mat-label>Owner or Tenant</mat-label>
+          <mat-select id="tenant" name="tenant" [(value)]="tenantId">
+            <input class="myInput" #myInput matInput focused="'true'" type="text" (keydown)="handleInput($event)"
+              (keyup)="search($event.target.value)" autocomplete="off" placeholder="search">
+            <mat-divider></mat-divider>
+            <mat-option *ngFor="let option of allTenants" [value]="option.id">{{ option.ownerName }}
+            </mat-option>
+          </mat-select>
+
+        </mat-form-field>
+
+        <div class="fury-flex-form-field">
+          <button (click)="onSearch()" mat-icon-button>
+            <mat-icon>search</mat-icon>
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</mat-dialog-content>

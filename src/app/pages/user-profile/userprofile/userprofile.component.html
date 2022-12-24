@@ -1,0 +1,170 @@
+<fury-page-layout mode="card">
+  <fury-page-layout-content fxLayout="column" class="content">
+    
+  
+  <div style="padding:20px;margin-top: -28px;">
+    <!-- <mat-card style="height: 40px;margin-top: 33px;">
+      <div style="margin-top: -10px;padding: 27px 27px 27px 27px;">
+        <b> Information</b>
+      </div>
+    </mat-card> -->
+
+    <mat-toolbar color="primary" class="position-fixed" style="width: 100%;">
+      <img class="img-style" src="assets/img/fav-icon.png">
+      <span>Profile</span>
+      <span class="toolbar-spacer"></span>
+      <div class="fury-flex-form-field">
+        <button matTooltip="Save" (click)="saveData()" mat-icon-button class="example-icon"
+          aria-label="Example icon-button with menu icon">
+          <mat-icon>save</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar>
+
+    <mat-card style="height: 100%;">
+      <h6 class="customMatToolbar" style="padding-top: 20px;">
+        <div mat-dialog-title>Personal Information</div>
+      </h6>
+
+      <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="20px" style="padding-left:27px;margin-top: 10px;max-width: 100%;display: inline-flex;flex-flow: row wrap;">
+
+        <div fxLayout="column" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px" >
+          <label fxFlex><b>User Name</b></label>
+          <mat-form-field appearance="outline" fxFlex>
+            <input pattern="[a-zA-Z0-9\s]*$" [formControl]="groupForm.controls['username']" required
+              [(ngModel)]="userName" name="username" matInput id="usernameId">
+            <mat-error *ngIf="groupForm.controls['username'].hasError('required')">
+              Username required
+            </mat-error>
+            <mat-error *ngIf="groupForm.controls['username'].errors?.pattern">
+              Alphabets, Numbers and spaces only allowed
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px">
+          <label fxFlex><b>Email</b></label>
+          <mat-form-field appearance="outline" fxFlex>
+            <input [formControl]="groupForm.controls['email']" pattern="[A-Za-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+              type="email" required [(ngModel)]="email" name="email" matInput id="emailId">
+            <mat-error *ngIf="groupForm.controls['email'].hasError('required')">
+              Email required
+            </mat-error>
+            <mat-error *ngIf="groupForm.controls['email'].errors?.pattern">
+              Enter Valid Email Id
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px">
+          <label fxFlex><b>Role</b></label>
+          <mat-form-field appearance="outline" fxFlex>
+            <input [formControl]="groupForm.controls['role']" required [(ngModel)]="role" name="role" matInput
+              id="role">
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="20px" style="padding-left:27px;padding-bottom: 10px;max-width: 100%;display: inline-flex;flex-flow: row wrap;">
+        <div fxLayout="column" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px">
+          <label fxFlex><b>First name</b></label>
+          <mat-form-field appearance="outline" fxFlex>
+            <input pattern="[a-zA-Z0-9\s]*$" [formControl]="groupForm.controls['firstname']" required
+              [(ngModel)]="firstName" name="firstname" matInput id="firstnameId">
+            <mat-error *ngIf="groupForm.controls['firstname'].hasError('required')">
+              First name required
+            </mat-error>
+            <mat-error *ngIf="groupForm.controls['firstname'].errors?.pattern">
+              Alphabets, Numbers and spaces only allowed
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="column" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px">
+          <label fxFlex><b>Last name</b></label>
+          <mat-form-field appearance="outline" fxFlex>
+            <input pattern="[a-zA-Z0-9\s]*$" [formControl]="groupForm.controls['lastname']" required
+              [(ngModel)]="lastName" name="lastname" matInput id="lastnameId">
+            <mat-error *ngIf="groupForm.controls['lastname'].hasError('required')">
+              Last name required
+            </mat-error>
+            <mat-error *ngIf="groupForm.controls['lastname'].errors?.pattern">
+              Alphabets, Numbers and spaces only allowed
+            </mat-error>
+          </mat-form-field>
+        </div>
+        
+        <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="10px">
+            <img src="{{image}}" style="width: 76px;height: 76px;border-radius: 50%">
+            <div fxLayout="column" fxLayout.xs="row" fxLayout.sm="row" fxLayoutGap="20px" style="padding-top: 25px;">
+              <input fxFlex [formControl]="groupForm.controls['profileFile']" type="file" id="picture"
+                (change)="uploadPhoto()" class="input-file" id="InputFile" name="InputFile" #profilePic/>
+                <!-- max-file-size="100kb" -->                
+            </div>
+            <div fxLayout="column" fxLayout.xs="row" fxLayout.sm="row">
+              <mat-hint class="errorMessage" *ngIf="isUploadSuccess == false"> {{ errorMessage }} </mat-hint>  
+            </div>
+        </div>
+      </div>      
+      
+      <!-- <mat-card fxLayout="row" class="heading">
+        <div style=" padding-left: 27px;  margin-top: -10px;color: white;width: 100%;"><b>
+            <span> Change Password</span>
+          </b></div>
+      </mat-card> -->
+
+      <h6 class="customMatToolbar" >
+        <div mat-dialog-title>Change Password</div>
+      </h6>
+
+      <div fxLayout="row" fxLayout.xs="column" fxLayout.sm="column" fxLayoutGap="20px" style="margin-top: 23px;padding-left: 27px;margin-bottom: 20px;max-width: 100%;display: inline-flex;flex-flow: row wrap;">
+
+        <div fxLayout="column" fxLayoutGap="10px">
+
+          <label fxFlex><b>New Password</b></label>
+          <mat-form-field appearance="outline">
+            <input [type]="newPasswordInputType" [formControl]="groupPassword.controls['newPassword']" [(ngModel)]="newPassword" name="newPassword"
+              matInput id="newPasswordId">
+
+              <button type="button" mat-icon-button matSuffix (click)="toggleNewPasswordVisibility()"
+              matTooltip="Toggle Visibility">
+              <mat-icon *ngIf="newPasswordVisible">visibility</mat-icon>
+              <mat-icon *ngIf="!newPasswordVisible">visibility_off</mat-icon>
+            </button>
+            <mat-hint>Enter your new password.</mat-hint>
+            <mat-error *ngIf="groupPassword?.get('newPassword').hasError('pattern')">Password should contain 1 Uppercase, 1 Special character and minimum 8 charaters long.</mat-error>
+            <!-- <mat-error *ngIf="groupPassword.get('newPassword').hasError('required')">
+              Enter your new password.
+            </mat-error>  -->
+
+          </mat-form-field>
+
+        </div>
+        <div fxLayout="column" fxLayoutGap="10px">
+
+          <label fxFlex><b>Confirm Password</b></label>
+          <mat-form-field appearance="outline">
+            <input [type]="confirmPasswordInputType" [formControl]="groupPassword.controls['confirmPassword']" [(ngModel)]="confirmPassword"
+              name="confirmPassword" matInput id="confirmPasswordId">
+              <button type="button" mat-icon-button matSuffix (click)="toggleConfirmPasswordVisibility()"
+              matTooltip="Toggle Visibility">
+              <mat-icon *ngIf="confirmPasswordVisible">visibility</mat-icon>
+            <mat-icon *ngIf="!confirmPasswordVisible">visibility_off</mat-icon>
+            </button>
+            <mat-hint>Re-enter new password.</mat-hint>
+            <mat-error *ngIf="groupPassword?.get('confirmPassword').hasError('pattern')">Password should contain 1 Uppercase, 1 Special character and minimum 8 charaters long.</mat-error>
+
+          </mat-form-field>
+
+        </div>
+
+        <button style="width: 40%;text-align: left;padding-top: 10px;" (click)="resetPassword()" [disabled]="groupPassword.pristine" color="primary"
+          mat-button type="button">RESET
+        </button>
+
+      </div>
+    </mat-card>
+
+  </div>
+</fury-page-layout-content>
+</fury-page-layout>

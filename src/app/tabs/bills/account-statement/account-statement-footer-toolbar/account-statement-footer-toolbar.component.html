@@ -1,0 +1,21 @@
+<mat-dialog-content>
+    <div class="person">
+        <form>
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutAlign="end end" fxLayoutGap.gt-sm="24px">
+                <div class="fury-flex-form-field">
+                    <button matTooltip="Print" mat-icon-button class="example-icon" (click)="onPrint('Normal')">
+                        <mat-icon>print</mat-icon>
+                    </button>
+                    <!-- <button matTooltip="Print Details" mat-icon-button class="example-icon"
+                        (click)="onPrint('Extended')">
+                        <mat-icon>receipt</mat-icon>
+                    </button> -->
+                    <button matTooltip="Export" (click)="onExport()" mat-icon-button class="example-icon"
+                        aria-label="Example icon-button with menu icon">
+                        <mat-icon>import_export</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</mat-dialog-content>

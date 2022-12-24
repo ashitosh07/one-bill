@@ -1,0 +1,54 @@
+{
+    "role": "",
+    "permissions": [
+        {
+            "name": "APPS",
+            "position": 5,
+            "type": "subheading",
+            "customClass": "first-subheading"
+        },
+        {
+            "name": "Dashboard",
+            "routeOrFunction": "/",
+            "icon": "dashboard",
+            "position": 10,
+            "pathMatchExact": true
+        },
+        {
+            "name": "Owner & Tenant",
+            "icon": "description",
+            "position": 15,
+            "subItems": [
+              {
+                "name": "Create Owner",
+                "routeOrFunction": "/owner-tenant/create-owner",
+                "position": 5,
+                "accessLevel": ["read/write/update/delete"]
+              },
+              {
+                "name": "Create Tenant",
+                "routeOrFunction": "/owner-tenant/create-tenant",
+                "position": 10,
+                "accessLevel": ["read/write/update/delete"]
+              },
+              {
+                "name": "Create Contract",
+                "routeOrFunction": "/owner-tenant/create-contract",
+                "position": 15,
+                "accessLevel": ["read/write/update/delete"]
+              },
+              {
+                "name": "Contract End",
+                "routeOrFunction": "/owner-tenant/contract-end",
+                "position": 20,
+                "accessLevel": ["read/write/update/delete"]
+              },
+              {
+                "name": "Service Disconnection",
+                "routeOrFunction": "/owner-tenant/service-disconnection",
+                "position": 25
+              }
+            ]
+        }
+    ]
+}

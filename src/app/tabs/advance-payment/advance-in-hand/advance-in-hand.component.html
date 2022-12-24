@@ -1,0 +1,27 @@
+<fury-page-layout mode="card" style="margin-top: 27px;">
+    <fury-page-layout-content fxLayout="column">
+        <mat-toolbar color="primary" class="position-fixed">
+            <img class="img-style" src="assets/img/fav-icon.png">
+            <span>Advance In Hand</span>
+            <span class="toolbar-spacer"></span> 
+            <button matTooltip="Export" (click)="onExport()" mat-icon-button class="example-icon"
+                aria-label="Example icon-button with menu icon">
+                <mat-icon>import_export</mat-icon>
+            </button>           
+        </mat-toolbar>    
+                  
+        <fury-card class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+          <fury-card-content fxLayout="column"class="padding-top">
+            <div class="result padding-top" fxLayout="column">
+              <!-- <app-advance-payment-toolbar [tenants]="tenants" (searchClicked)="getAdvancePaymentDetails($event)">
+              </app-advance-payment-toolbar> -->
+  
+              <fury-expandable-table-structure [hideHeader]="false" [tableData]="advancePayments" [columnsToDisplay]="columns" [columnNames]="columnNames">
+              </fury-expandable-table-structure>
+            </div>
+            
+          </fury-card-content>
+        </fury-card>    
+    </fury-page-layout-content>
+  </fury-page-layout>
+  

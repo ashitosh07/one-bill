@@ -1,0 +1,45 @@
+<mat-dialog-content>
+    <div class="person">
+        <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+            <mat-form-field style="width:50%" class="result">
+                <mat-label>Payment Mode</mat-label>
+                <mat-select id="PaymentMode" name="PaymentMode" (selectionChange)="onChangePaymentMode($event.value)"
+                    [(value)]="paymentModeId">
+                    <mat-option *ngFor="let option of paymentModes" [value]="option.value">{{ option.label }}
+                    </mat-option>
+                </mat-select>
+                <mat-hint class="small" *ngIf="isShowValidation && !paymentModeId">Select payment mode</mat-hint>
+            </mat-form-field>
+            <mat-form-field style="width:50%" class="result">
+                <mat-label>Bank</mat-label>
+                <mat-select id="Bank" name="Bank" [disabled]="disableBank"
+                    (selectionChange)="onChangeBank($event.value)" [(value)]="bankId">
+                    <mat-option *ngFor="let option of banks" [value]="option.value">{{ option.label }}
+                    </mat-option>
+                </mat-select>
+                <mat-hint class="small" *ngIf="isShowValidation && !disableBank && !bankId">Select bank</mat-hint>
+            </mat-form-field>
+        </div>
+        <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+            <mat-form-field style="width:50%" class="result">
+                <mat-label>Ref Number</mat-label>
+                <input type="text" id="ReferenceNumber" name="ReferenceNumber" [(ngModel)]="refNumber" matInput>
+            </mat-form-field>
+            <mat-form-field style="width:50%" class="result">
+                <mat-label>Payment Date</mat-label>
+                <input (click)="formDatepickerRef.open()" id="PaymentDate" name="PaymentDate" [(ngModel)]="paymentDate"
+                    (focus)="formDatepickerRef.open()" (dateInput)="onDateChange($event)"
+                    [matDatepicker]="formDatepickerRef" matInput readonly>
+                <mat-datepicker-toggle [for]="formDatepickerRef" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #formDatepickerRef></mat-datepicker>
+                <mat-hint class="small" *ngIf="isShowValidation && !paymentDate">Select payment date</mat-hint>
+            </mat-form-field>
+        </div>
+        <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="24px">
+            <mat-form-field fxFlex="grow">
+                <mat-label>Remarks</mat-label>
+                <textarea type="text" id="Remarks" name="Remarks" [(ngModel)]="remarks" matInput></textarea>
+            </mat-form-field>
+        </div>
+    </div>
+</mat-dialog-content>

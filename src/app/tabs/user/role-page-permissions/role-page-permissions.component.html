@@ -1,0 +1,54 @@
+<fury-page-layout mode="card" style="margin-top:20px">
+    <!-- <fury-page-layout-header>
+        <fury-breadcrumbs [@fadeInRight] [crumbs]="[]" current="Permission Settings"></fury-breadcrumbs>
+    </fury-page-layout-header> -->
+    <fury-page-layout-content  fxLayout="column">
+
+        <mat-toolbar color="primary" class="position-fixed">
+            <img class="img-style" src="assets/img/fav-icon.png">
+
+            <span>Roles & Permission</span>
+            <span class="toolbar-spacer"></span>
+            <button (click)="onSave()" mat-icon-button matTooltip="Save" [disabled]="!(roleId > 0)">
+                <mat-icon>save</mat-icon>
+              </button>
+          </mat-toolbar>
+          
+        <div [fxLayoutGap]="gap" fxFlex="noshrink" fxLayout="column" fxLayout.gt-sm="row"
+            fxLayoutAlign.gt-sm="start stretch">
+
+            <fury-card [fxFlex.gt-sm]="col2" class="basic-forms route-animations-elements" [@fadeInUp] fxFlex="grow">
+                <div class="card-spacer">
+                </div>
+              
+                  
+                <fury-card-content class="dropdown">
+                    <mat-form-field>
+                        <mat-label>Roles</mat-label>
+                        <mat-select id="roles" name="roles" (selectionChange)="onChangeRoles($event.value)"
+                            [(value)]="roleId">
+                            <mat-option *ngFor="let option of roles" [value]="option.value">{{ option.label }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </fury-card-content>
+                <fury-card-content fxLayout="column" *ngIf="roleId > 0">
+                    <div class="result" fxLayout="column">
+                        <app-table-structure [tableData]="menuItems" [columns]="columns"
+                            (selectedRows)="onSelectedRows($event)" [hideHeader]="false">
+                        </app-table-structure>
+                    </div>
+                </fury-card-content>
+                <!-- <fury-card-content fxLayout="column">
+                    <div class="result" fxLayout="column">
+                        <div class="fury-flex-form-field" fxLayoutAlign="end end">
+                            <button (click)="onSave()" color="primary" mat-raised-button>
+                                <span>Save</span>
+                            </button>
+                        </div>
+                    </div>
+                </fury-card-content> -->
+            </fury-card>
+        </div>
+    </fury-page-layout-content>
+</fury-page-layout>

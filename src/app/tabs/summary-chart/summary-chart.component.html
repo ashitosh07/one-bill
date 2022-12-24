@@ -1,0 +1,105 @@
+  
+    <div fxLayout="column wrap" style="padding: 27px 27px 27px 27px;"  fxLayoutGap="7px">
+
+      <div class="loading-indicator" *ngIf="showSpinner">
+        <mat-progress-spinner mode="indeterminate" color="accent"></mat-progress-spinner>
+      </div>
+
+        <mat-toolbar color="primary" class="position-fixed">
+            <img class="img-style" src="assets/img/fav-icon.png">
+            <span>Meter Summary</span>
+            <span class="toolbar-spacer"></span>
+          </mat-toolbar>
+  
+            <!-- <mat-card class="mat-elevation-z4" fxFlexLayout="row" fxFlex>
+                        <mat-form-field>
+                        <mat-select [(ngModel)]="type" name="type" id="typeId" placeholder="Select a Type">
+                            <mat-option *ngFor="let item of lstType;" [value]="item.name"  (click)="onTypeChange(item)">{{item.value}}</mat-option>
+                        </mat-select>
+                        </mat-form-field>
+            </mat-card> -->
+
+            <div fxLayout="row" fxLayoutGap="10px" *ngIf="lstMeter">
+                <mat-card class="mat-elevation-z4 card-height" fxLayoutGap="75px" fxFlexLayout="column">
+                      <button mat-raised-button class="true-button node-color" fxFlex>
+                        <mat-icon class="icon-color">computer</mat-icon>
+                      </button>
+                    <h3 fxFlex>
+                      Total Nodes
+                      <b>{{lstMeter.totalNodes}}</b>
+                    </h3>
+                </mat-card>
+                <mat-card class="mat-elevation-z4 card-height" fxLayoutGap="75px" fxFlexLayout="column">
+                  <button mat-raised-button class="true-button location-color " fxFlex>
+                    <mat-icon class="icon-color">location_on</mat-icon>
+                  </button>
+                    <h3 fxFlex>
+                      Total Location
+                      <b>{{lstMeter.totalLocation}}</b>
+                    </h3>
+                </mat-card>
+                <mat-card class="mat-elevation-z4 card-height" fxLayoutGap="35px" fxFlexLayout="column">
+                  <button mat-raised-button class="true-button gateway-color" fxFlex>
+                    <mat-icon  class="icon-color">location_city</mat-icon>
+                  </button>
+                  <h3 fxFlex>
+                    Total Sub Location
+                    <b>{{lstMeter.totalSubLocation}}</b>
+                  </h3>
+                </mat-card>
+                <mat-card class="mat-elevation-z4 card-height" fxLayoutGap="75px" fxFlexLayout="column">
+                  <button mat-raised-button class="true-button sub-location-color" fxFlex>
+                    <mat-icon  class="icon-color">network_wifi</mat-icon>
+                  </button>
+                  <h3 fxFlex>
+                    Total Gateway
+                    <b>{{lstMeter.totalGateWay}}</b>
+                  </h3>
+                </mat-card>
+            </div>
+      
+                <div class="scrollit" *ngIf="lstMeter">
+                    <mat-accordion>
+                        <mat-expansion-panel  *ngFor="let item of lstMeter.meterGroupList;let i=index" id='divId' class="child-2">
+                          <mat-expansion-panel-header>
+                            <mat-panel-title>
+                              <h5>
+                                <b>
+                                  <label> {{item.groupName}} </label> 
+                                <label *ngIf="!item.groupName">-------</label>   
+                                </b> 
+                              </h5>       
+                            </mat-panel-title>
+                  
+                          </mat-expansion-panel-header>
+                          <table>
+                            <thead>
+                              <th class="column-width">Meter Name</th>
+                              <th class="column-width">Model Name</th>
+                              <th class="column-width">Meter Type Name</th>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let parameter of item.meterSummaryDetails">
+                                <td class="column-width">{{parameter.meterName}}</td>
+                                <td class="column-width">{{parameter.modelName}}</td>
+                                <td class="column-width">{{parameter.meterTypeName}}</td>
+                              </tr>
+                            </tbody>
+                          </table>
+                                   
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                
+                  </div>
+
+                  <mat-card fxFlex *ngIf="!lstMeter"  class="text-align">
+                    <label>
+                      <b>
+                        No Data Found
+                      </b>
+                    </label>
+                  </mat-card>
+                  <!-- <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> -->
+    </div>
+    
+    

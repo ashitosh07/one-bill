@@ -1,0 +1,164 @@
+<mat-dialog-content>
+    <form [formGroup]="form">
+        <div class="person">
+            <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+                <mat-form-field fxFlex>
+                    <mat-label>Alert Type</mat-label>
+                    <mat-select id="consumptionTypeId" name="consumptionTypeId" formControlName="consumptionTypeId"
+                        (selectionChange)="onChangeConsumptionType($event)">
+                        <mat-option *ngFor="let option of consumptionTypes" [value]="option.value">{{ option.label }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint class="small"
+                        *ngIf="!form.controls.consumptionTypeId.value || form.controls.consumptionTypeId.value==0">
+                        Select
+                        Consumption Type</mat-hint>
+                </mat-form-field>
+                <mat-form-field fxFlex>
+                    <mat-label>Utility Type</mat-label>
+                    <mat-select id="utilityTypeId" name="utilityTypeId" formControlName="utilityTypeId"
+                        (selectionChange)="onChangeUtilityType($event)">
+                        <mat-option *ngFor="let option of utilityTypes" [value]="option.value">{{ option.label }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-hint class="small"
+                        *ngIf="!form.controls.utilityTypeId.value ||form.controls.utilityTypeId.value==0">Select
+                        Utility Type</mat-hint>
+                </mat-form-field>
+                <div fxFlex>
+                    <mat-radio-group (change)="optionChange($event)" [value]="optionId" fxLayout="column"
+                        fxLayoutGap="12px">
+                        <mat-radio-button value="1">Compare based on Bill Period</mat-radio-button>
+                        <mat-radio-button value="2"> Compare based on Date range</mat-radio-button>
+                    </mat-radio-group>
+                </div>
+            </div>
+        </div>
+    </form>
+
+    <div *ngIf="optionId=='1'">
+        <div class="person">
+            <form [formGroup]="billPeriodForm">
+
+                <div fxLayout="column" fxLayout.gt-sm="column">
+                    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+                        <mat-form-field fxFlex>
+                            <mat-label *ngIf="consumptionType ==='Zero Consumption'">Bill Period</mat-label>
+                            <mat-label *ngIf="consumptionType !=='Zero Consumption'">Bill Period to compare</mat-label>
+                            <mat-select id="fromBillPeriodId" name="fromBillPeriodId" formControlName="fromBillPeriodId"
+                                (selectionChange)="onChangeFromBillPeriod($event)">
+                                <mat-option *ngFor="let option of billPeriods" [value]="option.value">{{ option.label }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-hint class="small"
+                                *ngIf="!billPeriodForm.controls.fromBillPeriodId.value || billPeriodForm.controls.fromBillPeriodId.value==0">
+                                Select
+                                Bill Period to compare</mat-hint>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlex *ngIf="consumptionType !=='Zero Consumption'">
+                            <mat-label>Bill Period To be compared with</mat-label>
+                            <mat-select id="toBillPeriodId" name="toBillPeriodId" formControlName="toBillPeriodId"
+                                (selectionChange)="onChangeToBillPeriod($event)">
+                                <mat-option *ngFor="let option of billPeriods" [value]="option.value">{{ option.label }}
+                                </mat-option>
+                            </mat-select>
+                            <mat-hint class="small"
+                                *ngIf="!billPeriodForm.controls.toBillPeriodId.value || billPeriodForm.controls.toBillPeriodId.value==0">
+                                Select
+                                Bill Period To be compared with</mat-hint>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlex *ngIf="consumptionType !=='Zero Consumption'">
+                            <mat-label>Threshold [%]</mat-label>
+                            <input type="number" id="percentageBillPeriod" name="percentageBillPeriod"
+                                formControlName="percentageBillPeriod" [(ngModel)]="percentageBillPeriod" matInput>
+                        </mat-form-field>
+
+                        <div fxFlex>
+                            <button (click)="onSearch('BillPeriod')" mat-icon-button class="example-icon"
+                                [disabled]="disableBillPeriod" matTooltip="Compare"
+                                aria-label="Example icon-button with menu icon">
+                                <mat-icon>compare</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- <div class="blank_row">
+        </div> -->
+        <div class="person topPadding">
+            <div fxLayout="column" fxLayout.gt-sm="column">
+                <app-table-structure [visibleDeleteButton]="true" [tableData]="consumptionAlerts" [columns]="columns" [hideHeader]="true"
+                (deleteRow)="onDeleteRow($event)">
+                </app-table-structure>
+            </div>
+        </div>
+    </div>
+
+    <div class="person" *ngIf="optionId=='2'">
+        <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="20px">
+            <mat-form-field>
+                <mat-label>Date to compare with </mat-label>
+                <input (click)="formDatepickerRef1.open()" id="fromDate" name="fromDate" [(ngModel)]="fromDate"
+                    (focus)="formDatepickerRef1.open()" [matDatepicker]="formDatepickerRef1" matInput readonly
+                    [ngModelOptions]="{standalone: true}">
+                <mat-datepicker-toggle [for]="formDatepickerRef1" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #formDatepickerRef1></mat-datepicker>
+                <mat-hint class="small" *ngIf="!fromDate || fromDate ==''">Select Date to compare with</mat-hint>
+            </mat-form-field>
+
+            <!-- <div style="width: 24%;">
+                <mat-label>Average consumption between :</mat-label>
+            </div> -->
+            <!-- Start Date -->
+            <mat-form-field>
+                <mat-label>Average consumption From</mat-label>
+                <input (click)="formDatepickerRef2.open()" id="startDate" name="startDate" [(ngModel)]="startDate"
+                    (focus)="formDatepickerRef2.open()" [matDatepicker]="formDatepickerRef2" matInput readonly
+                    [ngModelOptions]="{standalone: true}">
+                <mat-datepicker-toggle [for]="formDatepickerRef2" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #formDatepickerRef2></mat-datepicker>
+                <mat-hint class="small" *ngIf="!startDate ||startDate ==''">Select Average consumption From</mat-hint>
+            </mat-form-field>
+            <!-- <div style="width: 4%;">
+                <mat-label>And</mat-label>
+            </div> -->
+            <mat-form-field>
+                <mat-label>Average consumption To</mat-label>
+                <input (click)="formDatepickerRef3.open()" id="endDate" name="endDate" [(ngModel)]="endDate"
+                    (focus)="formDatepickerRef3.open()" [matDatepicker]="formDatepickerRef3" matInput readonly
+                    [ngModelOptions]="{standalone: true}">
+                <mat-datepicker-toggle [for]="formDatepickerRef3" matSuffix></mat-datepicker-toggle>
+                <mat-datepicker #formDatepickerRef3></mat-datepicker>
+                <mat-hint class="small" *ngIf="!endDate || endDate ==''">Select Average consumption To</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field style="width: 100px;">
+                <mat-label>Threshold</mat-label>
+                <input type="text" id="percentageDatewise" name="percentageDatewise" [(ngModel)]="percentageDatewise"
+                    matInput>
+            </mat-form-field>
+
+            <button (click)="onSearch('DateWise')" mat-icon-button class="example-icon" matTooltip="Compare"
+                [disabled]="!formValidation(form) || !this.startDate || !this.endDate || !this.fromDate"
+                aria-label="Example icon-button with menu icon">
+                <mat-icon>compare</mat-icon>
+            </button>
+        </div>
+        <!-- <div class="person">
+            <mat-form-field style="width: 24%;">
+                <mat-label>Threshold</mat-label>
+                <input type="text" id="percentageDatewise" name="percentageDatewise" [(ngModel)]="percentageDatewise"
+                    matInput>
+            </mat-form-field>
+
+            <button (click)="onSearch('DateWise')" mat-icon-button class="example-icon" matTooltip="Compare"
+                [disabled]="!formValidation(form) || !this.startDate || !this.endDate || !this.fromDate"
+                aria-label="Example icon-button with menu icon">
+                <mat-icon>compare</mat-icon>
+            </button>
+        </div> -->
+    </div>
+</mat-dialog-content>

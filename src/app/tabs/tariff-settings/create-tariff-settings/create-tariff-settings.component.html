@@ -1,0 +1,94 @@
+<div mat-dialog-title>
+    <mat-toolbar role="toolbar" class="task-header">
+        <span>Tariff Settings</span>
+        <span class="fx-spacer"></span>
+        <button mat-icon-button (click)="close()">
+            <mat-icon title="Close" mat-list-icon>close</mat-icon>
+        </button>
+    </mat-toolbar>
+</div>
+<mat-dialog-content>
+    <fury-card>
+        <!-- <div fxLayout="column" fxLayoutAlign="start center">
+            <div [@fadeInUp] class="card"> -->
+        <mat-horizontal-stepper #stepper="matHorizontalStepper" [linear]="true">
+
+            <mat-step [stepControl]="seasonSettingsFormGroup">
+                <form [formGroup]="seasonSettingsFormGroup">
+                    <ng-template matStepLabel>Tariff Settings</ng-template>
+
+                    <div class="heading"></div>
+                    <div class="subheading"></div>
+
+                    <app-create-seasonal-tariff-settings [utilityTypes]="utilityTypes" [data]="defaults"
+                        [parameters]="parameters" [clients]="clients">
+                    </app-create-seasonal-tariff-settings>
+
+                    <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                        <button (click)="stepper.reset()" [disabled]="seasonSettingsFormGroup.pristine" color="primary"
+                            mat-button type="button">RESET
+                        </button>
+                        <button [disabled]="seasonSettingsFormGroup.invalid" color="primary" mat-raised-button
+                            matStepperNext>NEXT
+                        </button>
+                    </div>
+                </form>
+            </mat-step>
+
+            <mat-step>
+                <form [formGroup]="peakSettingsFormGroup">
+                    <ng-template matStepLabel>Season Settings</ng-template>
+
+                    <div class="heading"></div>
+                    <div class="subheading"></div>
+
+                    <app-create-peak-settings [tariffSettings]="tariffSettings" [peakTypes]="peakTypes" [days]="days"
+                        [months]="months" [weekTypes]="weekTypes" [seasons]="seasons" [data]="defaults"
+                        (tariffSettingsChanged)="saveTariffSettings($event)" (isDisable)="isPeakSettingsAdded($event)">
+                    </app-create-peak-settings>
+
+                    <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px"
+                        style="padding-top: 20px;">
+                        <button color="primary" mat-button matStepperPrevious type="button">PREVIOUS</button>
+                        <button (click)="submit()" [disabled]="peakSettingsHide" color="primary" mat-raised-button
+                            matStepperNext>
+                            {{buttonName}}
+                        </button>
+                    </div>
+
+                    <!-- <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                                <button color="primary" mat-button matStepperPrevious type="button">PREVIOUS</button>
+                                <button color="primary" [disabled]="peakSettingsHide" mat-raised-button
+                                    matStepperNext>NEXT
+                                </button>
+                            </div> -->
+                </form>
+            </mat-step>
+
+            <!-- <mat-step>
+                        <form [formGroup]="peakSettingsFormGroup">
+                            <ng-template matStepLabel>Slab Settings</ng-template>
+
+                            <div class="heading"></div>
+                            <div class="subheading"></div>
+
+                            <app-create-slab-rate-settings [slabs]="slabs" [data]="defaults"
+                                (isDisable)="isSlabSettingsAdded($event)">
+                            </app-create-slab-rate-settings>
+
+                            <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                                <button color="primary" mat-button matStepperPrevious type="button">PREVIOUS</button>
+                                <button (click)="submit()" [disabled]="slabSettingsHide" color="primary"
+                                    mat-raised-button matStepperNext>
+                                    {{buttonName}}
+                                </button>
+                            </div>
+
+                        </form>
+                    </mat-step> -->
+
+        </mat-horizontal-stepper>
+        <!-- </div>
+        </div> -->
+    </fury-card>
+</mat-dialog-content>

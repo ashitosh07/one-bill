@@ -1,0 +1,45 @@
+<h4 mat-dialog-title>
+    <mat-toolbar role="toolbar" class="task-header">
+        <span>Copy Bill Line</span>
+        <span class="fx-spacer"></span>
+        <button mat-icon-button (click)="close()">
+            <mat-icon title="Close" mat-list-icon>close</mat-icon>
+        </button>
+    </mat-toolbar>
+</h4>
+
+<form [formGroup]="form" (ngSubmit)="save()">
+    <mat-dialog-content class="mat-dlg-content">
+        <fury-card>
+            <fury-card-content class="padding-top">
+                <div class="person">
+                    <div fxLayout="column" fxLayout.gt-sm="row" fxLayoutGap.gt-sm="48px">
+                        <mat-form-field fxFlex>
+                            <mat-select [(ngModel)]="fromClientName" [disabled]="true" formControlName="fromClient" (selectionChange)="selectCopyFromClient($event.value)" placeholder="Copy From Client">
+                                <mat-option *ngFor="let item of lstFilterClients; index as i" [value]="item.clientName">{{ item.clientName }}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                        <mat-form-field fxFlex>
+                            <mat-select [(ngModel)]="selectedClients" multiple placeholder="Copy To Client"
+                                class="multiSelectCustom" [formControl]="form.controls['clients']">
+                                <input class="myInput mySelect" #myInput matInput focused="'true'" type="text"
+                                    (keyup)="search($event.target.value)" autocomplete="off" placeholder="Search">
+                                <mat-divider></mat-divider>
+                                <mat-option #allClientsSelected (click)="toggleClientsAllSelection()" [value]="0">Select
+                                    All</mat-option>                                
+                                <mat-option *ngFor="let item of lstClients" [value]="item.clientId"
+                                    (click)="toggleClientPerOne(allClientsSelected.viewValue)"> {{item.clientName}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </fury-card-content>
+        </fury-card>
+    </mat-dialog-content>
+    <mat-dialog-actions fxLayout="row" fxLayoutAlign="end center">
+        <button mat-button (click)="closeDialog()">CANCEL</button>
+        <button mat-button [disabled]="selectedClients?.length == 0">PROCEED</button>
+    </mat-dialog-actions>
+</form>

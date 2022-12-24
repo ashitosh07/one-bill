@@ -1,0 +1,64 @@
+<div fxLayout="column" fxLayoutGap="2%" style="padding: 27px;">
+
+  <mat-toolbar color="primary" fxLayout="row" fxLayout.xs="column" class="position-fixed">
+    <img class="img-style" src="assets/img/fav-icon.png" [fxHide.xs]="true">
+    <span fxLayout="row" fxLayout.xs="column">Single line diagram</span>
+    <span class="toolbar-spacer"></span>
+    <div class="fury-flex-form-field">
+      <button (click)="clear()" mat-icon-button class="example-icon"
+        aria-label="Example icon-button with menu icon">
+        <mat-icon class="icon-color" matTooltip="Reset">refresh</mat-icon>
+      </button>
+    </div>
+    <div class="fury-flex-form-field">
+      <button matTooltip="Print" mat-icon-button class="example-icon" (click)="onSave()">
+        <mat-icon>save</mat-icon>
+      </button>
+    </div>
+  </mat-toolbar>
+
+  <mat-card fxLayout="column" fxLayoutGap="2%">
+    <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="2%" style="width: 90%;">      
+
+      <div fxFlex>
+      <mat-form-field style="width: 75%;margin-right: 0px;">
+        <mat-select id="floorId" (selectionChange)="onFloorChange($event)" placeholder="Select a Floor">
+          <mat-option *ngFor="let item of floors;" [value]="item.id">{{item.description}}</mat-option>
+        </mat-select>
+        <mat-hint>Please select Floor.</mat-hint> 
+      </mat-form-field>
+      <button class="create" (click)="createFloor()" style="height: 30px;width: 30px;margin-right: 0px;margin-left: 5px;padding-top: -5px;" type="button" mat-mini-fab color="primary">
+        <mat-icon style="height: 10px;width: 10px;padding-top: -5px;margin-top: -25px;margin-left: -13px;">add</mat-icon>
+      </button>
+    </div>
+
+      <mat-form-field fxFlex>
+        <mat-label>Client</mat-label>
+        <mat-select [(ngModel)]="clientId" name="clientId" id="clientId" placeholder="Client" (selectionChange)="onChangeClient()">
+          <mat-option *ngFor="let client of clients;" [value]="client.id" >{{client.description}}</mat-option>
+        </mat-select>
+        <mat-hint>Please select Client.</mat-hint> 
+      </mat-form-field>
+
+      <div fxFlex style="padding-top: 15px;">
+        <input fxFlex type="file" id="picture" (change)="uploadPhoto()" class="input-file" id="InputFile"
+          name="InputFile" #profilePic max-file-size="100kb" />
+      </div>
+
+      <mat-form-field fxFlex>
+        <mat-select id="meterId" (selectionChange)="onMeterChange($event)" placeholder="Select a Meter">
+          <input class="myInput" #myInput matInput focused="'true'" type="text" (keyup)="search($event.target.value)"
+            autocomplete="off" placeholder="search">
+          <mat-divider></mat-divider>
+          <mat-option *ngFor="let item of meters;" [value]="item.id">{{item.description}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </mat-card>
+
+  <mat-card fxLayout="row" fxLayoutGap="10%">
+    <canvas id="canvas" width="810" height="720" (click)="getPosition($event)"
+      style="cursor:crosshair;background:url({{image}})"></canvas>
+  </mat-card>
+
+</div>
